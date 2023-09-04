@@ -17,7 +17,3 @@ def matrix_shape(matrix):
         shape.append(num_rows)
         shape.append(num_of_columns)
     return shape
-
-
-matrix = [[1, 2], [3, 4]]
-print(matrix_shape(matrix))
