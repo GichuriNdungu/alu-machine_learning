@@ -2,7 +2,9 @@
 
 def matrix_shape(matrix):
     shape = []
-    if type(matrix[0]) == list and type(matrix[0][0]) == int:
+    if all(isinstance(obj, (int, float)) for obj in matrix):
+        shape.append(len(matrix))
+    elif type(matrix[0]) == list and type(matrix[0][0]) == int:
         shape.append(len(matrix))
         shape.append(len(matrix[0]))
     elif type(matrix[0][0]) == list:
