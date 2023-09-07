@@ -2,14 +2,13 @@
 '''
 Matrix Shape Determination Function
 
-This script defines a function for determining the shape (dimensions) of a matrix.
-The function can determine the shape of a matrix whether it's a 1D, 2D, or 3D matrix.
+defines a function for determining the shape (dimensions) of a matrix.
 
 Usage:
     shape = matrix_shape(matrix)
 
 Parameters:
-    matrix (list): The input matrix represented as a list of lists. It can be a 1D, 2D, or 3D matrix.
+    matrix (list): The input matrix represented as a list of lists.
 Example:
     matrix = [[1, 2, 3], [4, 5, 6]]
     shape = matrix_shape(matrix)
@@ -36,5 +35,5 @@ def matrix_shape(matrix):
             '''use recursion to determine the shape of the rem dimensions'''
             rem_dimensions_shape = matrix_shape(matrix[0])
 
-            shape = [current_dimension_size,] + rem_dimensions_shape
+            shape = [current_dimension_size, ] + rem_dimensions_shape
     return shape
