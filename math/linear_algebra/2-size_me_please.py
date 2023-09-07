@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-import numpy as np
-def matrix_trial(matrix):
+#import numpy as np
+def matrix_shape(matrix):
     shape = []
     if type(matrix[0]) == list and len(matrix[0]) == 2:
         shape.append(len(matrix))
@@ -18,7 +18,7 @@ def matrix_trial(matrix):
         shape.append(num_rows)
         shape.append(num_of_columns)
     return shape
-def matrix_shape (matrix):
+#def matrix_shape (matrix):
     shape = list(np.shape(matrix))
   
     return shape
