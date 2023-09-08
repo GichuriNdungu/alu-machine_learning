@@ -5,6 +5,9 @@ adds two arrays element-wise:'''
 
 
 def add_arrays(arr1, arr2):
+    '''function employs; 
+    map func to parse sum to each of the elements
+    and zip func to select the elements in their order'''
     if len(arr1) != len(arr2):
         return None
     else:
