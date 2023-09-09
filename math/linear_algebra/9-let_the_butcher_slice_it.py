@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 ^import numpy as np$
-^matrix = np\.array\(\[\[1, 2, 3, 4, 5, 6\], \[7, 8, 9, 10, 11, 12\],$
+matrix = np.array([[1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12],
+                   [13, 14, 15, 16, 17, 18], [19, 20, 21, 22, 23, 24]])
 mat1 = matrix[1:3]
 mat2 = list(map(list, (matrix[0][2:4], matrix[1][2:4], matrix[2][2:4], matrix[3][2:4])))
 mat3 = list(map(list, (matrix[1][3:], matrix[2][3:], matrix[3][3:])))
