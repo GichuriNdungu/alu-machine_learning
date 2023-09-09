@@ -14,7 +14,7 @@ def cat_matrices2D(mat1, mat2, axis=0):
         return result
     elif axis == 1:
         result = []
-        for row1, row3 in zip(mat1, mat3):
+        for row1, row3 in zip(mat1, mat2):
             new_row = row1+row3
             result.append(new_row)
         return result
