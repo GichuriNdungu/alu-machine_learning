@@ -6,7 +6,7 @@ adds two arrays element-wise:'''
 
 def add_arrays(arr1, arr2):
     '''function to add 2 arrays
-    employs map and zip for zipping and summation'''
+    employs map and zip for zipping'''
     if len(arr1) != len(arr2):
         return None
     else:
