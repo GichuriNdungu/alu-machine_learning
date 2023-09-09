@@ -4,4 +4,3 @@ the_middle = []
 for element in matrix:
     new_element = element[2:4]
     the_middle.append(new_element)
-print("The middle columns of the matrix are: {}".format(the_middle))
