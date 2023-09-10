@@ -10,4 +10,4 @@ def np_cat(mat1, mat2, axis=0):
 	'''concatenates 2 arrays on agiven axis
 	returns a concatenated array
 	type(array) = np.ndarray'''
-	return np.concatenate((mat1, mat2), axis))
+	return np.concatenate((mat1, mat2), axis)
