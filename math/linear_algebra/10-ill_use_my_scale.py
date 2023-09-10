@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-'''function that determines the 
+'''function that determines the
 shape of an array using numpy'''
 
 
