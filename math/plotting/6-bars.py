@@ -27,7 +27,7 @@ for fruit_no in range(len(fruit)):
     bottom += fruit[fruit_no]
 # add a label and a legend
 ax.set_xlabel('categories')
-ax.set_ylabel('Quantity')
+ax.set_ylabel('Quantity of fruit')
 ax.set_title('Number of Fruit per Person')
 ax.set_ylim(0, 80)
 ax.legend()
