@@ -6,7 +6,7 @@
 def summation_i_squared(n):
     '''function to get the summation of a squares
 '''
-    if type(n) != int:
+    if n<1 or type(n) != int:
         return None
     else:
         squared_num = n*((n+1)*(2*n+1))//6
