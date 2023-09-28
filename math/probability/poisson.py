@@ -28,7 +28,7 @@ class Poisson:
         of successes'''
         if not isinstance(k, int):
             k = int(k)
-        elif isinstance(k, int) and k >= 0:
+        if k >= 0:
             e = 2.7182818285
             num = e**(-self.lambtha)*(self.lambtha**k)
             result = 1
