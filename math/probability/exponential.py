@@ -34,4 +34,3 @@ class Exponential:
             return pdf
         else:
             return 0
-
