@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
+'''Class Poisson that sets the lambtha 
+of a poisson distribution
+Args = data
+'''
+
+
 class Poisson:
+    '''class constructor'''
+
     def __init__(self, data=None, lambtha=1.):
         if data == None:
             self.lambtha = lambtha
