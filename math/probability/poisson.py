@@ -45,7 +45,7 @@ class Poisson:
         if not isinstance(k, int):
             k = int(k)
         cdf_value = 0
-        for i in (1, k+1):
+        for i in range(k+1):
             pmf_i = self.pmf(i)
             cdf_value += pmf_i
         return cdf_value

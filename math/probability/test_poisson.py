@@ -10,3 +10,8 @@ print('F(9):', p1.cdf(9))
 
 p2 = Poisson(lambtha=5)
 print('F(9):', p2.cdf(9))
+
+
+data = [1,2,3,4,5]
+p2 = Poisson(data)
+print('cdf:', p2.cdf(7))
