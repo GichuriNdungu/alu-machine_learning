@@ -38,3 +38,14 @@ class Poisson:
             return pmf
         else:
             return 0
+
+    def cdf(self, k):
+        '''calculates the cumulative 
+        distribution fucntion of k successes'''
+        if not isinstance(k, int):
+            k = int(k)
+        cdf_value = 0
+        for i in (1, k+1):
+            pmf_i = self.pmf(i)
+            cdf_value += pmf_i
+        return cdf_value
