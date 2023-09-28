@@ -27,11 +27,8 @@ class Poisson:
         '''calculates the PMF of a number
         of successes'''
 
-        if isinstance(k, int):
+        if isinstance(k, int) and k >= 0:
             self.k = int(k)
-        elif k > max(self.data):
-            return 0
-        else:
             e = 2.7182818285
             num = e**(-self.lambtha)*(self.lambtha**k)
             result = 1
@@ -39,3 +36,5 @@ class Poisson:
                 result *= i
             pmf = num/result
             return pmf
+        else:
+            return 0
