@@ -7,4 +7,7 @@ class Poisson:
             sum_of_data = sum(data)
             self.lambtha = float(sum_of_data/len(data))
         if self.lambtha <= 0:
-            raise 
+            raise ValueError('lambtha must be a positive value')
+        else:
+            pass
+        
