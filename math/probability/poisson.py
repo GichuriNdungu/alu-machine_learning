@@ -4,7 +4,7 @@ class Poisson:
         if data == None:
             self.lambtha = lambtha
         elif type(data) != list:
-            raise TypeError('lambtha must be a positive value')
+            raise TypeError('data must be a list')
         elif len(data) < 2:
             raise ValueError('data must contain multiple values')
         else:
