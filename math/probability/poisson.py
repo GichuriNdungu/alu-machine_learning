@@ -6,7 +6,7 @@ class Poisson:
         elif type(data) != list:
             raise TypeError('lambtha must be a positive value')
         elif len(data) < 2:
-            raise ValueError ('data must contain multiple values')
+            raise ValueError('data must contain multiple values')
         else:
             sum_of_data = sum(data)
             self.lambtha = float(sum_of_data/len(data))
@@ -14,4 +14,3 @@ class Poisson:
             raise ValueError('lambtha must be a positive value')
         else:
             pass
-        
