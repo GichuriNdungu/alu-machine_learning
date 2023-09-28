@@ -34,8 +34,8 @@ class Poisson:
         else:
             e = 2.7182818285
             num = e**(-self.lambtha)*(self.lambtha**k)
-            pmf = num
-            for i in range(k, k+1):
+            result = 1
+            for i in range(1, k+1):
                 result *= i
-                pmf = num/result
-        return pmf
+            pmf = num/result
+            return pmf
