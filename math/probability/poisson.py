@@ -30,7 +30,7 @@ class Poisson:
             self.k = int(k)
         elif isinstance(k, int) and k >= 0:
             e = 2.7182818285
-            num = e**(-self.lambtha)*(self.lambtha**k)
+            num = e**(-self.lambtha)*(self.lambtha**self.k)
             result = 1
             for i in range(1, k+1):
                 result *= i
