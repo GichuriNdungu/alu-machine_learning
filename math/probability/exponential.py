@@ -22,3 +22,12 @@ class Exponential:
             raise ValueError('lambtha must be a positive value')
         else:
             pass
+    def pdf(self, x):
+        '''calculates the pdf of an 
+        exponential distribution'''
+        if not isinstance(x, int):
+            x = int(x)
+        if x >= 0:
+            e = 2.7182818285
+            pdf = self.lambtha * (e**(-self.lambtha * x))
+        return pdf
