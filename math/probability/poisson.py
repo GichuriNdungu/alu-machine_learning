@@ -22,6 +22,7 @@ class Poisson:
             raise ValueError('lambtha must be a positive value')
         else:
             pass
+
     def pmf(self, k):
         '''calculates the PMF of a number
         of successes'''
@@ -35,5 +36,5 @@ class Poisson:
             num = e**(-self.lambtha)*(self.lambtha**k)
             for i in range(k, k+1):
                 result *= i
-            pmf = num/result
-        return pmf    
+                pmf = num/result
+        return pmf
