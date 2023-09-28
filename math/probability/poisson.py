@@ -40,7 +40,7 @@ class Poisson:
             return 0
 
     def cdf(self, k):
-        '''calculates the cumulative 
+        '''calculates the cumulative
         distribution fucntion of k successes'''
         if not isinstance(k, int):
             k = int(k)
