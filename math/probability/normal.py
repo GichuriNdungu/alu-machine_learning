@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 
-'''class Normal that represents a normal distribution'''
+'''class Normal that represents
+ a normal distribution
+ args: mean, data, stddev
+ return: standard dev, mean'''
+
+
 class Normal:
     def __init__(self, data=None, mean=0., stddev=1.):
         '''class constructor'''
         if data is None:
             if stddev <= 0:
-                raise ValueError('stddeve must be a positive value')
+                raise ValueError('stddev must be a positive value')
             else:
                 self.mean = float(mean)
                 self.stddev = float(stddev)
@@ -24,4 +29,3 @@ class Normal:
                     squared_diff_sum += squared_diff
                 starndard_dev = (squared_diff_sum/len(data)) ** 0.5
                 self.stddev = starndard_dev
-                 
