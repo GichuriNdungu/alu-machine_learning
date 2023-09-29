@@ -49,3 +49,17 @@ class Normal:
         exponent = -0.5 * (((x - self.mean)/self.stddev) ** 2)
         pdf = coeffecient * e**exponent
         return pdf
+
+    def cdf(self, x):
+        '''calculates the cdf of a value x'''
+        mean = self.mean
+        stddev = self.stddev
+        pi = 3.1415926536
+        value = (x - mean) / (stddev * (2 ** (1 / 2)))
+        # estimate the erf using taylor series expansion
+        erf = value - ((value ** 3) / 3) + ((value ** 5) / 10)
+        erf = erf - ((value ** 7) / 42) + ((value ** 9) / 216)
+        # calculate the cdf from the estimated erf
+        erf *= (2 / (pi ** (1 / 2)))
+        cdf = (1 / 2) * (1 + erf)
+        return cdf
