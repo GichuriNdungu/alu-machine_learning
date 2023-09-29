@@ -1,4 +1,6 @@
-ss Poisson that sets the lambtha
+#!/usr/bin/env python3
+
+'''class Poisson that sets the lambtha
 of a poisson distribution
 Args = data
 '''
