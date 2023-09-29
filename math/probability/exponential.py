@@ -28,17 +28,19 @@ class Exponential:
             print(str(e))
 
     def pdf(self, x):
-        '''calculates the pdf of an 
-        exponential distribution'''
-        try:
-            if not isinstance(x, int):
-                x = int(x)
-            if x >= 0:
-                e = 2.7182818285
-                lambtha = self.lambtha
-                pdf = lambtha * (e**(-self.lambtha * x))
-                return pdf
-            else:
-                return 0
-        except Exception as e:
-            print(str(e))
+        """
+        calculates the value of the PDF for a given time period
+
+        parameters:
+            x [int]: time period
+                If x is out of range, return 0
+
+        return:
+            the PDF value for x
+        """
+        if x < 0:
+            return 0
+        e = 2.7182818285
+        lambtha = self.lambtha
+        pdf = lambtha * (e ** (-lambtha * x))
+        return pdf
