@@ -30,3 +30,12 @@ class Normal:
                     squared_diff_sum += squared_diff
                 starndard_dev = (squared_diff_sum/len(data)) ** 0.5
                 self.stddev = starndard_dev
+    def z_score(self, x):
+        '''calculates the z score of a given value x'''
+        z_score = (x - self.mean)/self.stddev
+        return z_score
+    def x_value(self, z):
+        '''calculates the value of a given z-score'''
+        x_value = (z*self.stddev) + self.mean
+        return x_value
+
