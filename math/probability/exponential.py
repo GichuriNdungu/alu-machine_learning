@@ -30,7 +30,8 @@ class Exponential:
             x = int(x)
         if x >= 0:
             e = 2.7182818285
-            pdf = self.lambtha * (e**(-self.lambtha * x))
+            lambtha = self.lambtha
+            pdf = lambtha * (e**(-self.lambtha * x))
             return pdf
         else:
             return 0
