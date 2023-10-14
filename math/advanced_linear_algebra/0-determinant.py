@@ -50,6 +50,6 @@ def determinant(matrix):
                         continue
                     new_row.append(matrix[row][column])
                 submatrix.append(new_row)
-            d += (element * determinant(submatrix))
+            d += (element * multiplier * determinant(submatrix))
             multiplier *= -1
         return d
