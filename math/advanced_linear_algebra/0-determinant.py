@@ -9,6 +9,9 @@ def determinant(matrix):
         return matrix[0][0]
     elif isinstance(matrix, list):
         '''check whether matrix is a square'''
+        for row in matrix:
+            if not isinstance(row, list):
+                raise TypeError('matrix must be a list of lists')
         if len(matrix[0]) != len(matrix):
             raise ValueError('matrix must be a square matrix')
         else:
