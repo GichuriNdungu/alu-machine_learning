@@ -9,8 +9,6 @@ def adjugate(matrix):
     n = len(matrix)
     if n == 0:
         raise TypeError('matrix must be a list of lists')
-    if n == 1:
-        return [[1]]
     for row in matrix:
         if type(row) != list:
             raise TypeError('matrix must be a list of lists')
