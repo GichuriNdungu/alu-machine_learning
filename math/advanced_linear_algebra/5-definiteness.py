@@ -1,52 +1,50 @@
 #!/usr/bin/env python3
+"""
+Defines function that calculates the definiteness of a matrix
+"""
 
-"""
-modeule with function definiteness(matrix)
-"""
 
 import numpy as np
 
 
 def definiteness(matrix):
     """
-    calculate the definiteness of a matrix
+    Calculates the definiteness of a matrix
+
+    parameters:
+        matrix [numpy.ndarray of shape(n, n)]:
+            matrix whose definiteness should be calculated
+
+    returns:
+        one of the following strings indicating definiteness or None:
+            "Positive definite"
+            "Positive semi-definite"
+            "Negative definite"
+            "Negative semi-definite"
+            "Indefinite"
     """
-
-    n, p = np.linalg.eig(matrix)  # n is eigenvalues, p is eigenvectors
-    # if matrix is not a numpy.ndarray raise type error
-    if not isinstance(matrix, np.ndarray):
-        raise TypeError('matrix must be a numpy.ndarray')
-
-    if not matrix.any():
+    if type(matrix) is not np.ndarray:
+        raise TypeError("matrix must be a numpy.ndarray")
+    if len(matrix.shape) != 2 or matrix.shape[0] != matrix.shape[1] or \
+       np.array_equal(matrix, matrix.T) is False:
         return None
-
-    if matrix.shape[0] != matrix.shape[1]:
-        return None
-
-    if matrix.shape[0] == 1:
-        if n[0] > 0:
-            return "Positive definite"
-        elif n[0] == 0:
-            return "Positive semi-definite"
-        else:
-            return "Negative definite"
-    if matrix.shape[0] == 2:
-        if n[0] > 0 and n[1] > 0:
-            return "Positive definite"
-        elif n[0] < 0 and n[1] < 0:
-            return "Negative definite"
-        elif n[0] == 0 and n[1] == 0:
-            return "Positive semi-definite"
-        else:
-            return "Indefinite"
-    if matrix.shape[0] == 3:
-        if n[0] > 0 and n[1] > 0 and n[2] > 0:
-            return "Positive definite"
-        elif n[0] < 0 and n[1] < 0 and n[2] < 0:
-            return "Negative definite"
-        elif n[0] == 0 and n[1] == 0 and n[2] == 0:
-            return "Positive semi-definite"
-        else:
-            return "Indefinite"
-
-    return None
+    positive = 0
+    negative = 0
+    zero = 0
+    eigenvalues = np.linalg.eig(matrix)[0]
+    for value in eigenvalues:
+        if value > 0:
+            positive += 1
+        if value < 0:
+            negative += 1
+        if value == 0 or value == 0.:
+            zero += 1
+    if positive and zero and negative == 0:
+        return ("Positive semi-definite")
+    elif negative and zero and positive == 0:
+        return ("Negative semi-definite")
+    elif positive and negative == 0:
+        return ("Positive definite")
+    elif negative and positive == 0:
+        return ("Negative definite")
+    return ("Indefinite")
