@@ -10,12 +10,12 @@ def minor(matrix):
     if n == 0:
         raise TypeError('matrix must be a list of lists')
     if n == 1:
-        return 1
+        return [[1]]
     for row in matrix:
         if type(row) != list:
             raise TypeError('matrix must be a list of lists')
         if len(row) != n:
-            raise ValueError('matrix must be a square matrix')
+            raise ValueError('matrix must be a non-empty square matrix')
     if n == 2:
         minor = []
         row_a = [matrix[1][1], matrix[1][0]]
