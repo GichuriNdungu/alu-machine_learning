@@ -16,7 +16,7 @@ def minor(matrix):
             raise TypeError('matrix must be a list of lists')
         if len(row) != n:
             raise ValueError('matrix must be a non-empty square matrix')
-        if len(matrix[0] == 0):
+        if len(matrix[0]) == 0:
             raise ValueError('matrix must be a non-empty square matrix')
     if n == 2:
         minor = []
