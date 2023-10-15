@@ -82,7 +82,7 @@ def determinant(matrix):
         if len(row) == 0 and n == 1:
             return 1
         if len(row) != n:
-            raise ValueError('matrix must be a square matrix')
+            raise ValueError('matrix must be a non-empty square matrix')
     if n == 1:
         return matrix[0][0]
     if n == 2:
