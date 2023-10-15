@@ -2,7 +2,7 @@
 '''A function that calculates the minor of a matrix'''
 
 
-def minor(matrix):
+def cofactor(matrix):
     '''extract the minor of matrix'''
     if not isinstance(matrix, list):
         raise TypeError('matrix must be a list of lists')
@@ -25,11 +25,14 @@ def minor(matrix):
     #     row_b = [matrix[0][1], matrix[0][0]]
     #     minor.append(row_b)
     #     return minor
+    #  modify else to handle 2*2 as well
     else:
         minor = []
         for row_i in range(n):
             minor_row = []
             for j in range(n):
+                # determine sign based on position
+                sign = (-1) ** (row_i + j)
                 submatrix = []
                 for row in range(n):
                     if row == row_i:
@@ -40,7 +43,7 @@ def minor(matrix):
                             continue
                         new_row.append(matrix[row][column])
                     submatrix.append(new_row)
-                minor_row.append(determinant(submatrix))
+                minor_row.append(sign * determinant(submatrix))
             minor.append(minor_row)
         return minor
 
