@@ -4,7 +4,7 @@
 
 def adjugate(matrix):
     '''extract the minor of matrix'''
-    if not isinstance(matrix, list):
+    if type(matrix) != list:
         raise TypeError('matrix must be a list of lists')
     n = len(matrix)
     if n == 0:
@@ -18,6 +18,8 @@ def adjugate(matrix):
             raise ValueError('matrix must be a non-empty square matrix')
         if len(matrix[0]) == 0:
             raise ValueError('matrix must be a non-empty square matrix')
+    if n == 1:
+        return [[1]]
     # if n == 2:
     #     minor = []
     #     row_a = [matrix[1][1], matrix[1][0]]
