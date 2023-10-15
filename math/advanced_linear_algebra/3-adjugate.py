@@ -55,7 +55,7 @@ def determinant(matrix):
     '''calculates the determinant of a matris
     args: matrix
     return: determinant'''
-    if not isinstance(matrix, list):
+    if type(matrix) != list:
         raise TypeError('matrix must be a list of lists')
     n = len(matrix)
     if n == 0:
