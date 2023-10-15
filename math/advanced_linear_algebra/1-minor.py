@@ -94,7 +94,3 @@ def determinant(matrix):
             d += (element * multiplier * determinant(submatrix))
             multiplier *= -1
         return d
-
-
-matrix = [[5, 7, 9], [3, 1, 8], [6, 2, 4]]
-print(minor(matrix))
