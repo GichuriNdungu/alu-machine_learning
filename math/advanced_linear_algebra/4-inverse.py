@@ -3,6 +3,7 @@
 
 
 def inverse(matrix):
+    '''Invert a matrix based on the adjugate'''
     # divide 1 with the determinant
     # check for singularity
     if determinant(matrix) == 0:
