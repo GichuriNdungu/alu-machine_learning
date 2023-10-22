@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+import numpy as np
+
+# Define the matrix A
+A = np.array([[ -4, 1, 9 ],
+  [ -9, -8, -5 ],
+  [ -3, 8, 10 ]])
+# Function to calculate the adjugate of a matrix
+def adjugate_matrix(matrix):
+    minors = np.zeros_like(matrix)
+    for i in range(matrix.shape[0]):
+        for j in range(matrix.shape[1]):
+            sub_matrix = np.delete(np.delete(matrix, i, axis=0), j, axis=1)
+            minor = np.linalg.det(sub_matrix)
+            minors[i, j] = (-1)**(i + j) * minor
+
+    adjugate = minors.T  # Transpose the cofactor matrix to get the adjugate
+    return adjugate
+
+adjugate = adjugate_matrix(A)
+print(adjugate)
