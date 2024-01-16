@@ -6,7 +6,6 @@ import numpy as np
 class Neuron:
     '''class neuron representing a single neuron in an NN'''
 
-    '''declare private '''
 
     def __init__(self, nx):
         '''nx refers to the number of input features'''
@@ -14,7 +13,18 @@ class Neuron:
             raise TypeError('nx must be an integer')
         if nx < 1:
             raise ValueError('nx must be a positive integer')
-        '''declare a vector size'''
-        self.W = np.random.randn(1, nx)
-        self.b = 0
-        self.A = 0
+                
+        '''declare private instance attributes'''
+        self.__w = np.random.randn(1, nx)
+        self.__b = 0 
+        self.__A = 0
+
+    def get_w(self):
+        '''getter method for self.__w'''
+        return self.__w
+    def get_b(self):
+        '''getter method for private instace b'''
+        return self.__b
+    def get_A(self):
+        '''getter method for private instance A'''
+        return self.__A
