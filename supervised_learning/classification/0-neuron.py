@@ -13,7 +13,6 @@ class Neuron:
         if nx < 1:
             raise Exception('nx must be a positive integer')
         '''declare a vector size'''
-        vector_size = np.random.randint(1, 100)
-        self.W = np.random.normal(size=vector_size)
+        self.W = np.random.randn(1, nx)
         self.b = 0
         self.A = 0
