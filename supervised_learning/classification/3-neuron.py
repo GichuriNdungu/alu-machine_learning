@@ -54,16 +54,15 @@ class Neuron:
         '''cost function for our Neuron'''
 
         'get corresponding elements in actual and pred'
-        m = A.shape[0]
-        '''initialize the cost function'''
-        cost_func = 0.0
-        for i in range(m):
-            Y_element = Y[0, i]
-            A_element = A[0, i]
-            '''implement the loss function'''
-            cost_func += -(Y_element*np.log(A_element) + ((1-Y_element) * (np.log(1.0000001-A_element))))
-        
-        '''divide by m to get the average loss'''
-        cost_func/= m
-        return cost_func
+        m = A.shape[1]
+        '''use binary cross Entropy function to calculate logloss'''
+        loss = - (Y * np.log(A) + (1 - Y) * np.log(1.0000001 - A))
 
+        total_loss = np.sum(loss)
+
+        '''divive the loss by number of instances to 
+        get average loss aka, cost function'''
+
+        cost_func = total_loss/m
+
+        return cost_func
