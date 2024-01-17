@@ -9,9 +9,9 @@ class Neuron:
     def __init__(self, nx):
         '''nx refers to the number of input features'''
         if not isinstance(nx, int):
-            raise Exception('nx must be an integer')
+            raise TypeError('nx must be an integer')
         if nx < 1:
-            raise Exception('nx must be a positive integer')
+            raise ValueError('nx must be a positive integer')
         '''declare a vector size'''
         self.W = np.random.randn(1, nx)
         self.b = 0
