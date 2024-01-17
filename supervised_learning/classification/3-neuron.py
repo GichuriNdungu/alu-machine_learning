@@ -60,8 +60,7 @@ class Neuron:
 
         total_loss = np.sum(loss)
 
-        '''divive the loss by number of instances to 
-        get average loss aka, cost function'''
+        '''divive the loss by the num of examples'''
 
         cost_func = total_loss/m
 
