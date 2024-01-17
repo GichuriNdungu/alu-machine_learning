@@ -31,7 +31,11 @@ class Neuron:
     def A(self):
         '''getter method for private instance A'''
         return self.__A
-    
+    @A.setter
+    def A(self, new_value):
+        '''setter function for the private intance A'''
+        self.__A = new_value
+
     def forward_prop(self, X):
         '''A method to calculate the forward 
         propagation of our neuron
@@ -46,9 +50,9 @@ class Neuron:
         ''' Add the bias to the dot'''
         Z = np.add(weighted_sum, self.b)
         '''apply the activation function, sigmoid'''
-        sig = self.A
-        sig = 1/(1+np.exp(-Z))
-        return sig      
+    
+        self.A = 1/(1+np.exp(-Z))
+        return self.A       
         
             
 
