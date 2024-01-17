@@ -33,7 +33,7 @@ class Neuron:
         return self.__A
 
     def forward_prop(self, X):
-        '''A method to calculate the forward 
+        '''A method to calculate the forward
         propagation of our neuron
         nx = number of features
         m = number of houses'''
