@@ -38,7 +38,7 @@ class Neuron:
         nx = number of features
         m = number of houses'''
 
-        nx, m = X.shape
+        nx, m= X.shape
         '''first transpose the weights vector'''
         w_t = np.transpose(self.W)
         '''multiply transposed weights with input vector'''

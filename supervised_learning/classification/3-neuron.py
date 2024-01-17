@@ -49,7 +49,7 @@ class Neuron:
 
         self.__A = 1/(1+np.exp(-Z))
         return self.__A
-    
+
     def cost(self, Y, A):
         '''cost function for our Neuron'''
 
