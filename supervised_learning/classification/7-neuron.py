@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 '''Defines a binary classification class'''
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class Neuron:
@@ -84,7 +85,7 @@ class Neuron:
         self.__W -= alpha * dw
         self.__b -= alpha * db
 
-    def train(self, X, Y, iterations=5000, alpha=0.05):
+    def train(self, X, Y, iterations=5000, Verbose=True, graph=True, step=100, alpha=0.05):
         '''Implement back propagation for full training'''
         if type(iterations) != int:
             raise TypeError('iterations must be an integer')
@@ -94,10 +95,30 @@ class Neuron:
             raise TypeError('alpha must be a float')
         if alpha < 0:
             raise ValueError('alpha must be positive')
+
+        cost_after_iteration = []
         for iteration in range(iterations):
             '''Do forward propagation and backward
               propagation for each iteration'''
             A = self.forward_prop(X)
             self.gradient_descent(X, Y, A, alpha)
+            cost = self.cost(Y, A)
+            if iteration%step == 0:
+                cost_after_iteration.append(cost)
+            if Verbose == True and iteration%step == 0:
+                if type(step) != int:
+                    raise TypeError('Step must be an integer')
+                if step <0 or step > iterations:
+                    raise ValueError('step must be positive and <= iterations')
+                print(f'cost after {iteration} iterations: {cost}')
         evaluation_results = self.evaluate(X, Y)
+        if graph == True and cost_after_iteration: 
+            ''' print a graph of the cost after x iterations'''
+            if type(step) != int:
+                raise TypeError('step must be an integer')
+            if step <0 or step > iterations:
+                raise ValueError('step must be positive and <= iterations')
+            x = np.arange(0, iterations, step)
+            y = cost_after_iteration
+            plt.plot(x, cost_after_iteration, color='blue')
         return evaluation_results
