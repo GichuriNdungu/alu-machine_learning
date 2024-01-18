@@ -67,7 +67,7 @@ class NeuralNetwork:
 
         self.__A1 = 1/(1+np.exp(-Z1))
 
-        ''''output from the hidden layer will be 
+        ''''output from the hidden layer will be
         the input for the output neuron'''
 
         weighted_sum_2 = np.dot(self.W2, self.__A1)
