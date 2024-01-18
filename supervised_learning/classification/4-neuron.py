@@ -53,7 +53,6 @@ class Neuron:
     def cost(self, Y, A):
         '''cost function for our Neuron'''
 
-        'get corresponding elements in actual and pred'
         m = A.shape[1]
         '''use binary cross Entropy function to calculate logloss'''
         loss = - (Y * np.log(A) + (1 - Y) * np.log(1.0000001 - A))
