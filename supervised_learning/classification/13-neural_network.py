@@ -76,6 +76,31 @@ class NeuralNetwork:
 
         return self.__A1, self.__A2
 
+    def cost(self, Y, A):
+        '''cost function for our Neuron'''
+
+        m = A.shape[1]
+        '''use binary cross Entropy function to calculate logloss'''
+        loss = - (Y * np.log(A) + (1 - Y) * np.log(1.0000001 - A))
+
+        total_loss = np.sum(loss)
+
+        '''divive the loss by the num of examples'''
+
+        cost_func = total_loss/m
+
+        return cost_func
+
+    def evaluate(self, X, Y):
+        '''evaluates the predictions of the neural net'''
+        # first perform forward propagation
+        Y_pred = self.forward_prop(X)
+        # then calculate the cost of running the net
+        cost = self.cost(Y, Y_pred)
+        # change the values
+        y_convert = np.where(Y_pred >= 0.5, 1, 0)
+        return y_convert, cost
+
     def gradient_descent(self, X, Y, A1, A2, alpha=0.05):
         ''''calculates the gradient descent
           of the neural network and updates
