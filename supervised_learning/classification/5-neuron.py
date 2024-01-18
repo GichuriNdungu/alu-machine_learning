@@ -85,4 +85,3 @@ class Neuron:
         '''update the weights and biases'''
         self.__W -= alpha * dw
         self.__b -= alpha * db
-        
