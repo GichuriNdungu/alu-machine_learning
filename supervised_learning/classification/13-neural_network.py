@@ -77,6 +77,9 @@ class NeuralNetwork:
         return self.__A1, self.__A2
 
     def gradient_descent(self, X, Y, A1, A2, alpha=0.05):
+        ''''calculates the gradient descent
+          of the neural network and updates
+          values of the weights and biases in a single pass'''
         m = X.shape[1]
         dz2 = A2 - Y
         dw2 = np.dot(dz2, A1.T) / m
