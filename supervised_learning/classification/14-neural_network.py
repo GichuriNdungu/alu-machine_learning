@@ -74,7 +74,7 @@ class NeuralNetwork:
         Z2 = np.add(weighted_sum_2, self.b2)
         self.__A2 = 1/(1+np.exp(-Z2))
 
-        return self.__A2
+        return self.__A1, self.__A2
 
     def cost(self, Y, A):
         '''cost function for our Neuron'''
@@ -93,4 +93,49 @@ class NeuralNetwork:
 
     def evaluate(self, X, Y):
         '''evaluates the predictions of the neural net'''
-        # first per
+        # first perform forward propagation
+        Y_pred = self.forward_prop(X)
+        # then calculate the cost of running the net
+        cost = self.cost(Y, Y_pred)
+        # change the values
+        y_convert = np.where(Y_pred >= 0.5, 1, 0)
+        return y_convert, cost
+
+    def gradient_descent(self, X, Y, A1, A2, alpha=0.05):
+        ''''calculates the gradient descent
+          of the neural network and updates
+          values of the weights and biases in a single pass'''
+        # first get the cost at the output layer
+        m = X.shape[1]
+        dz2 = A2 - Y
+        dw2 = np.dot(dz2, A1.T) / m
+        db2 = np.sum(dz2, axis=1, keepdims=True) / m
+        # then get the cost at the hidden layer 
+        dz1 = np.dot(self.__W2.T, dz2) * A1 * (1 - A1)
+        dw1 = np.dot(dz1, X.T) / m
+        db1 = np.sum(dz1, axis=1, keepdims=True) / m
+        # Adjust the weights and the biases using logistic regression
+        self.__W2 -= alpha * dw2
+        self.__b2 -= alpha * db2
+        self.__W1 -= alpha * dw1
+        self.__b1 -= alpha * db1
+    def train(self, X, Y, iterations=5000, alpha=0.05):
+        '''trains the neural net'''
+        if type(iterations) != int:
+            raise TypeError('iterations must be an integer')
+        if iterations < 0:
+            raise ValueError('iterations must be a positive integer')
+        if type(alpha) != float:
+            raise TypeError('alpha must be a float')
+        if alpha < 0:
+            raise ValueError('alpha must be positive')
+        for iteration in range(iterations):
+            # do forward prop and get the output after first
+            A1 = self.forward_prop(X)[0]
+            A2 = self.forward_prop(X)[1]
+            # calculate the gradient descent
+            self.gradient_descent(X, Y, A1, A2, alpha)
+            self.__A1 = A1
+            self.__A2 = A2
+        evaluation_results = self.evaluate(X,Y)
+

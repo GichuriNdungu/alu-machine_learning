@@ -105,15 +105,16 @@ class NeuralNetwork:
         ''''calculates the gradient descent
           of the neural network and updates
           values of the weights and biases in a single pass'''
+        # first get the cost at the output layer
         m = X.shape[1]
         dz2 = A2 - Y
         dw2 = np.dot(dz2, A1.T) / m
         db2 = np.sum(dz2, axis=1, keepdims=True) / m
-
+        # then get the cost at the hidden layer 
         dz1 = np.dot(self.__W2.T, dz2) * A1 * (1 - A1)
         dw1 = np.dot(dz1, X.T) / m
         db1 = np.sum(dz1, axis=1, keepdims=True) / m
-
+        # Adjust the weights and the biases using logistic regression
         self.__W2 -= alpha * dw2
         self.__b2 -= alpha * db2
         self.__W1 -= alpha * dw1
