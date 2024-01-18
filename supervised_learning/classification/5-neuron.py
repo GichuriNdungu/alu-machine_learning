@@ -13,7 +13,7 @@ class Neuron:
         if nx < 1:
             raise ValueError('nx must be a positive integer')
         '''declare private instance attributes'''
-        self.__W = np.random.randn(nx, 1).reshape(-1, 1)
+        self.__W = np.random.randn(nx, 1)
         self.__b = 0
         self.__A = 0
 
@@ -79,11 +79,11 @@ class Neuron:
         descent on the neuron'''
         m = X.shape[1]
         cost = A - Y
-        dw = np.dot(cost, X.T) / m
+        dw = np.mean(np.matmul(cost, X.T))
         db = np.sum(cost) / m
 
         '''update the weights and biases'''
-        self.__W -= alpha * dw.T
+        self.__W -= alpha * dw
         self.__b -= alpha * db
         
 
