@@ -13,7 +13,7 @@ class Neuron:
         if nx < 1:
             raise ValueError('nx must be a positive integer')
         '''declare private instance attributes'''
-        self.__W = np.random.randn(nx, 1)
+        self.__W = np.random.randn(nx, 1).reshape(-1, 1)
         self.__b = 0
         self.__A = 0
 
@@ -75,14 +75,16 @@ class Neuron:
         return Y_convert, cost
 
     def gradient_descent(self, X, Y, A, alpha=0.05):
-        ''''calculates one pass of gradient
-          descent on the neuron'''
+        '''calculates one pass of gradient
+        descent on the neuron'''
         m = X.shape[1]
-        cost = A-Y
-        dw = np.dot(cost, X.T)/m
-        db = np.sum(cost)/m
+        cost = A - Y
+        dw = np.dot(cost, X.T) / m
+        db = np.sum(cost) / m
 
         '''update the weights and biases'''
-        self.__W = alpha * dw
-        self.__b = alpha * db
+        self.__W -= alpha * dw.T
+        self.__b -= alpha * db
         return self.__W, self.__b
+
+
