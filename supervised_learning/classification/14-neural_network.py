@@ -74,7 +74,7 @@ class NeuralNetwork:
         Z2 = np.add(weighted_sum_2, self.b2)
         self.__A2 = 1/(1+np.exp(-Z2))
 
-        return self.__A1, self.__A2
+        return self.__A2
 
     def cost(self, Y, A):
         '''cost function for our Neuron'''
@@ -93,10 +93,4 @@ class NeuralNetwork:
 
     def evaluate(self, X, Y):
         '''evaluates the predictions of the neural net'''
-        # first perform forward propagation
-        Y_pred = self.forward_prop(X)
-        # then calculate the cost of running the net
-        cost = self.cost(Y, Y_pred)
-        # change the values
-        y_convert = np.where(Y_pred >= 0.5, 1, 0)
-        return y_convert, cost
+        # first per
