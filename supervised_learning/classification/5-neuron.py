@@ -73,6 +73,7 @@ class Neuron:
         Y_convert = np.where(Y_pred >= 0.5, 1, 0)
         cost = self.cost(Y, Y_pred)
         return Y_convert, cost
+
     def gradient_descent(self, X, Y, A, alpha=0.05):
         ''''calculates one pass of gradient
           descent on the neuron'''
