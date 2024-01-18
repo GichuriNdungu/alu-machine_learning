@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-'''Defines a Neural Network with one hidden 
+'''Defines a Neural Network with one hidden
 layer performing binary classification'''
 
 import numpy as np
