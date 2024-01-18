@@ -79,9 +79,10 @@ class Neuron:
         descent on the neuron'''
         m = X.shape[1]
         cost = A - Y
-        dw = np.mean(np.matmul(cost, X.T))
+        dw = 1/m * (np.matmul(cost, X.T))
         db = np.sum(cost) / m
 
         '''update the weights and biases'''
         self.__W -= alpha * dw
         self.__b -= alpha * db
+        
