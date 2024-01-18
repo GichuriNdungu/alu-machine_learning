@@ -13,7 +13,7 @@ class Neuron:
         if nx < 1:
             raise ValueError('nx must be a positive integer')
         '''declare private instance attributes'''
-        self.__W = np.random.randn(nx, 1)
+        self.__W = np.random.randn(1, nx)
         self.__b = 0
         self.__A = 0
 
@@ -40,9 +40,9 @@ class Neuron:
 
         nx, m = X.shape
         '''first transpose the weights vector'''
-        w_t = np.transpose(self.W)
+        # w_t = np.transpose(self.W)
         '''multiply transposed weights with input vector'''
-        weighted_sum = np.dot(w_t, X)
+        weighted_sum = np.dot(self.W, X)
         ''' Add the bias to the dot'''
         Z = np.add(weighted_sum, self.b)
         '''apply the activation function, sigmoid'''
