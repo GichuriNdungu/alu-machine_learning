@@ -93,7 +93,7 @@ class Neuron:
         if type(alpha) != float:
             raise TypeError('alpha must be a float')
         if alpha < 0:
-            raise ValueError('alpha must be a positive integer')
+            raise ValueError('alpha must be positive')
         for iteration in range(iterations):
             '''Do forward propagation'''
             A = self.forward_prop(X)
