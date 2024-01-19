@@ -94,7 +94,7 @@ class NeuralNetwork:
     def evaluate(self, X, Y):
         '''evaluates the predictions of the neural net'''
         # first perform forward propagation
-        Y_pred = self.forward_prop(X)
+        _, Y_pred = self.forward_prop(X) 
         # then calculate the cost of running the net
         cost = self.cost(Y, Y_pred)
         # change the values
@@ -131,11 +131,12 @@ class NeuralNetwork:
             raise ValueError('alpha must be positive')
         for iteration in range(iterations):
             # do forward prop and get the output after first
-            A1 = self.forward_prop(X)[0]
-            A2 = self.forward_prop(X)[1]
+            A1, A2 = self.forward_prop(X)
             # calculate the gradient descent
             self.gradient_descent(X, Y, A1, A2, alpha)
             self.__A1 = A1
             self.__A2 = A2
-        evaluation_results = self.evaluate(X,Y)
+        
+        # return evaluation
+        return self.evaluate(X, Y)
 
