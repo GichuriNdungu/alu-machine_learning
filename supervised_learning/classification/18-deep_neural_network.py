@@ -55,7 +55,7 @@ class DeepNeuralNetwork:
             self.__cache['A0'] = X
         for layer in range(1, self.__L + 1):
             # Linear transformation (Z = W*X + b)
-            Z = np.dot(self.__weights[f'W{layer}'], 
+            Z = np.dot(self.__weights[f'W{layer}'],
                        self.__cache[f'A{layer-1}']) + self.__weights[f'b{layer}']
 
             # Activation function
