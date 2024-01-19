@@ -82,5 +82,6 @@ class DeepNeuralNetwork:
         self.forward_prop(X)
         # then get the output from the cache
         model_out = self.__cache['A' + str(self.__L)]
+        cost = self.cost(Y, model_out)
         y_convert = np.where(model_out >= 0.5, 1, 0)
-        return model_out, y_convert
+        return y_convert, cost
