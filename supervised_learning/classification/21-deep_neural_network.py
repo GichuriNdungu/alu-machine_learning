@@ -85,6 +85,7 @@ class DeepNeuralNetwork:
         cost = self.cost(Y, model_out)
         y_convert = np.where(model_out >= 0.5, 1, 0)
         return y_convert, cost
+
     def gradient_descent(self, Y, cache, alpha=0.05):
         '''calculates the gradient descent of neural net after 1 pass'''
         m = Y.shape[1]
@@ -94,13 +95,11 @@ class DeepNeuralNetwork:
             A_prev = cache['A' + str(layer-1)]
             dW = (1 / m) * np.dot(dZ_last, A_prev.T)
             db = (1 / m) * np.sum(dZ_last, axis=1, keepdims=True)
-            dZ_prev = np.dot(self.__weights['W' + str(layer)].T, dZ_last) * (A_prev * (1 - A_prev))
+            dZ_prev = np.dot(
+                self.__weights['W' + str(layer)].T, dZ_last) * (A_prev * (1 - A_prev))
 
             # Update weights and biases
             self.__weights['W' + str(layer)] -= alpha * dW
             self.__weights['b' + str(layer)] -= alpha * db
 
             dZ_last = dZ_prev
-
-
-
