@@ -18,7 +18,7 @@ class NeuralNetwork:
             raise TypeError('nodes must be an integer')
         if nodes < 1:
             raise ValueError('nodes must be a positive integer')
-        self.__W1 = np.random.randn(nodes, nx)
+        self.__W1 = np.random.randn(nodes, nx) 
         self.__b1 = np.zeros((nodes, 1))
         self.__A1 = 0
         self.__W2 = np.random.randn(1, nodes)
