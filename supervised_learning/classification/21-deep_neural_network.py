@@ -96,7 +96,8 @@ class DeepNeuralNetwork:
             dW = (1 / m) * np.dot(dZ_last, A_prev.T)
             db = (1 / m) * np.sum(dZ_last, axis=1, keepdims=True)
             dZ_prev = np.dot(
-                self.__weights['W' + str(layer)].T, dZ_last) * (A_prev * (1 - A_prev))
+                self.__weights['W' + str(
+                    layer)].T, dZ_last) * (A_prev * (1 - A_prev))
 
             # Update weights and biases
             self.__weights['W' + str(layer)] -= alpha * dW
