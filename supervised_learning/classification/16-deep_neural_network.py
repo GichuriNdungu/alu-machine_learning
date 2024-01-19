@@ -20,7 +20,14 @@ class DeepNeuralNetwork:
         self.L = len(layers)
         self.cache = {}
         self.weights = {}
+        # ... (previous code)
+        self.weights = {}
+        # Initialize the first layer using the number of input features (nx)
+        self.weights['W1'] = np.random.randn(layers[0], nx) * np.sqrt(2/nx)
+        self.weights['b1'] = np.zeros((layers[0], 1))
+
+        # Initialize the rest of the layers
         for layer in range(1, self.L):
-            self.weights['W' + str(layer)] = np.random.randn(layers[0],
-                                                             nx) * np.sqrt(2/nx)
-            self.weights['b' + str(layer)] = np.zeros((0, 1))
+            self.weights['W' + str(layer+1)] = np.random.randn(layers[layer],
+                                                       layers[layer-1]) * np.sqrt(2/layers[layer-1])
+        self.weights['b' + str(layer+1)] = np.zeros((layers[layer], 1))
