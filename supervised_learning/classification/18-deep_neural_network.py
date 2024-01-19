@@ -56,9 +56,11 @@ class DeepNeuralNetwork:
             self.__cache['A0'] = X
         for layer in range(1, self.__L + 1):
             # Linear transformation (Z = W*X + b)
-            weighted_sum = np.dot(
-                self.__weights['W'+str(layer)], self.__cache['A' + str(layer-1)])
-            Z = np.add(weighted_sum, self.__weights['b' + str(layer)])
+            W = self.__weights['W'+str(layer)]
+            A = self.__cache['A' + str(layer-1)]
+            b = self.__weights['b' + str(layer)]
+            weighted_sum = np.dot(W, A)
+            Z = np.add(weighted_sum, b)
 
             # Activation function
             A = 1 / (1 + np.exp(-Z))
