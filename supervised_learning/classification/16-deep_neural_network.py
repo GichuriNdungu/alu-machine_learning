@@ -28,8 +28,9 @@ class DeepNeuralNetwork:
 
         # Initialize the rest of the layers
         for layer in range(1, self.L):
-            w_row = layers[layer]
-            w_col = layers[layer-1]
-            self.weights['W' + str(layer+1)] = np.random.randn(w_row,
-                                                               w_col) * np.sqrt(2/layers[layer-1])
+            r = layers[layer]
+            c = layers[layer-1]
+            self.weights['W' + str(layer+1)] = np.random.randn(r,
+                                                               c) * np.sqrt(
+                                                                   2/layers[layer-1])
             self.weights['b' + str(layer+1)] = np.zeros((layers[layer], 1))
