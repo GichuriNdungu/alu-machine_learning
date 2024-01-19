@@ -1,23 +1,26 @@
 #!/usr/bin/env python3
+
+""" One-Hot Encode
+"""
+
+
 import numpy as np
-from tensorflow.keras.utils import to_categorical
 
 
 def one_hot_encode(Y, classes):
-    '''
-    Converts a numeric label vector into a one-hot matrix.
+    """Converts a numeric label vector into a one-hot matrix
 
     Args:
-    - Y: numpy.ndarray with shape (m,) containing numeric class labels
-    - classes: the maximum number of classes found in Y
-
-    Returns:
-    - a one-hot encoding of Y with shape (classes, m)
-    - None on failure
-    '''
+        Y (_type_): _description_
+        classes (_type_): _description_
+    """
+    if not isinstance(Y, np.ndarray) or len(Y) == 0:
+        return None
+    if not isinstance(classes, int) or classes < 0:
+        return None
     try:
-        one_hot_matrix = to_categorical(Y, num_classes=classes).T
-        return one_hot_matrix
-    except Exception as e:
-        print(f"Error: {e}")
+        one_hot = np.zeros((classes, Y.shape[0]))
+        one_hot[Y, np.arange(Y.shape[0])] = 1
+        return one_hot
+    except Exception:
         return None
