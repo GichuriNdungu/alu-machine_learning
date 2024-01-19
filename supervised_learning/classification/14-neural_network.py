@@ -94,7 +94,7 @@ class NeuralNetwork:
     def evaluate(self, X, Y):
         '''evaluates the predictions of the neural net'''
         # first perform forward propagation
-        _, Y_pred = self.forward_prop(X) 
+        _, Y_pred = self.forward_prop(X)
         # then calculate the cost of running the net
         cost = self.cost(Y, Y_pred)
         # change the values
@@ -110,7 +110,7 @@ class NeuralNetwork:
         dz2 = A2 - Y
         dw2 = np.dot(dz2, A1.T) / m
         db2 = np.sum(dz2, axis=1, keepdims=True) / m
-        # then get the cost at the hidden layer 
+        # then get the cost at the hidden layer
         dz1 = np.dot(self.__W2.T, dz2) * A1 * (1 - A1)
         dw1 = np.dot(dz1, X.T) / m
         db1 = np.sum(dz1, axis=1, keepdims=True) / m
@@ -119,6 +119,7 @@ class NeuralNetwork:
         self.__b2 -= alpha * db2
         self.__W1 -= alpha * dw1
         self.__b1 -= alpha * db1
+
     def train(self, X, Y, iterations=5000, alpha=0.05):
         '''trains the neural net'''
         if type(iterations) != int:
@@ -136,7 +137,6 @@ class NeuralNetwork:
             self.gradient_descent(X, Y, A1, A2, alpha)
             self.__A1 = A1
             self.__A2 = A2
-        
+
         # return evaluation
         return self.evaluate(X, Y)
-
