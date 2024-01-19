@@ -57,7 +57,7 @@ class DeepNeuralNetwork:
             Z = np.dot(
                 self.__weights[f'W{layer}'], self.__cache[f'A{layer-1}']) + self.__weights[f'b{layer}']
 
-            # Activation function (using sigmoid for binary classification)
+            # Activation function
             A = 1 / (1 + np.exp(-Z))
 
             # Save the intermediate values in the cache
