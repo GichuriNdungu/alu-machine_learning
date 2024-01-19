@@ -30,4 +30,4 @@ class DeepNeuralNetwork:
         for layer in range(1, self.L):
             self.weights['W' + str(layer+1)] = np.random.randn(layers[layer],
                                                        layers[layer-1]) * np.sqrt(2/layers[layer-1])
-        self.weights['b' + str(layer+1)] = np.zeros((layers[layer], 1))
+            self.weights['b' + str(layer+1)] = np.zeros((layers[layer], 1))
