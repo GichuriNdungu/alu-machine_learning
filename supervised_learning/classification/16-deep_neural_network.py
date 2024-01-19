@@ -22,5 +22,5 @@ class DeepNeuralNetwork:
         self.weights = {}
         for layer in range(1, self.L):
             self.weights['W' + str(layer)] = np.random.randn(layers[0],
-                                                             nx) * np.sqrt(2/layers[nx])
+                                                             nx) * np.sqrt(2/nx)
             self.weights['b' + str(layer)] = np.zeros((0, 1))
