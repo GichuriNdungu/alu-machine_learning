@@ -48,6 +48,7 @@ class DeepNeuralNetwork:
     def weights(self):
         ''''getter func for weights and biases'''
         return self.__weights
+
     def forward_prop(self, X):
         '''calculates the forward propagation for the neural net'''
         m = list(X.shape)
@@ -55,15 +56,14 @@ class DeepNeuralNetwork:
             self.__cache['A0'] = X
         for layer in range(1, self.__L + 1):
             # Linear transformation (Z = W*X + b)
-            weighted_sum = np.dot(self.__weights['W'+str(layer)],self.__cache['A'+ str(layer-1)]) 
-            Z = np.add(weighted_sum,self.__weights['b' + str(layer)])
+            weighted_sum = np.dot(
+                self.__weights['W'+str(layer)], self.__cache['A' + str(layer-1)])
+            Z = np.add(weighted_sum, self.__weights['b' + str(layer)])
 
             # Activation function
             A = 1 / (1 + np.exp(-Z))
 
             # Save the intermediate values in the cache
             self.__cache['A' + str(layer)] = A
-        output = self.__cache['A'+ str(self.__L)]
+        output = self.__cache['A' + str(self.__L)]
         return output, self.cache
-
-
