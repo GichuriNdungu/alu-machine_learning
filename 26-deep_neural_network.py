@@ -2,8 +2,7 @@
 '''Defines a binary classification deep neural net'''
 from matplotlib import pyplot as plt
 import numpy as np
-import pickle
-import os
+
 
 class DeepNeuralNetwork:
     '''defines a deep neural network
@@ -143,16 +142,5 @@ class DeepNeuralNetwork:
                 plt.title('Training Cost')
         # return evaluation
         return self.evaluate(X, Y)
-    def save(self, filename):
-        '''saves the instance object to a file in pickle format'''
-        if filename[-4:] != '.pkl':
-            filename += '.pkl'
-        with open(filename, 'wb') as file:
-            pickle.dump(self, file)
-    def load(filename):
-        '''loads a pickled DeepNeuralNetwork object'''
-        if os.path.exists(filename) == False:
-            return None
-        with open(filename, 'rb') as f:
-            return pickle.load(f)
-    
+
+
