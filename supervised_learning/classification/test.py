@@ -3,7 +3,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-Deep = __import__('22-deep_neural_network').DeepNeuralNetwork
+Deep = __import__('23-deep_neural_network').DeepNeuralNetwork
 
 lib_train = np.load('./data/Binary_Train.npz')
 X_train_3D, Y_train = lib_train['X'], lib_train['Y']
@@ -14,7 +14,7 @@ X_dev = X_dev_3D.reshape((X_dev_3D.shape[0], -1)).T
 
 np.random.seed(0)
 deep = Deep(X_train.shape[0], [5, 3, 1])
-A, cost = deep.train(X_train, Y_train, iterations=100)
+A, cost = deep.train(X_train, Y_train)
 accuracy = np.sum(A == Y_train) / Y_train.shape[1] * 100
 print("Train cost:", cost)
 print("Train accuracy: {}%".format(accuracy))
