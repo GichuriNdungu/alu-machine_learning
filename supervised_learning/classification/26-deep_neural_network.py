@@ -108,7 +108,8 @@ class DeepNeuralNetwork:
 
             dZ_last = dZ_prev
 
-    def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True, graph=True, step=100):
+    def train(self, X, Y, iterations=5000, alpha=0.05,
+              verbose=True, graph=True, step=100):
         '''Trains the deep neural network'''
         if type(iterations) != int:
             raise TypeError('iterations must be an integer')
@@ -124,7 +125,7 @@ class DeepNeuralNetwork:
             self.forward_prop(X)
             # calculate the gradient descent
             self.gradient_descent(Y, self.__cache, alpha)
-            if verbose == True and iteration % step == 0:
+            if verbose and iteration % step == 0:
                 if type(step) != int:
                     raise TypeError('step must be an integer')
                 if step < 0 or step > iterations:
