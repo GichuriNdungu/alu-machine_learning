@@ -129,7 +129,7 @@ class DeepNeuralNetwork:
                     raise ValueError('step must be positive and <= iterations')
                 cost = self.cost(Y, self.__cache['A' + str(self.__L)])
                 cost_after_iteration.append(cost)
-                print('Cost after {} iterations: {}'.format(iteration, cost)) 
+                print('Cost after {} iterations: {}'.format(iteration, cost))
             # graph the results after every step iterations
             if graph == True and cost_after_iteration:
                 if type(step) != int:
@@ -142,5 +142,3 @@ class DeepNeuralNetwork:
                 plt.title('Training Cost')
         # return evaluation
         return self.evaluate(X, Y)
-
-
