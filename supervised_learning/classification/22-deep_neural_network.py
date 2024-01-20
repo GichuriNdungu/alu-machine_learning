@@ -104,6 +104,7 @@ class DeepNeuralNetwork:
             self.__weights['b' + str(layer)] -= alpha * db
 
             dZ_last = dZ_prev
+
     def train(self, X, Y, iterations=5000, alpha=0.05):
         '''Trains the deep neural network'''
         if type(iterations) != int:
@@ -112,7 +113,7 @@ class DeepNeuralNetwork:
             raise ValueError('iterations must be a positive integer')
         if type(alpha) != float:
             raise TypeError('alpha must be a float')
-        if alpha<0:
+        if alpha < 0:
             raise ValueError('alpha must be positive')
         for iteration in range(iterations):
             # do forward prop and get the output after first
@@ -121,5 +122,3 @@ class DeepNeuralNetwork:
             self.gradient_descent(Y, self.__cache, alpha)
         # return evaluation
         return self.evaluate(X, Y)
-            
-
