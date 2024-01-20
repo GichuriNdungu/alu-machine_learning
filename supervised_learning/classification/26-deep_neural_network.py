@@ -144,16 +144,18 @@ class DeepNeuralNetwork:
                 plt.title('Training Cost')
         # return evaluation
         return self.evaluate(X, Y)
+
     def save(self, filename):
         '''saves the instance object to a file in pickle format'''
         if filename[-4:] != '.pkl':
             filename += '.pkl'
         with open(filename, 'wb') as file:
             pickle.dump(self, file)
+
     def load(filename):
         '''loads a pickled DeepNeuralNetwork object'''
-        if os.path.exists(filename) == False:
+        if os.path.exists(filename):
+            with open(filename, 'rb') as f:
+                return pickle.load(f)
+        else:
             return None
-        with open(filename, 'rb') as f:
-            return pickle.load(f)
-    
