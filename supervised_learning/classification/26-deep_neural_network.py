@@ -134,7 +134,7 @@ class DeepNeuralNetwork:
                 cost_after_iteration.append(cost)
                 print('Cost after {} iterations: {}'.format(iteration, cost))
             # graph the results after every step iterations
-            if graph == True and cost_after_iteration:
+            if graph and cost_after_iteration:
                 if type(step) != int:
                     raise TypeError('step must be an integer')
                 if step < 0 or step > iterations:
