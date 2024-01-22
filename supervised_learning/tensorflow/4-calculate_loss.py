@@ -1,5 +1,5 @@
 #!/usr/bin/env python3'''
-'''function that calculates the accuracy of a prediction'''
+'''function that calculates the loss of a prediction'''
 import tensorflow as tf
 
 
