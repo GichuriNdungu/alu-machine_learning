@@ -3,6 +3,8 @@
 for a single layer neural network'''
 import tensorflow as tf
 create_layer = __import__('1-create_layer').create_layer
+
+
 def forward_prop(x, layer_sizes=[], activations=[]):
     '''args:x:placeholder for the input data
        layer_sizes:list containing the number of nodes in each layer
@@ -12,4 +14,3 @@ def forward_prop(x, layer_sizes=[], activations=[]):
     for size, activation in zip(layer_sizes[1:], activations[1:]):
         current_layer = create_layer(current_layer, size, activation)
     return current_layer
-
