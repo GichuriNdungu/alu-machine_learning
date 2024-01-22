@@ -1,5 +1,5 @@
 #!/usr/bin/env python3'''
-''''function that does a forward propagation 
+''''function that does a forward propagation
 for a single layer neural network'''
 import tensorflow as tf
 create_layer = __import__('1-create_layer').create_layer
