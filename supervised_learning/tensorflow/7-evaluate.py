@@ -8,7 +8,7 @@ def evaluate(X, Y, save_path):
             Y: one-hot labels for x
         returns: networks pred, accuracy, loss'''
     with tf.session() as sess:
-        ''''import the metagraph'''
+        '''' get the metagraph'''
         saver = tf.train.import_meta_graph(save_path + '/model.ckpt.meta')
         '''restore saved variables'''
         saver.restore(sess, tf.train.latest_checkpoint(save_path))
