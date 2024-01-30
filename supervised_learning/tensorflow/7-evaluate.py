@@ -19,3 +19,4 @@ def evaluate(X, Y, save_path):
         accuracy = tf.get_collection('accuracy')[0]
         pred, acc, cost = sess.run(
             [y_pred, accuracy, loss], feed_dict={X: X, Y: Y})
+    return pred, acc, cost
