@@ -9,14 +9,15 @@ def evaluate(X, Y, save_path):
         returns: networks pred, accuracy, loss'''
     with tf.session() as sess:
         '''' get the metagraph'''
-        saver = tf.train.import_meta_graph(save_path + '/model.ckpt.meta')
+        saver = tf.train.import_meta_graph(save_path + '.meta')
         '''restore saved variables'''
         saver.restore(sess, tf.train.latest_checkpoint(save_path))
         # access the tensors from the collection
-
+        x = tf.get_collection('x')[0]
+        y = tf.get_collection('y')[0]
         y_pred = tf.get_collection('y_pred')[0]
         loss = tf.get_collection('loss')[0]
         accuracy = tf.get_collection('accuracy')[0]
         pred, acc, cost = sess.run(
-            [y_pred, accuracy, loss], feed_dict={X: X, Y: Y})
+            [y_pred, accuracy, loss], feed_dict={x: X, y: Y})
     return pred, acc, cost
