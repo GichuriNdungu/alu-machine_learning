@@ -11,5 +11,5 @@ def create_placeholders(nx, classes):
             classes: the number of classes in our classifier
             returns: placeholders named x and y, respectively'''
     x = tf.compat.v1.placeholder('float', [None, nx], name='x')
-    y = tf.compat.v1.placeholder('float', classes, name='y')
+    y = tf.compat.v1.placeholder('float',[None, classes], name='y')
     return x, y
