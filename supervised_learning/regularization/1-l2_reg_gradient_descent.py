@@ -36,7 +36,7 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
         # get the error in the current layer
         dz = back['dz{}'.format(layer)]
         dw = (1/m) * ((np.matmul(dz, prev_out.T))) + (lambtha * weights['W{}'.format(layer)])
-        db = (1/m) * (np.sum(dz, axis=1, keepdims=True))
+        db = (1/m) * (np.sum(dz, axis=1, keepdims=True)) + (lambtha * weights['W{}'.format(layer)])
         curr_w = weights['W{}'.format(layer)]
         # update the weights and the biases
         weights['W' + str(layer)] -= alpha * dw
