@@ -24,16 +24,7 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
         L: the number of layers in the neural network
 
     Neural network using tanh activations on each layer except the last.
-    Last layer uses softmax activation.
-    """
-
-    Args:
-        Y(numpy.ndarray): one-hot matrix with the correct labels
-        weights(dict): The weights and biases of the network
-        cache(dict): The outputs of each layer of the network
-        alpha(float): The learning rate
-        lambtha(float): The L2 regularization parameter
-        L(int): The number of layers of the network
+    Last layer uses softmax activation
     """
     m = Y.shape[1]
     dz = cache['A' + str(L)] - Y
