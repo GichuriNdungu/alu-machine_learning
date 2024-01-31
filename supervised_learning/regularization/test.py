@@ -1,39 +1,58 @@
 #!/usr/bin/env python3
+"""
+Defines a function that updates the weights and biases
+using gradient descent with L2 Regularization
+"""
 
 import numpy as np
-l2_reg_gradient_descent = __import__('1-l2_reg_gradient_descent').l2_reg_gradient_descent
 
 
-def one_hot(Y, classes):
-    """convert an array to a one-hot matrix"""
-    m = Y.shape[0]
-    one_hot = np.zeros((classes, m))
-    one_hot[Y, np.arange(m)] = 1
-    return one_hot
+def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
+    """
+    Updates weights and biases using gradient descent with L2 regularization
 
-if __name__ == '__main__':
-    lib= np.load('../data/MNIST.npz')
-    X_train_3D = lib['X_train']
-    Y_train = lib['Y_train']
-    X_train = X_train_3D.reshape((X_train_3D.shape[0], -1)).T
-    Y_train_oh = one_hot(Y_train, 10)
+    parameters:
+        Y [one-hot numpy.ndarray of shape (classes, m)]:
+            contains the correct labels for the data
+            classes: number of classes
+            m: number of data points
+        weights [dict]: dictionary of weights and biases for the network
+        cache [dict]: dictionary of the outputs of each layer of the network
+        alpha [float]: learning rate
+        lambtha: the regularization parameter
+        L: the number of layers in the neural network
 
-    np.random.seed(0)
-
-    weights = {}
-    weights['W1'] = np.random.randn(256, 784)
-    weights['b1'] = np.zeros((256, 1))
-    weights['W2'] = np.random.randn(128, 256)
-    weights['b2'] = np.zeros((128, 1))
-    weights['W3'] = np.random.randn(10, 128)
-    weights['b3'] = np.zeros((10, 1))
-
-    cache = {}
-    cache['A0'] = X_train
-    cache['A1'] = np.tanh(np.matmul(weights['W1'], cache['A0']) + weights['b1'])
-    cache['A2'] = np.tanh(np.matmul(weights['W2'], cache['A1']) + weights['b2'])
-    Z3 = np.matmul(weights['W3'], cache['A2']) + weights['b3']
-    cache['A3'] = np.exp(Z3) / np.sum(np.exp(Z3), axis=0)
-    print(weights['W1'])
-    l2_reg_gradient_descent(Y_train_oh, weights, cache, 0.1, 0.1, 3)
-    print(weights['W1'])
+    Neural network using tanh activations on each layer except the last.
+    Last layer uses softmax activation.
+    """
+    m = Y.shape[1]
+    # error_out
+    back = {}
+    for index in range(L, 0, -1):
+        # A is actual output from the preceeding layer. 
+        A = cache["A{}".format(index - 1)]
+        # store the error from the last layer in the dict
+        if index == L:
+            back["dz{}".format(index)] = (cache["A{}".format(index)] - Y)
+        else:
+            # get the error from the preceeding layer from the right
+            dz_prev = back["dz{}".format(index + 1)]
+            # get the current layers output
+            A_current = cache["A{}".format(index)]
+            # calculate and update error for the current layer
+            back["dz{}".format(index)] = (
+                np.matmul(W_prev.transpose(), dz_prev) *
+                (A_current * (1 - A_current)))
+        ca
+        dz = back["dz{}".format(index)]
+        dW = (1 / m) * (
+            (np.matmul(dz, A.transpose())) + (
+                lambtha * weights["W{}".format(index)]))
+        db = (1 / m) * (
+            (np.sum(dz, axis=1, keepdims=True)) + (
+                lambtha * weights["b{}".format(index)]))
+        W_prev = weights["W{}".format(index)]
+        weights["W{}".format(index)] = (
+            weights["W{}".format(index)] - (alpha * dW))
+        weights["b{}".format(index)] = (
+            weights["b{}".format(index)] - (alpha * db))
