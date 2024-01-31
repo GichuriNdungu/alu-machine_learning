@@ -16,25 +16,28 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     # get the number of data points
     m = Y.shape[1]
     # define the output from each layer
-    out_err = cache['A' + str(L)] - Y
+    back = {}
     # kictart backward propagation
     for layer in range(L, 0, -1):
         # prev_out represents the output from the previous layer,
         # which is the input of our current layer
-        Prev_out = cache['A' + str(layer - 1)]
-        # calculate the gradients of the weights and biases
-        dw = (1/m) * np.dot(out_err, Prev_out.T)
-        db = (1/m) * np.sum(out_err, axis=1, keepdims=True)
-        # gradients of the regularization term
-        dw_regularization = (lambtha/m) * weights['W'+str(layer)]
-        # add the regularized weights to the derivative of the weights
-        dw += dw_regularization
-        # get the gradient of the previous layers activation
-        dz_prev = np.dot(weights['W'+str(layer)].T,
-                         out_err) * (Prev_out*(1-Prev_out))
+        prev_out = cache['A' + str(layer - 1)]
+        
+        if layer == L:
+        #    get the error from the last layer
+            back['dz{}'.format(layer)] = (cache['A{}'.format(layer)]-Y)
+        else:
+            # get the error from the preceeding layer from the right
+            dz_prev = back['dz{}'.format(layer+1)]
+            # get the output from the current layer
+            A_current = cache['A'+ str(layer)]
+            # calculate and update the error for the current layer
+            back['dz{}'.format(layer)] = (np.matmul(curr_w.transpose(), dz_prev)* (A_current) * (1-A_current))
+        # get the error in the current layer
+        dz = back['dz{}'.format(layer)]
+        dw = (1/m) * ((np.matmul(dz, prev_out.T))) + (lambtha * weights['W{}'.format(layer)])
+        db = (1/m) * (np.sum(dz, axis=1, keepdims=True))
+        curr_w = weights['W{}'.format(layer)]
         # update the weights and the biases
         weights['W' + str(layer)] -= alpha * dw
         weights['b' + str(layer)] -= alpha * db
-
-        # set the output for the next iteration
-        dz_prev = out_err
