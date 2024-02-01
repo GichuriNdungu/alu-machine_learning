@@ -32,3 +32,5 @@ if __name__ == '__main__':
     for k, v in sorted(cache.items()):
         print(k, v)
         print(v.shape)
+        print(np.isnan(v).any())
+        print(np.isinf(v).any())
