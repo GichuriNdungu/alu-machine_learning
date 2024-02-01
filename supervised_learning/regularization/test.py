@@ -3,39 +3,29 @@
 import numpy as np
 import tensorflow as tf
 l2_reg_cost = __import__('2-l2_reg_cost').l2_reg_cost
+l2_reg_create_layer = __import__('3-l2_reg_create_layer').l2_reg_create_layer
 
 def one_hot(Y, classes):
     """convert an array to a one-hot matrix"""
     m = Y.shape[0]
-    oh = np.zeros((classes, m))
-    oh[Y, np.arange(m)] = 1
-    return oh
+    one_hot = np.zeros((m, classes))
+    one_hot[np.arange(m), Y] = 1
+    return one_hot
 
-np.random.seed(4)
-m = np.random.randint(1000, 2000)
-c = 10
-lib= np.load('../data/MNIST.npz')
+if __name__ == '__main__':
+    lib= np.load('../data/MNIST.npz')
+    X_train_3D = lib['X_train']
+    Y_train = lib['Y_train']
+    X_train = X_train_3D.reshape((X_train_3D.shape[0], -1))
+    Y_train_oh = one_hot(Y_train, 10)
 
-X = lib['X_train'][:m].reshape((m, -1))
-Y = one_hot(lib['Y_train'][:m], c).T
-
-n0 = X.shape[1]
-n1, n2 = np.random.randint(10, 1000, 2)
-
-lam = np.random.uniform(0.01)
-tf.set_random_seed(0)
-
-x = tf.placeholder(tf.float32, (None, n0))
-y = tf.placeholder(tf.float32, (None, c))
-
-a1 = tf.layers.Dense(n1, activation=tf.nn.tanh, kernel_initializer=tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG"), kernel_regularizer=tf.contrib.layers.l2_regularizer(lam))(x)
-a2 = tf.layers.Dense(n2, activation=tf.nn.sigmoid, kernel_initializer=tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG"), kernel_regularizer=tf.contrib.layers.l2_regularizer(lam))(a1)
-y_pred = tf.layers.Dense(c, activation=None, kernel_initializer=tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG"), kernel_regularizer=tf.contrib.layers.l2_regularizer(lam))(a2)
-
-cost = tf.losses.softmax_cross_entropy(y, y_pred)
-
-l2_cost = l2_reg_cost(cost)
-
-with tf.Session() as sess:
-    sess.run(tf.global_variables_initializer())
-    print(sess.run(l2_cost, feed_dict={x: X, y: Y}))
+    tf.set_random_seed(0)
+    x = tf.placeholder(tf.float32, shape=[None, 784])
+    y = tf.placeholder(tf.float32, shape=[None, 10])
+    h1 = l2_reg_create_layer(x, 256, tf.nn.tanh, 0.1)
+    y_pred = l2_reg_create_layer(x, 10, None, 0.)
+    cost = tf.losses.softmax_cross_entropy(y, y_pred)
+    l2_cost = l2_reg_cost(cost)
+    with tf.Session() as sess:
+        sess.run(tf.global_variables_initializer())
+        print(sess.run(l2_cost, feed_dict={x: X_train, y: Y_train_oh}))

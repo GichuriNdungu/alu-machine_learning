@@ -8,6 +8,6 @@ def l2_reg_create_layer(prev, n, activation, lambtha):
     n: nodes in layer,
     activation: activation function for our layer,
     lambtha: regularization parameter'''
-    hidden_layer = tf.layers.dense(input=prev, units=n, activation=activation,
-                                   kernel_regularizer=tf.contrib.layers.l2_regularize(scale=lambtha))
+    hidden_layer = tf.layers.dense(inputs=prev, units=n, activation=activation,
+                                   kernel_regularizer=tf.contrib.layers.l2_regularizer(scale=lambtha))
     return hidden_layer
