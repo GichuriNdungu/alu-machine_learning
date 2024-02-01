@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import numpy as np
-dropout_forward_prop = __import__('4-dropout_forward_prop').dropout_forward_prop
+l2_reg_gradient_descent = __import__('1-l2_reg_gradient_descent').l2_reg_gradient_descent
 
 
 def one_hot(Y, classes):
@@ -28,6 +28,12 @@ if __name__ == '__main__':
     weights['W3'] = np.random.randn(10, 128)
     weights['b3'] = np.zeros((10, 1))
 
-    cache = dropout_forward_prop(X_train, weights, 3, 0.8)
-    for k, v in sorted(cache.items()):
-        print(k, v)
+    cache = {}
+    cache['A0'] = X_train
+    cache['A1'] = np.tanh(np.matmul(weights['W1'], cache['A0']) + weights['b1'])
+    cache['A2'] = np.tanh(np.matmul(weights['W2'], cache['A1']) + weights['b2'])
+    Z3 = np.matmul(weights['W3'], cache['A2']) + weights['b3']
+    cache['A3'] = np.exp(Z3) / np.sum(np.exp(Z3), axis=0)
+    print(weights['W1'])
+    l2_reg_gradient_descent(Y_train_oh, weights, cache, 0.1, 0.1, 3)
+    print(weights['W1'])
