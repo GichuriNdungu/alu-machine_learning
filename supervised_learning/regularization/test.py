@@ -1,58 +1,41 @@
 #!/usr/bin/env python3
-"""
-Defines a function that updates the weights and biases
-using gradient descent with L2 Regularization
-"""
 
 import numpy as np
+import tensorflow as tf
+l2_reg_cost = __import__('2-l2_reg_cost').l2_reg_cost
 
+def one_hot(Y, classes):
+    """convert an array to a one-hot matrix"""
+    m = Y.shape[0]
+    oh = np.zeros((classes, m))
+    oh[Y, np.arange(m)] = 1
+    return oh
 
-def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
-    """
-    Updates weights and biases using gradient descent with L2 regularization
+np.random.seed(4)
+m = np.random.randint(1000, 2000)
+c = 10
+lib= np.load('../data/MNIST.npz')
 
-    parameters:
-        Y [one-hot numpy.ndarray of shape (classes, m)]:
-            contains the correct labels for the data
-            classes: number of classes
-            m: number of data points
-        weights [dict]: dictionary of weights and biases for the network
-        cache [dict]: dictionary of the outputs of each layer of the network
-        alpha [float]: learning rate
-        lambtha: the regularization parameter
-        L: the number of layers in the neural network
+X = lib['X_train'][:m].reshape((m, -1))
+Y = one_hot(lib['Y_train'][:m], c).T
 
-    Neural network using tanh activations on each layer except the last.
-    Last layer uses softmax activation.
-    """
-    m = Y.shape[1]
-    # error_out
-    back = {}
-    for index in range(L, 0, -1):
-        # A is actual output from the preceeding layer. 
-        A = cache["A{}".format(index - 1)]
-        # store the error from the last layer in the dict
-        if index == L:
-            back["dz{}".format(index)] = (cache["A{}".format(index)] - Y)
-        else:
-            # get the error from the preceeding layer from the right
-            dz_prev = back["dz{}".format(index + 1)]
-            # get the current layers output
-            A_current = cache["A{}".format(index)]
-            # calculate and update error for the current layer
-            back["dz{}".format(index)] = (
-                np.matmul(W_prev.transpose(), dz_prev) *
-                (A_current * (1 - A_current)))
-        ca
-        dz = back["dz{}".format(index)]
-        dW = (1 / m) * (
-            (np.matmul(dz, A.transpose())) + (
-                lambtha * weights["W{}".format(index)]))
-        db = (1 / m) * (
-            (np.sum(dz, axis=1, keepdims=True)) + (
-                lambtha * weights["b{}".format(index)]))
-        W_prev = weights["W{}".format(index)]
-        weights["W{}".format(index)] = (
-            weights["W{}".format(index)] - (alpha * dW))
-        weights["b{}".format(index)] = (
-            weights["b{}".format(index)] - (alpha * db))
+n0 = X.shape[1]
+n1, n2 = np.random.randint(10, 1000, 2)
+
+lam = np.random.uniform(0.01)
+tf.set_random_seed(0)
+
+x = tf.placeholder(tf.float32, (None, n0))
+y = tf.placeholder(tf.float32, (None, c))
+
+a1 = tf.layers.Dense(n1, activation=tf.nn.tanh, kernel_initializer=tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG"), kernel_regularizer=tf.contrib.layers.l2_regularizer(lam))(x)
+a2 = tf.layers.Dense(n2, activation=tf.nn.sigmoid, kernel_initializer=tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG"), kernel_regularizer=tf.contrib.layers.l2_regularizer(lam))(a1)
+y_pred = tf.layers.Dense(c, activation=None, kernel_initializer=tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG"), kernel_regularizer=tf.contrib.layers.l2_regularizer(lam))(a2)
+
+cost = tf.losses.softmax_cross_entropy(y, y_pred)
+
+l2_cost = l2_reg_cost(cost)
+
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    print(sess.run(l2_cost, feed_dict={x: X, y: Y}))
