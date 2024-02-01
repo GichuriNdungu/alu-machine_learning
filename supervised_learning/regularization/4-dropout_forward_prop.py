@@ -28,7 +28,7 @@ def dropout_forward_prop(X, weights, L, keep_prob):
             A *= dropout
             # scale A
             A /= keep_prob
-            # outputs['D{}'.format(layer)] = dropout
+            outputs['D{}'.format(layer+1)] = dropout
         else:
             # apply softmax activation for the output layer
             A = np.exp(z)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import numpy as np
-dropout_forward_prop = __import__('4-dropout_forward_prop').dropout_forward_prop
+dropout_forward_prop = __import__('test3').dropout_forward_prop
 
 
 def one_hot(Y, classes):
