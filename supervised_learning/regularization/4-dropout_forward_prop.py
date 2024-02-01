@@ -11,12 +11,12 @@ def dropout_forward_prop(X, weights, L, keep_prob):
     a node will be kept'''
     outputs = {}
     outputs['A0'] = X
-    for layer in range(1, L+1):
+    for layer in range(L):
         # define the weights and biases
-        weight = weights['W{}'.format(layer)]
-        bias = weights['b{}'.format(layer)]
+        weight = weights['W{}'.format(layer+1)]
+        bias = weights['b{}'.format(layer+1)]
         # calculate layer output as before
-        linear_reg = np.dot(weight, outputs['A{}'.format(layer-1)])
+        linear_reg = np.dot(weight, outputs['A{}'.format(layer)])
         z = np.add(linear_reg, bias)
         # Get randomized 1 and 0's
         dropout = np.random.binomial(1, keep_prob, size=z.shape)
