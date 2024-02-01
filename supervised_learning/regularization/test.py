@@ -1,31 +1,33 @@
 #!/usr/bin/env python3
 
 import numpy as np
-import tensorflow as tf
-l2_reg_cost = __import__('2-l2_reg_cost').l2_reg_cost
-l2_reg_create_layer = __import__('3-l2_reg_create_layer').l2_reg_create_layer
+dropout_forward_prop = __import__('4-dropout_forward_prop').dropout_forward_prop
+
 
 def one_hot(Y, classes):
     """convert an array to a one-hot matrix"""
     m = Y.shape[0]
-    one_hot = np.zeros((m, classes))
-    one_hot[np.arange(m), Y] = 1
+    one_hot = np.zeros((classes, m))
+    one_hot[Y, np.arange(m)] = 1
     return one_hot
 
 if __name__ == '__main__':
     lib= np.load('../data/MNIST.npz')
     X_train_3D = lib['X_train']
     Y_train = lib['Y_train']
-    X_train = X_train_3D.reshape((X_train_3D.shape[0], -1))
+    X_train = X_train_3D.reshape((X_train_3D.shape[0], -1)).T
     Y_train_oh = one_hot(Y_train, 10)
 
-    tf.set_random_seed(0)
-    x = tf.placeholder(tf.float32, shape=[None, 784])
-    y = tf.placeholder(tf.float32, shape=[None, 10])
-    h1 = l2_reg_create_layer(x, 256, tf.nn.tanh, 0.1)
-    y_pred = l2_reg_create_layer(x, 10, None, 0.)
-    cost = tf.losses.softmax_cross_entropy(y, y_pred)
-    l2_cost = l2_reg_cost(cost)
-    with tf.Session() as sess:
-        sess.run(tf.global_variables_initializer())
-        print(sess.run(l2_cost, feed_dict={x: X_train, y: Y_train_oh}))
+    np.random.seed(0)
+
+    weights = {}
+    weights['W1'] = np.random.randn(256, 784)
+    weights['b1'] = np.zeros((256, 1))
+    weights['W2'] = np.random.randn(128, 256)
+    weights['b2'] = np.zeros((128, 1))
+    weights['W3'] = np.random.randn(10, 128)
+    weights['b3'] = np.zeros((10, 1))
+
+    cache = dropout_forward_prop(X_train, weights, 3, 0.8)
+    for k, v in sorted(cache.items()):
+        print(k, v)
