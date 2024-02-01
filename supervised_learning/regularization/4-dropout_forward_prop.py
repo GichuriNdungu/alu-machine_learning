@@ -1,9 +1,14 @@
-#!/usr/bin/env python
-import tensorflow as tf
+#!/usr/bin/env python3
+'''function that conducts forward propagation using Dropout:'''
 import numpy as np
 
 
 def dropout_forward_prop(X, weights, L, keep_prob):
+    ''''args: X: numpy.ndarray of shape (nx, m) containing the input data for
+    the network, nx: number of input features to the network, m: number of
+    data points, weights: dictionary of the weights and biases of the neural
+    network, L: number of layers in the network, keep_prob: probability that
+    a node will be kept'''
     outputs = {}
     outputs['A0'] = X
     for layer in range(1, L+1):
