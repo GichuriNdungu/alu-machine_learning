@@ -31,6 +31,3 @@ if __name__ == '__main__':
     cache = dropout_forward_prop(X_train, weights, 3, 0.8)
     for k, v in sorted(cache.items()):
         print(k, v)
-        print(v.shape)
-        print(np.isnan(v).any())
-        print(np.isinf(v).any())

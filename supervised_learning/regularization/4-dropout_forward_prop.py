@@ -21,7 +21,7 @@ def dropout_forward_prop(X, weights, L, keep_prob):
         # Get randomized 1 and 0's
         dropout = np.random.binomial(1, keep_prob, size=z.shape)
         #  check if layer is final
-        if layer < L:
+        if layer != L-1:
             # apply tanh activation
             A = np.tanh(z)
             # multiply the output of the layer to the dropout
