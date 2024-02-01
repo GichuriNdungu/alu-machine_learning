@@ -33,5 +33,5 @@ def dropout_forward_prop(X, weights, L, keep_prob):
             # apply softmax activation for the output layer
             A = np.exp(z)
             A /= np.sum(A, axis=0, keepdims=True)
-        outputs['A{}'.format(layer)] = A
+        outputs['A{}'.format(layer+1)] = A
     return outputs
