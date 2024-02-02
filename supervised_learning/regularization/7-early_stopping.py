@@ -14,10 +14,10 @@ def early_stopping(cost, opt_cost, threshold, patience, count):
     if cost < opt_cost - threshold:
         # reset the count, the model is still learning
         count = 0
-        return False, count
     else:
         # increase the count, the model is beyond tolerance level
         count += 1
+    if cost != patience:
         return False, count
     if count >= patience:
         return True, count
