@@ -26,26 +26,34 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     Last layer uses softmax activation.
     """
     m = Y.shape[1]
-    back = {}
-    for index in range(L, 0, -1):
-        A = cache["A{}".format(index - 1)]
-        if index == L:
-            back["dz{}".format(index)] = (cache["A{}".format(index)] - Y)
+    # get the derivative of the cost function with respect to output of last layer
+    dz_last = cache['A{}'.format(L)] - Y
+    # loop through the layers in reverse order
+    for layer in range(L):
+        if layer != L-1:
+            # calculate the derivative of the output of the current layer
+            # with respect to the output of the previous layer
+            A_current = cache['A{}'.format(layer)]
+            A_prev = cache['A{}'.format(layer - 1)]
+            dz_prev = np.dot(weights['W{}'.format(layer + 1)].T, dz_last) * (
+                1 - (cache['A{}'.format(layer + 1)] ** 2))
+            # calculate the L2 regularization term
+            l2 = (lambtha / m) * weights['W{}'.format(layer + 1)]
+            # calculate the derivative of the weights
+            dw = (1 / m) * np.dot(dz_last, cache['A{}'.format(layer)].T) + l
+            # calculate the derivative of the biases
+            db = (1 / m) * np.sum(dz_last, axis=1, keepdims=True)
+            # update the weights and biases
+            weights['W{}'.format(layer + 1)] = weights['W{}'.format(layer + 1)] - alpha * dw
+            weights['b{}'.format(layer + 1)] = weights['b{}'.format(layer + 1)] - alpha * db
+            # set the derivative of the output of the current layer
+            # with respect to the output of the previous layer
+            dz_last = dz_prev
         else:
-            dz_prev = back["dz{}".format(index + 1)]
-            A_prev = cache["A{}".format(index-1)]
-            back["dz{}".format(index)] = (
-                np.matmul(W_prev.transpose(), dz_prev) *
-                (1- np.square(A_prev)))
-        dz = back["dz{}".format(index)]
-        dW = (1 / m) * (
-            (np.matmul(dz, A.transpose())) + (
-                lambtha * weights["W{}".format(index)]))
-        db = (1 / m) * (
-            (np.sum(dz, axis=1, keepdims=True)) + (
-                lambtha * weights["b{}".format(index)]))
-        W_prev = weights["W{}".format(index)]
-        weights["W{}".format(index)] = (
-            weights["W{}".format(index)] - (alpha * dW))
-        weights["b{}".format(index)] = (
-            weights["b{}".format(index)] - (alpha * db))
+            # calculate the derivative of the weights
+            dw = (1 / m) * np.dot(dz_last, cache['A{}'.format(layer - 1)].T) + l2
+            # calculate the derivative of the biases
+            db = (1 / m) * np.sum(dz_last, axis=1, keepdims=True)
+            # update the weights and biases
+            weights['W{}'.format(layer + 1)] = weights['W{}'.format(layer + 1)] - alpha * dw
+            weights['b{}'.format(layer + 1)] = weights['b{}'.format(layer + 1)] - alpha * db
