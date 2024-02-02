@@ -1,24 +1,9 @@
 #!/usr/bin/env python3
-"""Script to implement dropout in tensorflow"""
 
-import tensorflow as tf
+early_stopping = __import__('7-early_stopping').early_stopping
 
-
-def dropout_create_layer(prev, n, activation, keep_prob):
-    """
-    Function that uses dropout in tensorflow
-    Args:
-        prev: tensor containing the output of the previous layer
-        n: number of nodes the new layer should contain
-        activation: activation function that should be used on the layer
-        keep_prob: probability that a node will be kept
-
-    Returns: output of the new layer
-
-    """
-    dropout = tf.layers.Dropout(keep_prob)
-    init = tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
-    tensor = tf.layers.Dense(units=n, activation=activation,
-                             kernel_initializer=init,
-                             kernel_regularizer=dropout)
-    return tensor(prev)
+if __name__ == '__main__':
+    print(early_stopping(1.0, 1.9, 0.5, 15, 5))
+    print(early_stopping(1.1, 1.5, 0.5, 15, 2))
+    print(early_stopping(1.0, 1.5, 0.5, 15, 8))
+    print(early_stopping(1.0, 1.5, 0.5, 15, 14))
