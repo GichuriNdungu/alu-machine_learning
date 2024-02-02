@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+'''Defines a deep neural network performing binary classification'''
 import numpy as np
 
 
