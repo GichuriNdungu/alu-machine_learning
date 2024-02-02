@@ -18,6 +18,6 @@ def early_stopping(cost, opt_cost, threshold, patience, count):
         # increase the count, the model is beyond tolerance level
         count += 1
     if cost != patience:
-        return False,count
+        return False, count
     if count >= patience:
         return True, count
