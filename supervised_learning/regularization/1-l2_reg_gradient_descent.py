@@ -33,8 +33,6 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
         if layer != L-1:
             # calculate the derivative of the output of the current layer
             # with respect to the output of the previous layer
-            A_current = cache['A{}'.format(layer)]
-            A_prev = cache['A{}'.format(layer - 1)]
             dz_prev = np.dot(weights['W{}'.format(layer + 1)].T, dz_last) * (
                 1 - (cache['A{}'.format(layer + 1)] ** 2))
             # calculate the L2 regularization term
