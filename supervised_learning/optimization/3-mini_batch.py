@@ -14,15 +14,19 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
         accuracy = tf.get_collection('accuracy')[0]
         loss = tf.get_collection('loss')[0]
         train_op = tf.get_collection('train_op')[0]
-        valid_cost = tf.get_collection('valid_cost')[0]
-        valid_accuracy = tf.get_collection('valid_accuracy')[0]
-        initial_loss = sess.run(loss, feed_dict={x:X_train, y:Y_train})
-        print(f'After {epoch} epochs:\n'
-            f'\tTraining Cost: {initial_loss}\n'
-            f'\tTraining Accuracy: {accuracy}\n'
+        for epoch in range(epochs):
+            
+            feed_train = {x:X_train, y:Y_train}
+            Valid_train = {x:X_valid, y:Y_valid}
+            train_cost = sess.run(loss, feed_dict=feed_train)
+            train_accuracy = sess.run(accuracy, feed_dict=feed_train)
+            valid_cost = sess.run(loss, feed_dict=valid_cost)
+            valid_accuracy = sess.run(accuracy, feed_dict=Valid_train)
+            print(f'After {epoch} epochs:\n'
+            f'\tTraining Cost: {train_cost}\n'
+            f'\tTraining Accuracy: {train_accuracy}\n'
             f'\tValidation Cost: {valid_cost}\n'
             f'\tValidation Accuracy: {valid_accuracy}')
-        for epoch in range(epochs):
             X_train, Y_train = shuffle_data(X_train, Y_train)
             step_counter = 0
             for batch in range(0, len(X_train),batch_size):
@@ -40,7 +44,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                           f'\t\tCost: {cost} \n'
                           f'\t\tAccuracy: {step_accuracy}')
         print(f'After {epoch} epochs:\n'
-            f'\tTraining Cost: {initial_loss}\n'
+            f'\tTraining Cost: {train_cost}\n'
             f'\tTraining Accuracy: {accuracy}\n'
             f'\tValidation Cost: {valid_cost}\n'
             f'\tValidation Accuracy: {valid_accuracy}')       
