@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
 
 import numpy as np
-normalization_constants = __import__('0-norm_constants').normalization_constants
-normalize = __import__('1-normalize').normalize
+shuffle_data = __import__('2-shuffle_data').shuffle_data
 
 if __name__ == '__main__':
+    X = np.array([[1, 2],
+                [3, 4],
+                [5, 6],
+                [7, 8], 
+                [9, 10]])
+    Y = np.array([[11, 12],
+                [13, 14],
+                [15, 16],
+                [17, 18],
+                [19, 20]])
+
     np.random.seed(0)
-    a = np.random.normal(0, 2, size=(100, 1))
-    b = np.random.normal(2, 1, size=(100, 1))
-    c = np.random.normal(-3, 10, size=(100, 1))
-    X = np.concatenate((a, b, c), axis=1)
-    m, s = normalization_constants(X)
-    print(X[:10])
-    X = normalize(X, m, s)
-    print(X[:10])
-    m, s = normalization_constants(X)
-    print(m)
-    print(s)
+    X_shuffled, Y_shuffled = shuffle_data(X, Y)
+
+    print(X_shuffled)
+    print(Y_shuffled)
