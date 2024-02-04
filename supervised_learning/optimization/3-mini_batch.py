@@ -42,11 +42,6 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                     step_accuracy = sess.run(accuracy, feed_dict ={x:x_batch, y:y_batch})
                     print(f'\t\tCost: {cost} \n'
                           f'\t\tCost: {cost} \n'
-                          f'\t\tAccuracy: {step_accuracy}')
-        print(f'After {epoch} epochs:\n'
-            f'\tTraining Cost: {train_cost}\n'
-            f'\tTraining Accuracy: {accuracy}\n'
-            f'\tValidation Cost: {valid_cost}\n'
-            f'\tValidation Accuracy: {valid_accuracy}')       
+                          f'\t\tAccuracy: {step_accuracy}')     
         save_path = saver.save(sess, save_path)
     return save_path
