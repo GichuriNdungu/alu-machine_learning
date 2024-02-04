@@ -44,5 +44,5 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
             f'\tTraining Accuracy: {accuracy}\n'
             f'\tValidation Cost: {valid_cost}\n'
             f'\tValidation Accuracy: {valid_accuracy}')       
-        saver.save(sess, save_path)
-        return save_path
+        save_path = saver.save(sess, save_path)
+    return save_path
