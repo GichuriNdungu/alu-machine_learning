@@ -15,7 +15,10 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
         accuracy = tf.get_collection('accuracy')[0]
         loss = tf.get_collection('loss')[0]
         train_op = tf.get_collection('train_op')[0]
-        for epoch in range(epochs):
+        steps = round(len(X_train)/ batch_size)
+        m = X_train.shape[0]
+
+        for epoch in range(epochs+1):
             
             feed_train = {x:X_train, y:Y_train}
             Valid_train = {x:X_valid, y:Y_valid}
@@ -25,26 +28,38 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
 
             valid_cost = sess.run(loss, feed_dict=Valid_train)
             valid_accuracy = sess.run(accuracy, feed_dict=Valid_train)
+
             print('After {} epochs:'.format(epoch))
             print('\tTraining Cost: {}'.format(train_cost))
             print('\tTraining Accuracy: {}'.format(train_accuracy))
             print('\tValidation Cost: {}'.format(valid_cost))
             print('\tValidation Accuracy: {}'.format(valid_accuracy))
 
-            X_trains, Y_trains = shuffle_data(X_train, Y_train)
-            step_counter = 0
+            if epoch != epochs:
+                start = 0
+                end = batch_size
+
+                X_trains, Y_trains = shuffle_data(X_train, Y_train)
             
-            for batch in range(0, len(X_trains),batch_size):
-                x_batch = X_trains[batch: batch+batch_size]
-                y_batch = Y_trains[batch: batch+batch_size]
-                # back_propagation
-                cost, _ = sess.run([loss, train_op], feed_dict={x:x_batch, y:y_batch})
-                # count the steps of back_propagation
-                step_counter += 1
-                if (step_counter+1)%100 and step_counter != 0:
-                    step_accuracy = sess.run(accuracy, feed_dict ={x:x_batch, y:y_batch})
-                    print(f'\t\tstep: {step_counter} \n'
-                          f'\t\tCost: {cost} \n'
-                          f'\t\tAccuracy: {step_accuracy}')     
+                for step in range(1, steps+2):
+                    x_batch = X_trains[start: end]
+                    y_batch = Y_trains[start: end]
+                    temp_feed = {x:x_batch, y:y_batch}
+                    # back_propagation
+                    train = sess.run(train_op, feed_dict={x:x_batch, y:y_batch})
+                    # back propagation is applied to each of the steps 
+                    # therefore, check whether the steps are divisible by 100
+                    if step %100 == 0:
+                        t_cost = sess.run(loss, feed_dict=temp_feed)
+                        step_accuracy = sess.run(accuracy, feed_dict =temp_feed)
+                        print(f'\t\tstep: {step} \n'
+                            f'\t\tCost: {t_cost} \n'
+                            f'\t\tAccuracy: {step_accuracy}')
+                    start = start + batch_size
+                    # handle instances when the last batch is not equal to batch size
+                    if (m-start) < batch_size:
+                        end = end + (m-start)
+                    else:
+                        end = end+batch_size
         save_path = saver.save(sess, save_path)
     return save_path
