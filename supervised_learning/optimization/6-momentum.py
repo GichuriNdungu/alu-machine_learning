@@ -3,6 +3,8 @@
  neural net in tensorflow
  using grad descent with momentum optimization'''
 import tensorflow as tf
+
+
 def create_momentum_op(loss, alpha, beta1):
     '''args:loss;loss of the net
             alpha: learning rate
