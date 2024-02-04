@@ -35,7 +35,7 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid,
                 # forward propagation
                 predictions = sess.run(y, feed_dict={x: x_batch})
                 # back_propagation
-                sess.run(train_op, feed_dict={x:x_batch, y:y_batch})
+                cost, _ = sess.run([loss, train_op], feed_dict={x:x_batch, y:y_batch})
                 # count the steps of back_propagation
                 step_counter += 1
                 if (step_counter+1)%100 and step_counter != 0:
