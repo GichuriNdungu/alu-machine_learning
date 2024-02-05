@@ -8,6 +8,7 @@ import tensorflow as tf
 def create_Adam_op(loss, alpha, beta1, beta2, epsilon):
     '''args:loss;loss of the net
             alpha: learning rate
+            beta1: momentum weight
             beta2: rmsprop weight
             return:rmsprop optimization operation'''
     optimizer = tf.train.AdamOptimizer(
