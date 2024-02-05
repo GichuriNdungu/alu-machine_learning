@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 '''function that implements learning rate decay'''
-import numpy as np
 
 import tensorflow as tf
+
+
 def learning_rate_decay(alpha, decay_rate, global_step, decay_step):
     '''args: alpha: initial learning rate
             decay_rate: weight to determin the rate of decay
@@ -15,5 +16,3 @@ def learning_rate_decay(alpha, decay_rate, global_step, decay_step):
         decay_steps=decay_step,
         decay_rate=decay_rate,
         staircase=True)
-
-
