@@ -10,6 +10,6 @@ def create_RMSProp_op(loss, alpha, beta2, epsilon):
             alpha: learning rate
             beta2: rmsprop weight
             return:rmsprop optimization operation'''
-    optimizer = tf.train.RMSPropOptimizer(alpha, beta2)
-    train_op = optimizer.minimize(loss)
-    return train_op
+    optimizer = tf.train.RMSPropOptimizer(
+        alpha, beta2, epsilon=epsilon).minimize(loss)
+    return optimizer
