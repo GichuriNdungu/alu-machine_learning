@@ -15,8 +15,8 @@ def update_variables_Adam(alpha, beta1, beta2, epsilon, var, grad, v, s, t):
             t: timestep used for bias correction
             return: updated variable, new moment'''
     vt = v*beta1 + ((1-beta1)*grad)
-    vdw = vt/(1-beta1**t)
-    Sdv = (beta2 * s) + ((1 - beta2) * grad ** 2)
-    non_bias_sdv = Sdv/(1-beta2**t)
-    new_variable = var - (alpha*(vdw/np.sqrt((non_bias_sdv) + epsilon)))
-    return new_variable, vdw, non_bias_sdv
+    Sdv = (beta2 * s) + (1 - beta2) * (grad ** 2)
+    vt2 = vt/(1-(beta1**t))
+    sdv2 = Sdv/(1-(beta2**t))
+    new_variable = var - alpha* vt2/(np.sqrt(sdv2)+epsilon)
+    return new_variable, vt, Sdv
