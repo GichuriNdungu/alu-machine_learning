@@ -10,7 +10,7 @@ def batch_norm(Z, gamma, beta, epsilon):
             beta: array(1, n) containing the offsets for normalization
             epsilon: factor to prevent 0-division error
             returns: normalized z matrix'''
-    mean = Z.mean (axis=0)
+    mean = Z.mean(axis=0)
     var = Z.var(axis=0)
     # prevent 0-division error using epsilon
     std_dev = np.sqrt(var + epsilon)
