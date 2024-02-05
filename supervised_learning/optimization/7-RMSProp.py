@@ -13,7 +13,7 @@ def update_variables_RMSProp(alpha, beta2, epilson, var, grad, s):
             return: updated variable, new moment'''
 
     sdw = s * beta2 + (1-beta2)*(grad**2)
-    dw_multplier = grad/np.sqrt(sdw+epilson)
+    dw_multplier = grad/np.sqrt((sdw) + epilson)
     new_value = var - (alpha*dw_multplier)
     s = sdw
     return new_value, sdw
