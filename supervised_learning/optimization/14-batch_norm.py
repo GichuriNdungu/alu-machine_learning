@@ -20,4 +20,4 @@ def create_batch_norm_layer(prev, n, activation):
     epsilon = 1e-8
     normalization = tf.nn.batch_normalization(
         x_prev, mean, variance, offset, scale, epsilon)
-    return normalization
+    return activation(normalization)
