@@ -7,7 +7,8 @@ import tensorflow as tf
 def create_batch_norm_layer(prev, n, activation):
     '''args: prev: is the activated output of the previous layer
             n: number of nodes in the layer to be created
-            activation: activation function that should be used on the output of the layer
+            activation: activation function that
+              should be used on the output of the layer
             returns:tensor of the activated output of the layer'''
     initializer = tf.contrib.layers.variance_scaling_initializer(
         mode="FAN_AVG")
