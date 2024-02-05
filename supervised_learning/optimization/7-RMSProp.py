@@ -11,9 +11,6 @@ def update_variables_RMSProp(alpha, beta2, epsilon, var, grad, s):
             grad: gradient descent of var
             s: previous second moment of var
             return: updated variable, new moment'''
-
-    sdw = s * beta2 + (1-beta2)*(grad**2)
-    dw_multplier = grad/np.sqrt((sdw)+epsilon)
-    new_value = var - (alpha*dw_multplier)
-    s = sdw
-    return new_value, sdw
+    Sdv = (beta2 * s) + ((1 - beta2) * grad ** 2)
+    new_V = var - alpha * (grad / (Sdv ** (1 / 2) + epsilon))
+    return new_V, Sdv
