@@ -11,9 +11,9 @@ def f1_score(confusion):
     return: f1 score'''
     classes = confusion.shape[0]
     f1 = np.zeros(classes)
-    precision = precision(confusion)
-    sensitivity = sensitivity(confusion)
+    precision_values = precision(confusion)
+    sensitivity_values = sensitivity(confusion)
     for i in range(classes):
-        f1[i] = 2 * (precision[i] * sensitivity[i]) / \
+        f1[i] = 2 * (precision_values[i] * sensitivity_values[i]) / \
             (precision[i] + sensitivity[i])
     return f1
