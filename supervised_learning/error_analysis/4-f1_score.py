@@ -15,5 +15,5 @@ def f1_score(confusion):
     sensitivity_values = sensitivity(confusion)
     for i in range(classes):
         f1[i] = 2 * (precision_values[i] * sensitivity_values[i]) / \
-            (precision[i] + sensitivity[i])
+            (precision_values[i] + sensitivity_values[i])
     return f1
