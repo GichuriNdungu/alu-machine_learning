@@ -2,6 +2,8 @@
 '''function that calculates the F1 score
  for each class in a confusion matrix'''
 import numpy as np
+precision = __import__('2-precision').precision
+sensitivity = __import__('1-sensitivity').sensitivity
 
 
 def f1_score(confusion):
