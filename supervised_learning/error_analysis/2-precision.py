@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
-'''function that calculates the
-sensitivity for each class in a confusion matrix'''
+'''function that calculates the precision for each class in a confusion matrix'''
 import numpy as np
 
 
-def sensitivity(confusion):
+def precision(confusion):
     '''args: confusion
-    return: sensitivity'''
+    return: precision'''
     classes = confusion.shape[0]
-    sensitivity = np.zeros(classes)
+    precision = np.zeros(classes)
     for i in range(classes):
-        sensitivity[i] = confusion[i][i] / np.sum(confusion[i])
-    return sensitivity
+        precision[i] = confusion[i][i] / np.sum(confusion[:, i])
+    return precision
