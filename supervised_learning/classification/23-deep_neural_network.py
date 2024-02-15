@@ -92,9 +92,12 @@ class DeepNeuralNetwork:
         '''calculates the gradient descent of neural net after 1 pass'''
         m = Y.shape[1]
         # Backward propagation
+        # get the cost at the last layer
         dZ_last = cache['A' + str(self.__L)] - Y
         for layer in range(self.__L, 0, -1):
+            # a_prev is the activation of the previous layer
             A_prev = cache['A' + str(layer-1)]
+            # 
             dW = (1 / m) * np.dot(dZ_last, A_prev.T)
             db = (1 / m) * np.sum(dZ_last, axis=1, keepdims=True)
             dZ_prev = np.dot(
