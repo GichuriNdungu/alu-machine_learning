@@ -1,15 +1,24 @@
 #!/usr/bin/env python3
-'''function that calculates the
-specificity for each class in a confusion matrix'''
+"""Script to calculate the specificity in a
+    confusion matrix
+"""
+
 import numpy as np
+
+
 def specificity(confusion):
-    '''args: confusion
-    return: specificity'''
-    classes = confusion.shape[0]
-    specificity = np.zeros(classes)
-    for i in range(classes):
-        true_negative = np.sum(np.delete(confusion, i, 0),
-                               axis=0) - confusion[i][i]
-        false_positive = np.sum(confusion[:, i]) - confusion[i][i]
-        specificity[i] = true_negative / (true_negative + false_positive)
-    return specificity
+    """
+    Function to calculate the specificity
+    Args:
+        confusion: numpy.ndarray of shape
+                    (classes, classes)
+    Returns: numpy.ndarray of shape (classes,)
+            containing the specificity of each class
+    """
+    TP = np.diag(confusion)
+    FP = np.sum(confusion, axis=0) - TP
+    FN = np.sum(confusion, axis=1) - TP
+    TN = np.sum(confusion) - (FP + FN + TP)
+
+    TNR = TN / (TN + FP)
+    return TNR
