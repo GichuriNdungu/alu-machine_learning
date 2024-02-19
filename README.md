@@ -1,4 +1,4 @@
-# Holbertonschool-machine_learning :robot:
+# ALU-MACHINE_LEARNING :robot:
 
 [![C|C](https://img.shields.io/badge/Python-100%25-blue.svg)](https://sourcerer.io/edward0rtiz) 
 > Machine Learning projects for real case scenarios
