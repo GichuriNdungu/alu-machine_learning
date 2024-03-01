@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 
-import numpy as np
-from_numpy = __import__('0-from_numpy').from_numpy
+from_file = __import__('2-from_file').from_file
 
-np.random.seed(0)
-A = np.random.randn(5, 8)
-print(from_numpy(A))
-B = np.random.randn(9, 3)
-print(from_numpy(B))
+df1 = from_file('coinbaseUSD_1-min_data_2014-12-01_to_2019-01-09.csv', ',')
+print(df1.head())
+df2 = from_file('bitstampUSD_1-min_data_2012-01-01_to_2020-04-22.csv', ',')
