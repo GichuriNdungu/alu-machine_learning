@@ -6,22 +6,26 @@ that can hold a given number of passengers
 
 import requests
 
+
 def availableShips(passengerCount):
     '''
-    This function returns a list of starships that can hold a given number of passengers.
+    This function returns a list of starships that
+      can hold a given number of passengers.
 
     Parameters:
-    passengerCount (int): The minimum number of passengers a starship must be able to hold.
+    passengerCount (int): The minimum number
+      of passengers a starship must be able to hold.
 
     Returns:
-    shipslist (list): A list of starship names that can hold at least 'passengerCount' passengers.
+    shipslist (list): A list of starship
+      names that can hold at least 'passengerCount' passengers.
     '''
 
     # API endpoint to fetch starship data
     url = "https://swapi-api.alx-tools.com/api/starships/?format=json"
 
     # List to store all starship data
-    ships=[]
+    ships = []
 
     # Loop until all pages of the API response have been processed
     while url:
@@ -43,7 +47,7 @@ def availableShips(passengerCount):
         passengers = ship.get('passengers').replace(",", "")
 
         # If the passenger capacity is known and is sufficient, add the starship to our list
-        if passengers != "n/a" and passengers !='unknown':
+        if passengers != "n/a" and passengers != 'unknown':
             if int(passengers) >= passengerCount:
                 shipslist.append(ship.get('name'))
 
