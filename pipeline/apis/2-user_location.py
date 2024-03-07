@@ -19,7 +19,7 @@ if __name__ == "__main__":
             reset = results.headers.get('X-Ratelimit-Reset')
             wait_time = int(reset) - time()
             minutes = round(wait_time/60)
-            print(f'reset in {minutes} min')
+            print('Reset in {} min'.format(minutes))
         else:
             results = results.json()
             location = results.get('location')
