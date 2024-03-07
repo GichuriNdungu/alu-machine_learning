@@ -2,7 +2,7 @@
 """
 Test file
 """
-availableShips = __import__('0-passengers').availableShips
-ships = availableShips(4)
-for ship in ships:
-    print(ship)
+sentientPlanets = __import__('1-sentience').sentientPlanets
+planets = sentientPlanets()
+for planet in planets:
+    print(planet)
