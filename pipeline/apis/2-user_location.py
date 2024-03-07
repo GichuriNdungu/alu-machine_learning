@@ -11,7 +11,11 @@ from time import time
 import requests 
 
 if __name__ == "__main__":
-
+    if len(argv) < 2:
+        raise TypeError(
+            "Input must have the full API URL passed in as an argument: {}{}".
+            format('ex. "./2-user_location.py',
+                   'https://api.github.com/users/holbertonschool"'))
     try:
         url = argv[1]
         results = requests.get('url')
