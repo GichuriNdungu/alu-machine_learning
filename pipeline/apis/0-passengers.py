@@ -38,7 +38,6 @@ def availableShips(passengerCount):
         # Get the URL for the next page
         url = response.get('next')
 
-    # List to store the names of starships that can hold the required number of passengers
     shipslist = []
 
     # Loop through each starship
@@ -46,7 +45,6 @@ def availableShips(passengerCount):
         # Get the passenger capacity, removing any commas
         passengers = ship.get('passengers').replace(",", "")
 
-        # If the passenger capacity is known and is sufficient, add the starship to our list
         if passengers != "n/a" and passengers != 'unknown':
             if int(passengers) >= passengerCount:
                 shipslist.append(ship.get('name'))
