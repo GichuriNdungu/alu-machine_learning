@@ -1,5 +1,5 @@
 -- combining data from two different tables
-SELECT tv_genres.name, SUM(tv.show_ratings.rate) AS rating
+SELECT tv_genres.name, SUM(rate) AS rating
 FROM tv_genres
     JOIN tv_show_genres 
         ON tv_genres.id = tv.show_genres.genre_id
