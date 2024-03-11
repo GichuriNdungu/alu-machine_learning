@@ -1,2 +1,2 @@
---create a database if it does not exist
+--new database creation
 CREATE DATABASE IF NOT EXISTS db_0;
