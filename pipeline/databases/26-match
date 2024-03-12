@@ -1,0 +1,2 @@
+// specify document search
+db.school.find({"name" : "Holberton"})
