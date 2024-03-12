@@ -1,4 +1,4 @@
-// list all databases
+// show databases
 db.adminCommand(
    {
      listDatabases: 1
