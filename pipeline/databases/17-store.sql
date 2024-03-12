@@ -1,3 +1,4 @@
+-- first trigger
 DELIMITER //
 CREATE TRIGGER update_quantity
 AFTER INSERT ON orders
