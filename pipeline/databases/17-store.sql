@@ -1,13 +1,11 @@
--- first trigger
-DELIMETER //
-CREATE TRIGGER decrease_quantity
+DELIMITER //
+CREATE TRIGGER update_quantity
 AFTER INSERT ON orders
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
     UPDATE items
     SET quantity = quantity - NEW.number
-    WHERE id = NEW.item_name;
+    WHERE items.name = NEW.item_name;
 END;
 //
-DELIMETER ;
-ON items
+DELIMITER ;
