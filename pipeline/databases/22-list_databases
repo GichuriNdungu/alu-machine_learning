@@ -1,6 +1,2 @@
 // show databases
-db.adminCommand(
-   {
-     listDatabases: 1
-   }
-)
+show dbs
