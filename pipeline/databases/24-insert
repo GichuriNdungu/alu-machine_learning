@@ -1,4 +1,4 @@
 // insert document to db
-db.school.insertOne({
+db.school.insert({
     name:"Holberton school"
 })
