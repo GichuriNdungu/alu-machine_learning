@@ -2,6 +2,7 @@ import tensorflow as tf
 from tensorflow.keras.callbacks import EarlyStopping
 from model import create_model
 from preprocessing import encode_data, oversample, scale_features, select_features, split_data, df
+import pickle
 
 early_stopping = EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=True)
 
@@ -27,5 +28,8 @@ optimizer = tf.keras.optimizers.RMSprop(learning_rate=0.001)
 model_1.fit(x_train_lstm, y_train, epochs=50, batch_size=32, validation_data=(x_val_lstm, y_test))
 _, accuracy = model_1.evaluate(x_val_lstm, y_val)
 # print model accuracy
-
 print(f'Model Accuracy: {accuracy * 100:.2f}%')
+# save model
+with open('models/model.pkl', 'wb') as f:
+    pickle.dump(model_1, f)
+
