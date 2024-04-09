@@ -4,5 +4,5 @@ import tensorflow as tf
 def flip_image(image):
     '''args: image
     return: horizontally flipped image'''
-    flipped = tf.flip_image.flip_up_down(image)
+    flipped = tf.image.flip_left_right(image)
     return flipped

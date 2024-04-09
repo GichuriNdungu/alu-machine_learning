@@ -6,5 +6,5 @@ def crop_image(image, size):
     '''args: image; image to be cropped
     size: crop_size'''
     seed = np.random.randint(1234)
-    output = tf.random_crop(image, size=size)
+    output = tf.image.random_crop(image, size=size)
     return output
