@@ -1,51 +1,59 @@
-# import the right modules
 
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from imblearn.over_sampling import RandomOverSampler
 from sklearn.model_selection import train_test_split
-import tensorflow as tf 
-from tensorflow.keras import Sequential
-from tensorflow.keras.layers import LSTM, Dense
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
 import os
 from sklearn.preprocessing import MinMaxScaler
 
-df =    pd.read_csv('bank.csv', sep=';')
-print(df.head(4))
 
-# Select independent and dependent variables 
-X = df[['job', 'marital', 'education', 'default', 'housing','duration', 'loan','contact','day', 'month', 'duration', 'campaign', 'pdays', 'previous', 'poutcome']]
+df = pd.read_csv('bank.csv', sep=';')
+
+# Select independent and dependent variables
+X = df[['job', 'marital', 'education', 'default', 'housing', 'duration', 'loan',
+        'contact', 'day', 'month', 'duration', 'campaign', 'pdays', 'previous', 'poutcome']]
 Y = df[["y"]]
-print(X, Y)
-def select_features(X, Y, df,missing_threshold):
+
+def select_features(X, Y, df, missing_threshold):
     '''drop columns with too many missing values'''
     clf = RandomForestClassifier()
     clf.fit(X, Y)
     importances = clf.feature_importances_
     columns_to_drop = X.columns[importances < 0.05]
-    X_dropped = X.drop(columns_to_drop, axis =1)
+    X_dropped = X.drop(columns_to_drop, axis=1)
     X_dropped = X_dropped.loc[:, X_dropped.isna().mean() < missing_threshold]
     return X_dropped
+
+
 def encode_data(df):
     '''encode categorical data using label encoder'''
     le = LabelEncoder()
     for category in df.columns[df.dtypes == object]:
         df.loc[:, category] = le.fit_transform(df[category])
     return df
+
+
 def oversample(X, Y):
     '''Augment the target variable to prevent class bias'''
     ros = RandomOverSampler()
-    X, Y = ros.fit_resample(X,Y)
-    return Y
+    X_resampled, Y_resampled = ros.fit_resample(X, Y)
+    return X_resampled, Y_resampled
+
+
 def scale_features(x):
     '''use minmax scaler to scale the input features'''
-    
-    ms=MinMaxScaler()
-    x=ms.fit_transform(x)
-def split_data_set()
-X = encode_data(X)
-print(select_features(X, Y,df, missing_threshold=0.5))
+
+    ms = MinMaxScaler()
+    return ms.fit_transform(x)
+
+
+def split_data(x, y, test_size=0.3, val_size=0.5, random_state=4):
+    '''split the dataset into training, validation and testing sets'''
+    x_train, x_temp, y_train, y_temp = train_test_split(
+        x, y, test_size=test_size, random_state=random_state)
+    x_test, x_val, y_test, y_val = train_test_split(
+        x_temp, y_temp, test_size=val_size, random_state=random_state)
+    return x_train, x_test, x_val, y_train, y_test, y_val
