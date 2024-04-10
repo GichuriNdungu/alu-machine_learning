@@ -8,6 +8,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
 import os
 from sklearn.preprocessing import MinMaxScaler
+import pickle
 
 
 df = pd.read_csv('bank.csv', sep=';')
@@ -29,10 +30,16 @@ def select_features(X, Y, df, missing_threshold):
 
 
 def encode_data(df):
-    '''encode categorical data using label encoder'''
-    le = LabelEncoder()
+    '''encode categorical data using a 
+    label encoder and save the encoders'''
+    le_dict = {}
     for category in df.columns[df.dtypes == object]:
+        le = LabelEncoder()
         df.loc[:, category] = le.fit_transform(df[category])
+        le_dict[category] = le
+    # save the dictionary of encoders
+    with open('models/encoder_dict.pkl', 'wb') as f: 
+        pickle.dump(le_dict, f)
     return df
 
 

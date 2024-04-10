@@ -1,35 +1,53 @@
-import tensorflow as tf
-from tensorflow.keras.callbacks import EarlyStopping
-from model import create_model
-from preprocessing import encode_data, oversample, scale_features, select_features, split_data, df
+import streamlit as st
+from sklearn import preprocessing
+import pandas as pd 
+import numpy as np
 import pickle
 
-early_stopping = EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=True)
+model = pickle.load(open('models/model.pkl', 'rb'))
+encoder_dict = pickle.load(open('models/encoder_dict.pkl', 'rb'))
+columns = ['age','job','balance', 'day', 'month', 'duration']
 
-df_encoded = encode_data(df)
-X = df_encoded.drop('y', axis=1)
-Y = df_encoded['y']
-Y = Y.astype(int)
-X_selected = select_features(X, Y, df_encoded, missing_threshold=0.5)
-# oversampling 
-X_resampled, Y_oversampled = oversample(X_selected, Y)
-X_scaled = scale_features(X_resampled)
-# split the dataset
+def main():
+    st.title('Credit Allocation predictor')
+    html_temp =""""
+    <div style = "background:#02524; padding:10px">
+    <h2 style ="color:white;text-align:center;">Credit Allocation Predictor </h2>
+    </div>
+    """
+    st.markdown(html_temp, unsafe_allow_html=True)
 
-x_train, x_test, x_val, y_train, y_test, y_val = split_data(X_scaled, Y_oversampled)
-x_train_lstm = x_train.reshape((x_train.shape[0], 1, x_train.shape[1]))
-x_test_lstm = x_test.reshape((x_test.shape[0], 1, x_test.shape[1]))
-x_val_lstm = x_val.reshape((x_val.shape[0], 1, x_val.shape[1]))
+    age = st.text_input("Age", "0")
+    job = st.selectbox("unemployed", "services", "management", "blue-collar", "self-employed", "technician", "entreprenuer", "admin.", "student", "housemaid", "retired", "unknown")
+    month = st.selectbox("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec")
+    day = st.text_input("day", "0")
+    balance = st.text_input("balance", "0")
+    duration = st.text_input("duration", "0")
 
-# Train the model
+    if st.button("Predict"):
+        features = [[age, job, month, day, balance, duration]]
+        data = {'age': int(age), 'job':job, 'month': month, 'day':int(day), 'balance': int(balance), 'duration':int(duration)}
+        print(data)
+        df = pd.DataFrame([list(data.values())], columns=['age','job','month','day','balance','duration'])
+        
+        category_col = ['job', 'month']
+        for cat in encoder_dict:
+            for col in df.columns:
+                le = preprocessing.LabelEncoder()
+                if cat == col:
+                    le.classes_ = encoder_dict[cat]
+                    for unique_item in df[col].unique():
+                        if unique_item not in le.classes_:
+                            df[col] = ['Unknown' if x == unique_item else x for x in df[col]]
+                        df[col] = le.transform(df[col])
+        features_list = df.values.tolist()
+        prediction = model.predict(features_list)
+        output = int(prediction[0])
+        if output == 1:
+            text ="Yes"
+        else:
+            text = "No"
+        st.success(f"{text}, to customer credit approval")
 
-model_1 = create_model(input_shape=(x_train_lstm.shape[1], x_train_lstm.shape[2]), lstm_units=50, dense_units=10, n_dense_layers=3)
-optimizer = tf.keras.optimizers.RMSprop(learning_rate=0.001)
-model_1.fit(x_train_lstm, y_train, epochs=50, batch_size=32, validation_data=(x_val_lstm, y_test))
-_, accuracy = model_1.evaluate(x_val_lstm, y_val)
-# print model accuracy
-print(f'Model Accuracy: {accuracy * 100:.2f}%')
-# save model
-with open('models/model.pkl', 'wb') as f:
-    pickle.dump(model_1, f)
-
+if __name__=='__main__': 
+    main()
