@@ -1,3 +1,4 @@
 from preprocessing import df 
-
-print(df["duration"].unique())
+import numpy as np
+print((df['marital'].unique()))
+ 

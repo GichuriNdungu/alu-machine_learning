@@ -23,7 +23,7 @@ def select_features(X, Y, df, missing_threshold):
     clf = RandomForestClassifier()
     clf.fit(X, Y)
     importances = clf.feature_importances_
-    columns_to_drop = X.columns[importances < 0.05]
+    columns_to_drop = X.columns[importances < 0.02]
     X_dropped = X.drop(columns_to_drop, axis=1)
     X_dropped = X_dropped.loc[:, X_dropped.isna().mean() < missing_threshold]
     return X_dropped
