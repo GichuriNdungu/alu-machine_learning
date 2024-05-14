@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+
+''''This script builds a convolutional neural network from scratch
+Main goal is to understand the intutition behind transfer learning and convnets'''
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
