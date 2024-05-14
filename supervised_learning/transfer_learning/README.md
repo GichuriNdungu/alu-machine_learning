@@ -9,7 +9,8 @@ As the world continues to heat up from the effects of Carbon emmissions, it is b
 
         *Number of samples: 36
         *Number of features: 36
-- *Second Dataset* used in Fine tuning the model is sourced from kaggle and can be accessed via this [link](https://www.kaggle.com/datasets/tongpython/cat-and-dog)
+- *Second Dataset* used in Fine tuning the model is sourced from kaggle and can be accessed via this [link](https://www.kaggle.com/datasets/tongpython/cat-and-dog).
+
         *Number of Samples: 8000
         *Number of features: 8000
 
