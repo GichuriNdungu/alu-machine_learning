@@ -9,7 +9,7 @@ As the world continues to heat up from the effects of Carbon emmissions, it is b
 
         *Number of samples: 36
         *Number of features: 36
-- *Second Dataset* used in Fine tuning the model is sourced from kaggle and can be accessed via this [link](https://www.kaggle.com/datasets/tongpython/cat-and-dog).
+- *Second Dataset* used in Training and observing Fine tuning the model is sourced from kaggle and can be accessed via this [link](https://www.kaggle.com/datasets/tongpython/cat-and-dog).
 
         *Number of Samples: 8000
         *Number of features: 8000
@@ -47,7 +47,7 @@ The table below shows the performance of the evaluated models based on the evalu
 - Despite recording high accuracies, the precision scores were as low as 40% for the resnet model, with the mobnet model demonstrating a slightly higher precision of 55% which is still significantly lower.
 - It is therefore imperative that the models are fine-tuned for better generalisations.
 - Upon further investigations, it is clear that the model's sample data is quite limited which likely affects the perfomance of the models.
-- Therefore, to better see/understand the effects of finetuning a model during transfer learning, the second dataset was applied at this stage and trained over five iterations. 
+- Therefore, to better see/understand the effects of finetuning a model during transfer learning, the second dataset was applied at this stage and trained over 2 iterations. 
 - fine tuning was also performed using this dataset
 
 ## Fine Tuning Process 
