@@ -35,7 +35,7 @@ class NST:
         self.alpha = alpha
         self.beta = beta
             
-
+    @staticmethod
     def scale_image(image):
         '''Rescale an image's pixels to 0 and 1.
         largest_image_size = 512 px
@@ -66,4 +66,4 @@ class NST:
             # confirm that the new shape is (1, hnew, w_new, 3)
             resized_image = tf.ensure_shape(resized_image, [1, None, None, 3])
 
-            return resized_image
+        return resized_image
