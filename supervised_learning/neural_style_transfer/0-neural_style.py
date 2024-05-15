@@ -56,7 +56,6 @@ class NST:
             # both height and width will be the new dimensions that are int 32
             new_width = tf.cast(original_width * scale, tf.float32)
 
-            #bicubic interpolation to resize image
             resized_image = tf.image.resize(
                 image, [new_height, new_width],
                 method=tf.image.ResizeMethod.BICUBIC)
