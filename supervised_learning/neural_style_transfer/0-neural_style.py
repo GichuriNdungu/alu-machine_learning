@@ -27,12 +27,14 @@ class NST:
             raise TypeError('beta must be a non-negative number')
         if not isinstance(alpha, int) or alpha < 0:
             raise TypeError('alpha must be a non-negative number')
+        
+        tf.enable_eager_execution()
 
-        self.style_image = style_image
-        self.content_image = content_image
+        self.style_image = self.scale_image(style_image)
+        self.content_image = self.scale_image(content_image)
         self.alpha = alpha
         self.beta = beta
-        tf.enable_eager_execution()
+            
 
     def scale_image(image):
         '''Rescale an image's pixels to 0 and 1.
