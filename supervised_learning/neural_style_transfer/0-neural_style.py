@@ -25,8 +25,7 @@ class NST:
                 'content_image must be a numpy.ndarray with shape (h, w, 3)')
         elif not isinstance(alpha, int) or alpha < 0:
             raise TypeError('alpha must be a non-negative number')
-        elif not isinstance(beta, int) or beta < 0:
-            raise TypeError('beta must be a non-negative number')
+
         else:
             self.style_image = style_image
             self.content_image = content_image
