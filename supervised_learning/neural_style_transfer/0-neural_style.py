@@ -37,8 +37,8 @@ class NST:
             max_dim =512
             scale = max_dim / tf.maximum(original_height, original_width)
             print(scale)
-            new_height = tf.cast(original_height * scale, tf.int32) # we use cast since the values had originally been converted to floats
-            new_width = tf.cast(original_width * scale, tf.int32) # both height and width will be the new dimensions that are int 32
+            new_height = tf.cast(original_height * scale, tf.float32) # we use cast since the values had originally been converted to floats
+            new_width = tf.cast(original_width * scale, tf.float32) # both height and width will be the new dimensions that are int 32
 
             # Use bicubic interpolation to resize our image according to the new dimensions
             resized_image = tf.image.resize(image, [new_height, new_width], method =tf.image.ResizeMethod.BICUBIC)
