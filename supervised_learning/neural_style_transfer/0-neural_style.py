@@ -44,7 +44,7 @@ class NST:
             raise TypeError(
                 'style_image must be a numpy.ndarray with shape (h, w, 3)')
         else:
-            # convert the image pixel values to requsite range (float 32- o and 1)
+            # convert pixel values to range (0-1)
             image = tf.image.convert_image_dtype(image, tf.float32)
             # get the initial dimensions
             original_height, original_width = tf.shape(
@@ -52,16 +52,15 @@ class NST:
             # calculate the new dimensions
             max_dim = 512
             scale = max_dim / tf.maximum(original_height, original_width)
-            # we use cast since the values had originally been converted to floats
             new_height = tf.cast(original_height * scale, tf.float32)
             # both height and width will be the new dimensions that are int 32
             new_width = tf.cast(original_width * scale, tf.float32)
 
-            # Use bicubic interpolation to resize our image according to the new dimensions
+            #bicubic interpolation to resize image
             resized_image = tf.image.resize(
                 image, [new_height, new_width],
                 method=tf.image.ResizeMethod.BICUBIC)
-            # add an extra batch dimension to allow for different neuralnet architectures
+            # add an extra batch dimension
             tf.expand_dims(resized_image, axis=0)
             # confirm that the new shape is (1, hnew, w_new, 3)
             resized_image = tf.ensure_shape(resized_image, [1, None, None, 3])
