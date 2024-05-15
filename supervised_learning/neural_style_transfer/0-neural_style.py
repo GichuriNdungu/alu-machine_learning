@@ -42,7 +42,7 @@ class NST:
         if not isinstance(image, np.ndarray) or\
                 image.ndim != 3 or image.shape[-1] != 3:
             raise TypeError(
-                'style_image must be a numpy.ndarray with shape (h, w, 3)')
+                'image must be a numpy.ndarray with shape (h, w, 3)')
         else:
             # convert pixel values to range (0-1)
             image = tf.image.convert_image_dtype(image, tf.float32)
