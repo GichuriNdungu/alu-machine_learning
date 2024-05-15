@@ -13,10 +13,14 @@ class NST:
 
     def __init__(self, style_image, content_image, alpha=1e4, beta=1):
         '''class initializer'''
-        if not isinstance(style_image, np.ndarray) or style_image.ndim != 3 or style_image.shape[-1] != 3:
+        if not isinstance(style_image, np.ndarray) or\
+            style_image.ndim != 3 or\
+            style_image.shape[-1] != 3:
             raise TypeError(
                 'style_image must be a numpy.ndarray with shape (h, w, 3)')
-        elif not isinstance(content_image, np.ndarray) or content_image.ndim != 3 or content_image.shape[-1] != 3:
+        elif not isinstance(content_image, np.ndarray) or\
+              content_image.ndim != 3 or\
+                  content_image.shape[-1] != 3:
             raise TypeError(
                 'content_image must be a numpy.ndarray with shape (h, w, 3)')
         elif not isinstance(alpha, int) or alpha < 0:
@@ -35,7 +39,8 @@ class NST:
         largest_image_size = 512 px
         args: image (image to rescale)
         return: rescaled image'''
-        if not isinstance(image, np.ndarray) or image.ndim != 3 or image.shape[-1] != 3:
+        if not isinstance(image, np.ndarray) or\
+              image.ndim != 3 or image.shape[-1] != 3:
             raise TypeError(
                 'style_image must be a numpy.ndarray with shape (h, w, 3)')
         else:
@@ -47,7 +52,6 @@ class NST:
             # calculate the new dimensions
             max_dim = 512
             scale = max_dim / tf.maximum(original_height, original_width)
-            print(scale)
             # we use cast since the values had originally been converted to floats
             new_height = tf.cast(original_height * scale, tf.float32)
             # both height and width will be the new dimensions that are int 32
@@ -55,7 +59,8 @@ class NST:
 
             # Use bicubic interpolation to resize our image according to the new dimensions
             resized_image = tf.image.resize(
-                image, [new_height, new_width], method=tf.image.ResizeMethod.BICUBIC)
+                image, [new_height, new_width],
+                  method=tf.image.ResizeMethod.BICUBIC)
             # add an extra batch dimension to allow for different neuralnet architectures
             tf.expand_dims(resized_image, axis=0)
             # confirm that the new shape is (1, hnew, w_new, 3)
