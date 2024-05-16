@@ -56,10 +56,10 @@ class NST:
             else:
                 new_width = 512
                 new_height = int(original_height * (512 / original_width))
-
+            size = (new_height, new_width)
             resized_image = tf.image.resize_bicubic(np.expand_dims(image,
                                                                    axis=0),
-                                                    size=(new_height, new_width))
+                                                    size)
 
             # clip the pixel values to [0, 1]
             resized_image = resized_image / 255
