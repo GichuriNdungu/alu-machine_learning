@@ -23,9 +23,9 @@ class NST:
                 content_image.shape[-1] != 3:
             raise TypeError(
                 'content_image must be a numpy.ndarray with shape (h, w, 3)')
-        if not isinstance(beta, int) or beta < 0:
+        if not isinstance(beta, (int, float)) or beta < 0:
             raise TypeError('beta must be a non-negative number')
-        if not isinstance(alpha, int) or alpha < 0:
+        if not isinstance(alpha, (int, float)) or alpha < 0:
             raise TypeError('alpha must be a non-negative number')
         
         tf.enable_eager_execution()
@@ -47,22 +47,23 @@ class NST:
                 'image must be a numpy.ndarray with shape (h, w, 3)')
         else:
             # convert pixel values to range (0-1)
-            image = tf.image.convert_image_dtype(image, tf.float32)
+            # image = tf.image.convert_image_dtype(image, tf.float32)
             # get the initial dimensions
             original_height, original_width = tf.shape(
                 image)[0], tf.shape(image)[1]
             # calculate the new dimensions
             max_dim = 512
             scale = max_dim / tf.maximum(original_height, original_width)
-            new_height = tf.cast(original_height * scale, tf.float32)
-            # both height and width will be the new dimensions that are int 32
-            new_width = tf.cast(original_width * scale, tf.float32)
+            original_height = tf.cast(original_height, tf.float64)
+            original_width = tf.cast(original_width, tf.float64)
+            new_height = original_height * scale
+            new_width = original_width * scale
 
             resized_image = tf.image.resize(
                 image, [new_height, new_width],
                 method=tf.image.ResizeMethod.BICUBIC)
             # add an extra batch dimension
-            tf.expand_dims(resized_image, axis=0)
+            resized_image = tf.expand_dims(resized_image, axis=0)
             # confirm that the new shape is (1, hnew, w_new, 3)
             resized_image = tf.ensure_shape(resized_image, [1, None, None, 3])
 
