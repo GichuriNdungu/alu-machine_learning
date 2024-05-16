@@ -59,13 +59,13 @@ class NST:
             new_height = original_height * scale
             new_width = original_width * scale
 
-            resized_image = tf.image.resize_images(
-                image, [new_height, new_width],
-                method=tf.image.ResizeMethod.BICUBIC)
+      
+            resized_image = tf.image.resize_bicubic(np.expand_dims(image, axis=0),
+                                          size=(new_height, new_width))
+            resized_image / 255.0
             # clip the pixel values to [0, 1]
             resized_image = tf.clip_by_value(resized_image, 0.0, 1.0)
-            # add an extra batch dimension
-            resized_image = tf.expand_dims(resized_image, axis=0)
+            
             # confirm that the new shape is (1, hnew, w_new, 3)
             resized_image = tf.ensure_shape(resized_image, [1, None, None, 3])
 
