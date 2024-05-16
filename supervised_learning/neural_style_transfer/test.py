@@ -27,8 +27,10 @@ if __name__ == '__main__':
     assert(np.array_equal(scaled_style, nst.style_image))
     assert(np.array_equal(scaled_content, nst.content_image))
 
-    plt.imshow(nst.style_image[0])
-    plt.show()
-    plt.imshow(nst.content_image[0])
-    plt.show()
-    print(nst.content_image.dtype)
+    # plt.imshow(nst.style_image[0])
+    # plt.show()
+    # plt.imshow(nst.content_image[0])
+    # plt.show()
+   
+    print(nst.style_image.dtype)
+    print(nst.style_image[0])

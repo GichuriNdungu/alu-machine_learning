@@ -46,26 +46,25 @@ class NST:
             raise TypeError(
                 'image must be a numpy.ndarray with shape (h, w, 3)')
         else:
-            # convert pixel values to range (0-1)
-            # image = tf.image.convert_image_dtype(image, tf.float32)
             # get the initial dimensions
-            original_height, original_width = tf.shape(
-                image)[0], tf.shape(image)[1]
+            original_height, original_width, dim = image.shape
+            print(original_height, original_width)
             # calculate the new dimensions
-            max_dim = 512
-            scale = max_dim / tf.maximum(original_height, original_width)
-            original_height = tf.cast(original_height, tf.float64)
-            original_width = tf.cast(original_width, tf.float64)
-            new_height = original_height * scale
-            new_width = original_width * scale
 
-      
+            if original_height > original_width:
+                new_height = 512
+                new_width = int(original_width * (512/original_height))
+            else:
+                new_width = 512
+                new_height = int(original_height * (512 / original_height))
+
             resized_image = tf.image.resize_bicubic(np.expand_dims(image, axis=0),
-                                          size=(new_height, new_width))
-            resized_image / 255.0
+                                                    size=(new_height, new_width))
+            # resized_image = tf.image.convert_image_dtype(resized_image, tf.float32)
             # clip the pixel values to [0, 1]
+            resized_image = resized_image / 255
             resized_image = tf.clip_by_value(resized_image, 0.0, 1.0)
-            
+
             # confirm that the new shape is (1, hnew, w_new, 3)
             resized_image = tf.ensure_shape(resized_image, [1, None, None, 3])
 
