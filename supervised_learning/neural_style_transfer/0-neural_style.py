@@ -1,4 +1,5 @@
-ss NST that performs neural style transfer'''
+#!/usr/bin/env python3
+class NST that performs neural style transfer'''
 import numpy as np
 import tensorflow as tf
 
