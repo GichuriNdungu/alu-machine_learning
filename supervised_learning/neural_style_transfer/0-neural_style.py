@@ -68,4 +68,3 @@ class NST:
             resized_image = tf.ensure_shape(resized_image, [1, None, None, 3])
 
             return resized_image
-
