@@ -47,7 +47,7 @@ class NST:
                 'image must be a numpy.ndarray with shape (h, w, 3)')
         else:
             # convert pixel values to range (0-1)
-            image = tf.image.convert_image_dtype(image, tf.float32)
+            # image = tf.image.convert_image_dtype(image, tf.float32)
             # get the initial dimensions
             original_height, original_width = tf.shape(
                 image)[0], tf.shape(image)[1]
