@@ -31,3 +31,4 @@ if __name__ == '__main__':
     plt.show()
     plt.imshow(nst.content_image[0])
     plt.show()
+    print(nst.content_image.dtype)

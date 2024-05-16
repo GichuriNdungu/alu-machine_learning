@@ -27,14 +27,14 @@ class NST:
             raise TypeError('beta must be a non-negative number')
         if not isinstance(alpha, (int, float)) or alpha < 0:
             raise TypeError('alpha must be a non-negative number')
-        
+
         tf.enable_eager_execution()
 
         self.style_image = self.scale_image(style_image)
         self.content_image = self.scale_image(content_image)
         self.alpha = alpha
         self.beta = beta
-            
+
     @staticmethod
     def scale_image(image):
         '''Rescale an image's pixels to 0 and 1.
@@ -46,7 +46,7 @@ class NST:
             raise TypeError(
                 'image must be a numpy.ndarray with shape (h, w, 3)')
         else:
-            #convert pixel values to range (0-1)
+            # convert pixel values to range (0-1)
             image = tf.image.convert_image_dtype(image, tf.float32)
             # get the initial dimensions
             original_height, original_width = tf.shape(
@@ -62,10 +62,11 @@ class NST:
             resized_image = tf.image.resize_images(
                 image, [new_height, new_width],
                 method=tf.image.ResizeMethod.BICUBIC)
+            # clip the pixel values to [0, 1]
+            resized_image = tf.clip_by_value(resized_image, 0.0, 1.0)
             # add an extra batch dimension
             resized_image = tf.expand_dims(resized_image, axis=0)
             # confirm that the new shape is (1, hnew, w_new, 3)
             resized_image = tf.ensure_shape(resized_image, [1, None, None, 3])
 
             return resized_image
-
