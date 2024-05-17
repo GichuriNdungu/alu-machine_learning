@@ -34,7 +34,7 @@ class NST:
         self.content_image = self.scale_image(content_image)
         self.alpha = alpha
         self.beta = beta
-        self.model = self.load_model()
+        self.load_model()
 
     @staticmethod
     def scale_image(image):
@@ -81,10 +81,10 @@ class NST:
         # Add customizable objects to model
         # Here we are replacing any maxpooling layer
         # in our model with average pooling
-        
         # load the model afresh with the customs
         custom_objects = {'MaxPooling2D': tf.keras.layers.AveragePooling2D}
-        loaded_model = tf.keras.models.load_model("VGG19_base_model.h5", custom_objects=custom_objects)
+        loaded_model = tf.keras.models.load_model("VGG19_base_model.h5",
+                                                  custom_objects)
 
         # define a list for outputs:
         style_output = []
@@ -98,4 +98,5 @@ class NST:
             layer.trainable = False
         output = style_output + [content_output]
         model = tf.keras.models.Model(loaded_model.input, output)
-        return model
+        self.model = model
+        return self.model
