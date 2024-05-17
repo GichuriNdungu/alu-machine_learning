@@ -70,23 +70,25 @@ class NST:
             resized_image = tf.ensure_shape(resized_image, [1, None, None, 3])
 
             return resized_image
+
     def load_model(self):
         '''loads a VGG19 model for neural transfer'''
         # define the base_model
-        VGG19_model = tf.keras.applications.VGG19(include_top=False,weights='imagenet')
+        VGG19_model = tf.keras.applications.VGG19(
+            include_top=False, weights='imagenet')
         # save model
         VGG19_model.save('VGG19_base_model')
-        #Add customizable objects to model
-        #Here we are replacing any maxpooling layer
-        # in our model with average pooling 
+        # Add customizable objects to model
+        # Here we are replacing any maxpooling layer
+        # in our model with average pooling
         # custom_objects = {'MaxPooling2D': tf.keras.layers.AveragePooling2D}
-        #load the model afresh with the customs
+        # load the model afresh with the customs
         # loaded_model = tf.keras.models.load_model("VGG19_base_model", custom_objects=custom_objects)
-        loaded_model = VGG19_model       
+        loaded_model = VGG19_model
         # define a list for outputs:
         style_output = []
         content_output = None
-        #check whether layer name is self.style_layers
+        # check whether layer name is self.style_layers
         for layer in loaded_model.layers:
             if layer.name in self.style_layers:
                 style_output.append(layer.output)
