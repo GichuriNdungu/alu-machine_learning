@@ -111,8 +111,11 @@ class NST:
         # get input dimensions
         _, h, w, c = input_layer.shape
         # flatten the dimensions h and w
-        features = tf.reshape(input_layer, (h *w, c))
+        pd = (h * w)
+        features = tf.reshape(input_layer, (pd, c))
         # calculate gram matrix (transpose of flat)
         gram = tf.matmul(features, features, transpose_a=True)
+        gram = tf.expand_dims(gram, axis=0)
+        gram /= tf.cast(pd, tf.float32)
 
         return gram
