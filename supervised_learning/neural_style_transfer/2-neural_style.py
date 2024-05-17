@@ -104,13 +104,13 @@ class NST:
     @staticmethod
     def gram_matrix(input_layer):
         '''function to calculate the gram matrix of input'''
-        if not isinstance(input_layer, (tf.Tensor, tf.Variable)) and tf.rank(input_layer)._numpy() != 4:
+        if not isinstance(input_layer, (tf.Tensor, tf.Variable)) or tf.rank(input_layer)._numpy() != 4:
             raise TypeError("input_layer must be a tensor of rank 4")
 
         # get input dimensions
         _, h, w, c = input_layer.shape
         # flatten the dimensions h and w
-        features = tf.reshape(input_layer, (h*w, c))
+        features = tf.reshape(input_layer, (h, w, c))
         # calculate gram matrix (transpose of flat)
         gram = tf.matmul(features, features, transpose_a=True)
 
