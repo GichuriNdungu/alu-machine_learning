@@ -2,7 +2,7 @@
 '''class NST that performs neural style transfer'''
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.applications import VGG19
+
 
 class NST:
     '''class that performs neural style transfer'''
@@ -73,7 +73,7 @@ class NST:
     def load_model(self):
         '''loads a VGG19 model for neural transfer'''
         # define the base_model
-        VGG19_model = VGG19(include_top=False, weights='imagenet')
+        VGG19_model = tf.keras.applications.VGG19(include_top=False, weights='imagenet')
         # save model
         VGG19_model.save('VGG19_base_model')
         #Add customizable objects to model
