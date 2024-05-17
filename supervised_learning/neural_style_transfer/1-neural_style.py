@@ -81,10 +81,9 @@ class NST:
         # Add customizable objects to model
         # Here we are replacing any maxpooling layer
         # in our model with average pooling
-        # custom_objects = {'MaxPooling2D': tf.keras.layers.AveragePooling2D}
+        custom_objects = {'MaxPooling2D': tf.keras.layers.AveragePooling2D}
         # load the model afresh with the customs
-        # loaded_model = tf.keras.models.load_model("VGG19_base_model", custom_objects=custom_objects)
-        loaded_model = VGG19_model
+        loaded_model = tf.keras.models.load_model("VGG19_base_model", custom_objects=custom_objects)
         # define a list for outputs:
         style_output = []
         content_output = None
