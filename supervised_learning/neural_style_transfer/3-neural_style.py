@@ -124,7 +124,7 @@ class NST:
 
     def generate_features(self):
         '''function to extract style and content features'''
-        VGG19_model = tf.keras.applications.VGG19()
+        VGG19_model = tf.keras.applications.VGG19
         preprocessed_style = VGG19_model.preprocess_input(self.style_image * 255)
         preprocessed_content = VGG19_model.preprocess_input(self.content_image * 255)
 
