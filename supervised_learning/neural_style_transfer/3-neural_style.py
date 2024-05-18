@@ -124,12 +124,17 @@ class NST:
 
     def generate_features(self):
         '''function to extract style and content features'''
-        model = self.load_model()
-        for layer in self.model.layers:
-            if layer.name in self.style_layers:
-                output = layer.output
-                output_gram = self.gram_matrix(output)
-                self.gram_style_features.append(output_gram)
-            if layer.name in self.content_layer:
-                output = layer.output
-                self.content_feature = output
+        VGG19_model = tf.keras.applications.VGG19()
+        preprocessed_style = VGG19_model.preprocess_input(self.style_image * 255)
+        preprocessed_content = VGG19_model.preprocess_input(self.content_image * 255)
+
+        style_output = VGG19_model(preprocessed_style)
+        content_output = VGG19_model(preprocessed_content)
+
+        gram_style = []
+        for output in style_output:
+            gram = self.gram_matrix(output)
+            gram.style.append(gram)
+        
+        self.gram_style_features = gram_style
+        self.content_feature = content_output
