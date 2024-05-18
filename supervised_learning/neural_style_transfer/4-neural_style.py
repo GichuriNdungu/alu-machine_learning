@@ -143,17 +143,19 @@ class NST:
 
         self.gram_style_features = gram_style_features
         self.content_feature = content_feature
+
     def layer_style_cost(self, style_output, gram_target):
         '''calculate the style cost of a single layer'''
         if not isinstance(style_output, (tf.Tensor, tf.Variable)) or tf.rank(style_output):
             raise TypeError("style_output must be a tensor of rank 4")
-        _,h,w,c = style_output.shape
-        if not isinstance(gram_target, (tf.tensor, tf.Variable)) or gram_target.shape != (1,c,c) :
-            raise TypeError("gram_target must be a tensor of shape [1, {c}, {c}]")
+        _, h, w, c = style_output.shape
+        if not isinstance(gram_target, (tf.tensor, tf.Variable)) or gram_target.shape != (1, c, c):
+            raise TypeError(
+                "gram_target must be a tensor of shape [1, {c}, {c}]")
         s = self.gram_matrix(style_output)
         g = gram_target
 
-        #style cost = mean squared error of the difference between s and 
+        # style cost = mean squared error of the difference between s and
 
         cost = tf.reduce_mean(tf.square(s-g))
-        return cost 
+        return cost
