@@ -122,18 +122,24 @@ class NST:
         return gram
 
     def generate_features(self):
-        '''function to extract style and content features'''
-        VGG19_model = tf.keras.applications.VGG19
-        preprocessed_style = VGG19_model.preprocess_input(self.style_image * 255)
-        preprocessed_content = VGG19_model.preprocess_input(self.content_image * 255)
+        """
+        Extracts the features used to calculate neural style cost
 
-        style_output = self.model(preprocessed_style)[:-1]
-        content_output = self.model(preprocessed_content)[-1]
+        Sets public instance attribute:
+            gram_style_features and content_feature
+        """
+        VGG19_model = tf.keras.applications.vgg19
+        preprocess_style = VGG19_model.preprocess_input(
+            self.style_image * 255)
+        preprocess_content = VGG19_model.preprocess_input(
+            self.content_image * 255)
 
-        gram_style = []
-        for output in style_output:
-            gram = self.gram_matrix(output)
-            gram_style.append(gram)
-        
-        self.gram_style_features = gram_style
-        self.content_feature = content_output
+        style_features = self.model(preprocess_style)[:-1]
+        content_feature = self.model(preprocess_content)[-1]
+
+        gram_style_features = []
+        for feature in style_features:
+            gram_style_features.append(self.gram_matrix(feature))
+
+        self.gram_style_features = gram_style_features
+        self.content_feature = content_feature
