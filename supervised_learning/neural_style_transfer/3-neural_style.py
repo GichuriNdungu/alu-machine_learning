@@ -35,8 +35,7 @@ class NST:
         self.alpha = alpha
         self.beta = beta
         self.load_model()
-        self.gram_style_features = []
-        self.content_feature = None
+        self.generate_features()
 
     @staticmethod
     def scale_image(image):
