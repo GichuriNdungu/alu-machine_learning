@@ -133,7 +133,7 @@ class NST:
         gram_style = []
         for output in style_output:
             gram = self.gram_matrix(output)
-            gram.style.append(gram)
+            gram_style.append(gram)
         
         self.gram_style_features = gram_style
         self.content_feature = content_output
