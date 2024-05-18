@@ -16,3 +16,4 @@ if __name__ == '__main__':
     input_layer = tf.constant(np.random.randn(1, 28, 30, 3), dtype=tf.float32)
     gram_matrix = nst.gram_matrix(input_layer)
     print(gram_matrix)
+    print(nst.model.summary())
