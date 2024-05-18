@@ -127,8 +127,8 @@ class NST:
         preprocessed_style = VGG19_model.preprocess_input(self.style_image * 255)
         preprocessed_content = VGG19_model.preprocess_input(self.content_image * 255)
 
-        style_output = VGG19_model(preprocessed_style)[:-1]
-        content_output = VGG19_model(preprocessed_content)[-1]
+        style_output = self.model(preprocessed_style)[:-1]
+        content_output = self.model(preprocessed_content)[-1]
 
         gram_style = []
         for output in style_output:
