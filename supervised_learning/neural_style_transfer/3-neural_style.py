@@ -37,6 +37,7 @@ class NST:
         self.load_model()
         self.gram_style_features = []
         self.content_feature = None
+
     @staticmethod
     def scale_image(image):
         '''Rescale an image's pixels to 0 and 1.
@@ -120,6 +121,7 @@ class NST:
         gram /= tf.cast(pd, tf.float32)
 
         return gram
+
     def generate_features(self):
         '''function to extract style and content features'''
         model = self.load_model()
@@ -131,5 +133,3 @@ class NST:
             if layer.name in self.content_layer:
                 output = layer.output
                 self.content_feature = output
-            
-
