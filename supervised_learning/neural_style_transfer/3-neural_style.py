@@ -147,9 +147,10 @@ class NST:
         '''calculate the style cost of a single layer'''
         if not isinstance(style_output, (tf.Tensor, tf.Variable)) or tf.rank(style_output):
             raise TypeError("style_output must be a tensor of rank 4")
-        _,h,w,c = style_output.shape
-        if not isinstance(gram_target, (tf.tensor, tf.Variable)) or gram_target.shape != (1,c,c) :
-            raise TypeError("gram_target must be a tensor of shape [1, {c}, {c}]")
+        one,h,w,c = style_output.shape
+        if not isinstance(gram_target, (tf.tensor, tf.Variable)) or gram_target.shape is not 3 or gram_target.shape != (1, c, c):
+            raise TypeError(f"gram_target must be a tensor of shape [1, {c}, {c}]")
+        
         s = self.gram_matrix(style_output)
         g = gram_target
 
