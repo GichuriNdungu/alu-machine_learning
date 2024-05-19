@@ -154,7 +154,8 @@ class NST:
                 len(gram_target.shape) is not 3 or\
                 gram_target.shape != (1, c, c):
             raise TypeError(
-                "gram_target must be a tensor of shape [1, {}, {}]".format(c, c))
+                "gram_target must be a tensor of shape [1, {}, {}]"
+                .format(c, c))
         s = self.gram_matrix(style_output)
         g = gram_target
 
