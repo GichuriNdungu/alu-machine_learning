@@ -143,7 +143,7 @@ class NST:
 
         self.gram_style_features = gram_style_features
         self.content_feature = content_feature
-     def layer_style_cost(self, style_output, gram_target):
+    def layer_style_cost(self, style_output, gram_target):
         """
         Calculates the style cost for a single layer
 
