@@ -163,3 +163,41 @@ class NST:
 
         cost = tf.reduce_mean(tf.square(s-g))
         return cost
+
+    def style_cost(self, style_outputs):
+        """
+        Calculates the style cost for generated image
+
+        parameters:
+            style_outputs [list of tf.Tensors]:
+                contains stye outputs for the generated image
+
+        returns:
+            the style cost
+        """
+        length = len(self.style_layers)
+        if type(style_outputs) is not list or len(style_outputs) != length:
+            raise TypeError(
+                "style_outputs must be a list with a length of {}".format(
+                    length))
+        weight = 1 / length
+        style_cost = 0
+        for i in range(length):
+            style_cost += (
+                self.layer_style_cost(style_outputs[i],
+                                      self.gram_style_features[i]) * weight)
+        return style_cost
+    def content_cost(self, content_output):
+        '''calculates content cost for the generated image
+        
+        parameters: 
+            content_output Tensor with content output for the generated image
+        returns:
+            generated image content cost'''
+        s = self.content_feature.shape
+        if not isinstance(content_output, (tf.Tensor, tf.Variable)) or content_output.shape != self.content_feature.shape:
+            raise TypeError(f"content_output must be a tensor of shape {s}")
+        #content ouput is = activation of content image - activation of generated image. therefore:
+        content_cost = self.content_feature - content_output
+        return content_cost
+    
