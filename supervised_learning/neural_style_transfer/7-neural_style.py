@@ -199,26 +199,29 @@ class NST:
         if not isinstance(content_output, (tf.Tensor, tf.Variable)) or content_output.shape != self.content_feature.shape:
             raise TypeError(
                 "content_output must be a tensor of shape {}".format(s))
-        content_cost = tf.reduce_mean(tf.square(self.content_feature - content_output))
+        content_cost = tf.reduce_mean(
+            tf.square(self.content_feature - content_output))
         return content_cost
+
     def total_cost(self, generated_image):
         '''calculates the total cost of the generated image
-        
+
         parameters:
             generated_image: tensor containing the generated image
         return:
             J: total cost
             j_content: content_cost
             j_style: style cost'''
-        
+
         s = self.content_image
         if not isinstance(generated_image, (tf.Tensor, tf.Variable)) or generated_image.shape != self.content_image.shape:
-            raise TypeError("generated_image must be a tensor of shape {}".format(s))
-        #get the total style cost for generated image
-        j_style = self.style_cost(generated_image) 
-        #get the total content cost for generate image
+            raise TypeError(
+                "generated_image must be a tensor of shape {}".format(s))
+        # get the total style cost for generated image
+        j_style = self.style_cost(generated_image)
+        # get the total content cost for generate image
         j_content = self.content_cost(generated_image)
-        #add these two to get total cost
+        # add these two to get total cost
         j = j_style + j_content
-        #return total cost
-        return(j, j_content, j_style)
+        # return total cost
+        return (j, j_content, j_style)
