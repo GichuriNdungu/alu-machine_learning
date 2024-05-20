@@ -196,8 +196,7 @@ class NST:
             generated image content cost'''
         s = self.content_feature.shape
         if not isinstance(content_output, (tf.Tensor, tf.Variable)) or content_output.shape != self.content_feature.shape:
-            raise TypeError(f"content_output must be a tensor of shape {s}")
-        #content ouput is = activation of content image - activation of generated image. therefore:
+            raise TypeError("content_output must be a tensor of shape {}".format(s))
         content_cost = self.content_feature - content_output
         return content_cost
     
