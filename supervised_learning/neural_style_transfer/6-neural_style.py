@@ -200,5 +200,5 @@ class NST:
             raise TypeError(
                 "content_output must be a tensor of shape {}".format(s))
         content_cost = self.content_feature - content_output
-	print('this is content_feature {} with shape {}'.format(self.content_feature, self.content_feature.shape)
+	    print('this is content_feature {} with shape {}'.format(self.content_feature, self.content_feature.shape)
         return content_cost
