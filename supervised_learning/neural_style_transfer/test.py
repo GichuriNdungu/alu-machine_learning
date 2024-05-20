@@ -3,11 +3,12 @@
 import matplotlib.image as mpimg
 import numpy as np
 import tensorflow as tf
-
+import os
 NST = __import__('4-neural_style').NST
 
 
 if __name__ == '__main__':
+    os.chdir("C:/Users/user/Desktop/codes/alu-machine_learning/supervised_learning/neural_style_transfer")
     style_image = mpimg.imread("starry_night.jpg")
     content_image = mpimg.imread("golden_gate.jpg")
 
