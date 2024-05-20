@@ -187,16 +187,18 @@ class NST:
                 self.layer_style_cost(style_outputs[i],
                                       self.gram_style_features[i]) * weight)
         return style_cost
+
     def content_cost(self, content_output):
         '''calculates content cost for the generated image
-        
-        parameters: 
+
+        parameters:
             content_output Tensor with content output for the generated image
         returns:
             generated image content cost'''
         s = self.content_feature.shape
         if not isinstance(content_output, (tf.Tensor, tf.Variable)) or content_output.shape != self.content_feature.shape:
-            raise TypeError("content_output must be a tensor of shape {}".format(s))
+            raise TypeError(
+                "content_output must be a tensor of shape {}".format(s))
         content_cost = self.content_feature - content_output
+	print('this is content_feature {} with shape {}'.format(self.content_feature, self.content_feature.shape)
         return content_cost
-    

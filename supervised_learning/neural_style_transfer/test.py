@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import matplotlib.image as mpimg
 import numpy as np
 import tensorflow as tf
