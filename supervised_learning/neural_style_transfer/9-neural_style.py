@@ -294,11 +294,11 @@ class NST:
         best_cost = float("inf")
         best_image = None
 
-        generated_image = tf.Variable(self.content_image, dtype = float32)
+        generated_image = tf.Variable(self.content_image, dtype = tf.float32)
 
         #define the optimizer
 
-        opt = tf.optimizers.Adam(learning_rate=lr, beta_1=beta1, beta_2= beta2)
+        opt = tf.keras.optimizers.Adam(learning_rate=lr, beta_1=beta1, beta_2= beta2)
         # create placeholder for the total cost
         total_cost, _, _ = self.total_cost(generated_image)
         #define the train step
