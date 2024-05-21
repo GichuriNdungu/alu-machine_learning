@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
 import numpy as np
-import tensorflow as tf
 
-NST = __import__('8-neural_style').NST
+NST = __import__('9-neural_style').NST
 
 
 if __name__ == '__main__':
@@ -13,9 +13,7 @@ if __name__ == '__main__':
 
     np.random.seed(0)
     nst = NST(style_image, content_image)
-    generated_image = tf.contrib.eager.Variable(nst.content_image)
-    grads, J_total, J_content, J_style = nst.compute_grads(generated_image)
-    print(J_total)
-    print(J_content)
-    print(J_style)
-    print(grads)
+    image, cost = nst.generate_image(iterations=2000, step=100, lr=0.002)
+    print("Best cost:", cost)
+    plt.imshow(image)
+    plt.show()
