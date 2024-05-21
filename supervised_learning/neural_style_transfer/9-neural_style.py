@@ -298,11 +298,7 @@ class NST:
 
         #define the optimizer
 
-        opt = tf.keras.optimizers.Adam(lr, beta1, beta2)
-        # create placeholder for the total cost
-        total_cost, _, _ = self.total_cost(generated_image)
-        #define the train step
-        train_step = opt.minimize(total_cost, var_list=[generated_image])
+        optimizer = tf.train.AdamOptimizer(learning_rate=lr, beta1=beta1, beta2=beta2))
         #initialize global variables
         init = tf.global_variables_initializer()
         with tf.Session() as sess:
@@ -310,9 +306,11 @@ class NST:
 
             for i in range(iterations):
                 #compute teh gradients and the costs
-                _,curr_total_cost, content_cost, style_cost, = sess.run([train_step, total_cost,self.content_cost(generated_image), self.style_cost(generated_image)])
+                grads, total_cost, content_cost, style_cost = self.compute_grads(generated_image)
+                # Apply the gradients manually
+                sess.run(optimizer.apply_gradients([(grads, generated_image)]))
                 #check whether the current cost is the best cost,if its not, update the variables (best_cost, best_image)
-                if curr_total_cost < best_cost:
+                if total_cost < best_cost:
                     best_cost = total_cost
                     best_image = sess.run(generated_image)
                 #print the costs every step iterations 
