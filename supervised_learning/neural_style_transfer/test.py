@@ -3,7 +3,9 @@
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 import numpy as np
+from tensorflow.keras import backend as K
 
+K.clear_session()
 
 NST = __import__('9-neural_style').NST
 
@@ -14,7 +16,7 @@ if __name__ == '__main__':
 
     np.random.seed(0)
     nst = NST(style_image, content_image)
-    image, cost = nst.generate_image(iterations=2000, step=100, lr=0.002)
+    image, cost = nst.generate_image(iterations=200, step=100, lr=0.002)
     print("Best cost:", cost)
     plt.imshow(image)
     plt.show()
