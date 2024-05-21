@@ -294,23 +294,30 @@ class NST:
         best_cost = float("inf")
         best_image = None
 
-        generated_image = tf.Variable(self.content_image)
+        generated_image = tf.Variable(self.content_image, dtype = float32)
 
         #define the optimizer
 
-        opt = tf._optimizers.Adam(learning_rate=lr, beta_1=beta1, beta_2= beta2)
-        for i in range(iterations):
-            #compute teh gradients and the costs
-            grads, total_cost, content_cost, style_cost = self.compute_grads(generated_image)
-            #check whether the current cost is the best cost,if its not, update the variables (best_cost, best_image)
-            if total_cost < best_cost:
-                best_cost = total_cost
-                best_image = tf.identity(generated_image)
-            #print the costs every step iterations 
-            if step is not None:
-                if i % step == 0:
-                    print("Cost at iteration {}: {}, content {}, style {}".format(i, total_cost, content_cost, style_cost))
-            #update the generated image with respect to the new grads
-            opt.apply_gradients([(grads, generated_image)])
-        #after all the iterations, return the best cost and the best image
-        return best_image, best_cost
+        opt = tf.optimizers.Adam(learning_rate=lr, beta_1=beta1, beta_2= beta2)
+        # create placeholder for the total cost
+        total_cost, _, _ = self.total_cost(generated_image)
+        #define the train step
+        train_step = opt.minimize(total_cost, var_list=[generated_image])
+        #initialize global variables
+        init = tf.global_variables_initializer()
+        with tf.Session() as sess:
+            sess.run(init)
+
+            for i in range(iterations):
+                #compute teh gradients and the costs
+                _,curr_total_cost, content_cost, style_cost, = sess.run([train_step, total_cost,self.content_cost(generated_image), self.style_cost(generated_image)])
+                #check whether the current cost is the best cost,if its not, update the variables (best_cost, best_image)
+                if curr_total_cost < best_cost:
+                    best_cost = total_cost
+                    best_image = sess.run(generated_image)
+                #print the costs every step iterations 
+                if step is not None:
+                    if i % step == 0:
+                        print("Cost at iteration {}: {}, content {}, style {}".format(i, curr_total_cost, content_cost, style_cost))
+            #after all the iterations, return the best cost and the best image
+            return best_image, best_cost
