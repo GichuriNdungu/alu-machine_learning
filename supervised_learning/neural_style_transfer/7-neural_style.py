@@ -217,17 +217,18 @@ class NST:
         if not isinstance(generated_image, (tf.Tensor, tf.Variable)) or generated_image.shape != self.content_image.shape:
             raise TypeError(
                 "generated_image must be a tensor of shape {}".format(s))
-       
-        #preprocess the generated image
+
+        # preprocess the generated image
         VGG19_model = tf.keras.applications.vgg19
-        preprocess_generated = VGG19_model.preprocess_input(generated_image*255)
-        
-        #get the outputs using the created model
+        preprocess_generated = VGG19_model.preprocess_input(
+            generated_image*255)
+
+        # get the outputs using the created model
         outputs = self.model(preprocess_generated)
         style_outputs = outputs[:-1]
         content_outputs = outputs[-1]
 
-         # get the total style cost for generated image
+        # get the total style cost for generated image
         j_style = self.style_cost(style_outputs)
         # get the total content cost for generate image
         j_content = self.content_cost(content_outputs)
