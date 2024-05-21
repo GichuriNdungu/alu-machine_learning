@@ -298,7 +298,7 @@ class NST:
 
         #define the optimizer
 
-        optimizer = tf.train.AdamOptimizer(learning_rate=lr, beta1=beta1, beta2=beta2))
+        optimizer = tf.train.AdamOptimizer(learning_rate=lr, beta1=beta1, beta2=beta2)
         #initialize global variables
         init = tf.global_variables_initializer()
         with tf.Session() as sess:
