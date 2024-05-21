@@ -219,8 +219,8 @@ class NST:
                 "generated_image must be a tensor of shape {}".format(s))
        
         #preprocess the generated image
-        VGG19_model = tf.keras.applications.VGG19
-        preprocess_generated = VGG19_model.preprocess_input(generated_image)
+        VGG19_model = tf.keras.applications.vgg19
+        preprocess_generated = VGG19_model.preprocess_input(generated_image*255)
         
         #get the outputs using the created model
         outputs = self.model(preprocess_generated)
