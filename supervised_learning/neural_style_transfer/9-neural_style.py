@@ -236,6 +236,7 @@ class NST:
         j = j_style + j_content
         # return total cost
         return (j, j_content, j_style)
+
     def compute_grads(self, generated_image):
         '''computes gradients for the generated image
         parameters: 
@@ -246,17 +247,19 @@ class NST:
             j_content: content cost for the generated image
             j_style: style cost for the generad image
         '''
-        #check whether gen image is right shape and type
+        # check whether gen image is right shape and type
         s = self.content_image.shape
         if not isinstance(generated_image, (tf.Tensor, tf.Variable)) or generated_image.shape != self.content_image.shape:
-            raise TypeError("generated_image must be a tensor of shape {}".format(s))
-        #call total_cost function
-        
+            raise TypeError(
+                "generated_image must be a tensor of shape {}".format(s))
+        # call total_cost function
+
         # calculate the gradients using tf.GradientTape
         with tf.GradientTape() as tape:
             j_total, j_content, j_style = self.total_cost(generated_image)
         gradients = tape.gradient(j_total, generated_image)
         return gradients, j_total, j_content, j_style
+
     def generate_image(self, iterations=1000, step=None, lr=0.01, beta1=0.9, beta2=0.99):
         '''generates the neural style transfer image
         parameters: 
@@ -283,42 +286,43 @@ class NST:
             raise ValueError("lr must be positive")
         if not isinstance(beta1, float):
             raise TypeError("beta1 must be a float")
-        if not (0<= beta1 <=1):
+        if not (0 <= beta1 <= 1):
             raise ValueError("beta1 must be in the range [0, 1]")
         if not isinstance(beta2, float):
             raise TypeError("beta2 must be a float")
-        if not (0<=beta2<=1):
+        if not (0 <= beta2 <= 1):
             raise ValueError("beta2 must be in the range [0, 1]")
-        
-        #initialize the best cost and the best image to keep track
+
+        # initialize the best cost and the best image to keep track
         best_cost = float("inf")
         best_image = None
 
-        generated_image = tf.Variable(self.content_image, dtype = tf.float32)
+        generated_image = tf.Variable(self.content_image, dtype=tf.float32)
 
-        #define the optimizer
+        # define the optimizer
 
-        optimizer = tf.train.AdamOptimizer(learning_rate=lr, beta1=beta1, beta2=beta2)
-         # Define the training operation
-        grads_placeholder = tf.placeholder(tf.float32, shape=generated_image.shape)
-        apply_grads = optimizer.apply_gradients([(grads_placeholder, generated_image)])
-        #initialize global variables
-        init = tf.global_variables_initializer()
-        with tf.Session() as sess:
-            sess.run(init)
+        optimizer = tf.train.AdamOptimizer(
+            learning_rate=lr, beta1=beta1, beta2=beta2)
+        for i in range(iterations):
+            # Compute the gradients and the costs
+            with tf.GradientTape() as tape:
+                total_cost, content_cost, style_cost = self.total_cost(
+                    generated_image)
 
-            for i in range(iterations):
-                #compute teh gradients and the costs
-                grads, total_cost, content_cost, style_cost = self.compute_grads(generated_image)
-                # Apply the gradients manually
-                sess.run(apply_grads, feed_dict={grads_placeholder: grads})
-                #check whether the current cost is the best cost,if its not, update the variables (best_cost, best_image)
-                if total_cost < best_cost:
-                    best_cost = total_cost
-                    best_image = sess.run(generated_image)
-                #print the costs every step iterations 
-                if step is not None:
-                    if i % step == 0:
-                        print("Cost at iteration {}: {}, content {}, style {}".format(i, curr_total_cost, content_cost, style_cost))
-            #after all the iterations, return the best cost and the best image
-            return best_image, best_cost
+            # Compute gradients
+            grads = tape.gradient(total_cost, generated_image)
+
+            # Apply gradients
+            optimizer.apply_gradients([(grads, generated_image)])
+
+            # Check whether the current cost is the best cost, if it's not, update the variables (best_cost, best_image)
+            if total_cost < best_cost:
+                best_cost = total_cost
+                best_image = generated_image.numpy()
+
+            # Print the costs every step iterations
+            if step is not None and i % step == 0:
+                print("Cost at iteration {}: {}, content {}, style {}".format(
+                    i, total_cost, content_cost, style_cost))
+        # After all the iterations, return the best cost and the best image
+        return best_image, best_cost
