@@ -299,6 +299,9 @@ class NST:
         #define the optimizer
 
         optimizer = tf.train.AdamOptimizer(learning_rate=lr, beta1=beta1, beta2=beta2)
+         # Define the training operation
+        grads_placeholder = tf.placeholder(tf.float32, shape=generated_image.shape)
+        apply_grads = optimizer.apply_gradients([(grads_placeholder, generated_image)])
         #initialize global variables
         init = tf.global_variables_initializer()
         with tf.Session() as sess:
@@ -308,7 +311,7 @@ class NST:
                 #compute teh gradients and the costs
                 grads, total_cost, content_cost, style_cost = self.compute_grads(generated_image)
                 # Apply the gradients manually
-                sess.run(optimizer.apply_gradients([(grads, generated_image)]))
+                sess.run(apply_grads, feed_dict={grads_placeholder: grads})
                 #check whether the current cost is the best cost,if its not, update the variables (best_cost, best_image)
                 if total_cost < best_cost:
                     best_cost = total_cost
