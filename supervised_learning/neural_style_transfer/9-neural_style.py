@@ -298,7 +298,7 @@ class NST:
 
         #define the optimizer
 
-        opt = tf.keras.optimizers.Adam(learning_rate=lr, beta_1=beta1, beta_2= beta2)
+        opt = tf.keras.optimizers.Adam(lr, beta1, beta2)
         # create placeholder for the total cost
         total_cost, _, _ = self.total_cost(generated_image)
         #define the train step
