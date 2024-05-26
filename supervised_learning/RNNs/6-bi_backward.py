@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """
 Defines the class BidirectionalCell that represents a bidirectional RNN cell

@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """
 Defines function that performs forward propagation for a deep RNN
