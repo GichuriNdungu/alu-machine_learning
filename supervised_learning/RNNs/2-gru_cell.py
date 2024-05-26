@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """
 Defines the class GRUCell that represents a gated recurrent unit
