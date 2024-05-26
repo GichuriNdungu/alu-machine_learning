@@ -24,6 +24,7 @@ class BidirectionalCell:
             calculates the hidden state in backward direction for one time step
 
     """
+
     def __init__(self, i, h, o):
         """
         Class constructor
@@ -89,4 +90,3 @@ class BidirectionalCell:
         h_prev = np.tanh(np.matmul(h_x, self.Whb) + self.bhb)
 
         return h_prev
-

@@ -25,6 +25,7 @@ class RNNCell:
         def forward(self, h_prev, x_t):
             performs forward propagation for one time step
     """
+
     def __init__(self, i, h, o):
         """
         Class constructor
@@ -88,4 +89,3 @@ class RNNCell:
         h_next = np.tanh(np.matmul(concatenation, self.Wh) + self.bh)
         y = self.softmax(np.matmul(h_next, self.Wy) + self.by)
         return h_next, y
-

@@ -29,6 +29,7 @@ class GRUCell:
         def forward(self, h_prev, x_t):
             performs forward propagation for one time step
     """
+
     def __init__(self, i, h, o):
         """
         Class constructor
@@ -121,4 +122,3 @@ class GRUCell:
         y = self.softmax(np.matmul(h_next, self.Wy) + self.by)
 
         return h_next, y
-

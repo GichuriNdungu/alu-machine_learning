@@ -24,6 +24,7 @@ class BidirectionalCell:
         def output(self, H):
             calculates all outputs for the RNN
     """
+
     def __init__(self, i, h, o):
         """
         Class constructor

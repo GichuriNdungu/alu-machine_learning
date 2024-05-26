@@ -20,6 +20,7 @@ class BidirectionalCell:
         def forward(self, h_prev, c_prev, x_t):
             performs forward propagation for one time step
     """
+
     def __init__(self, i, h, o):
         """
         Class constructor
