@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """
 Defines the class RNNCell that represents a cell of a simple RNN
