@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
+"""function that creates a bag of words embedding matrix"""
+
 from sklearn.feature_extraction.text import CountVectorizer
+
 
 def bag_of_words(sentences, vocab=None):
     """creates a bag of words embedding matrix
@@ -10,7 +13,7 @@ def bag_of_words(sentences, vocab=None):
         embeddings: np.array(s, f), where s = number of sentences in params
                     f = number of features analyzed
         Features: [] : Names of features used for analysis"""
-    
+
     if vocab:
         vectorizer = CountVectorizer(vocabulary=vocab)
     else:
