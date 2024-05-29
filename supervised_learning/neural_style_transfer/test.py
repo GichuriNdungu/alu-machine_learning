@@ -3,9 +3,6 @@
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 import numpy as np
-from tensorflow.keras import backend as K
-
-K.clear_session()
 
 NST = __import__('9-neural_style').NST
 
