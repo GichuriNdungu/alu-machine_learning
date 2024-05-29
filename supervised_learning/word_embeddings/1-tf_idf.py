@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""function that creates a bag of words embedding matrix"""
+"""function that creates a TF_Idf embedding matrix"""
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 
@@ -22,4 +22,3 @@ def tf_idf(sentences, vocab=None):
     embeddings = X_train_counts.toarray()
     features = vectorizer.get_feature_names()
     return embeddings, features
-
