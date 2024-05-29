@@ -5,7 +5,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 
 def tf_idf(sentences, vocab=None):
-    """creates a bag of words embedding matrix
+    """creates a tfid embedding matrix
     params:
         Vocab: []: words within sentence to use for analysis
         sentences: []: sentences to use for analysis
