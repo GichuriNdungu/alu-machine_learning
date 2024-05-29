@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """function that creates a TF_Idf embedding matrix"""
 
-from gensim.models import Word2Vec
+from gensim.models import FastText
 
 
-def word2vec_model(sentences, size=100, min_count=5, window=5, negative=5, cbow=True, iterations=5, seed=0, workers=1):
+def fasttext_model(sentences, size=100, min_count=5, window=5, negative=5, cbow=True, iterations=5, seed=0, workers=1):
     """ params:
             sentences: list of sentences to be trained on
             size = dimensionality of the embedding layer
@@ -21,7 +21,7 @@ def word2vec_model(sentences, size=100, min_count=5, window=5, negative=5, cbow=
         cbow_flag = 0
     else:
         cbow_flag = 1
-    model = Word2Vec(sentences=sentences,
+    model = FastText(sentences=sentences,
                      size=size,
                      min_count=min_count,
                      window=window,
@@ -34,3 +34,4 @@ def word2vec_model(sentences, size=100, min_count=5, window=5, negative=5, cbow=
                 total_examples=model.corpus_count,
                 epochs=model.epochs)
     return model
+
