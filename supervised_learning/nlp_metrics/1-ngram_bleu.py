@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """
 Defines function that calculates the n-gram BLEU score for a sentence
