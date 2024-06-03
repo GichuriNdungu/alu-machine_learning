@@ -126,4 +126,3 @@ def cumulative_bleu(references, sentence, n):
     BLEU_score = BLEU * mean
 
     return BLEU_score
-
