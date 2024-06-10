@@ -2,14 +2,15 @@
 
 import numpy as np
 import tensorflow as tf
-SelfAttention = __import__('1-self_attention').SelfAttention
+RNNDecoder = __import__('2-rnn_decoder').RNNDecoder
 
-attention = SelfAttention(256)
-print(attention.W)
-print(attention.U)
-print(attention.V)
-s_prev = tf.convert_to_tensor(np.random.uniform(size=(32, 256)), preferred_dtype='float32')
-hidden_states = tf.convert_to_tensor(np.random.uniform(size=(32, 10, 256)), preferred_dtype='float32')
-context, weights = attention(s_prev, hidden_states)
-print(context)
-print(weights)
+decoder = RNNDecoder(2048, 128, 256, 32)
+print(decoder.embedding)
+print(decoder.gru)
+print(decoder.F)
+x = tf.convert_to_tensor(np.random.choice(2048, 32).reshape((32, 1)))
+s_prev = tf.convert_to_tensor(np.random.uniform(size=(32, 256)).astype('float32'))
+hidden_states = tf.convert_to_tensor(np.random.uniform(size=(32, 10, 256)).astype('float32'))
+y, s = decoder(x, s_prev, hidden_states)
+print(y)
+print(s)

@@ -12,7 +12,6 @@ class RNNEncoder(tf.keras.layers.Layer):
         '''initializer of class RNNEncoder'''
         super(RNNEncoder, self).__init__()
         self.batch = batch
-        self.units = units
         self.embedding = tf.keras.layers.Embedding(
             input_dim=vocab, output_dim=embedding)
         self.gru = tf.keras.layers.GRU(
