@@ -2,13 +2,15 @@
 
 import numpy as np
 
+
 def get_angle(pos, i, dm):
     '''calculates the angles for positional encoding formulas
     PE(pos, 2i) = sin(pos / 10000^(2i/dm))
     PE(pos, 2i +1) = cos(pos / 10000^(2i/dm))'''
 
-    angle_rates = 1 /(10000 ** (i / dm))
+    angle_rates = 1 / (10000 ** (i / dm))
     return pos * angle_rates
+
 
 def positional_encoding(max_seq_len, dm):
     '''calculates the positional encoding for a transformer
