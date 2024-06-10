@@ -10,7 +10,8 @@ class SelfAttention(tf.keras.layers.Layer):
 
     def __init__(self, units):
         '''params:
-                units: integer, number of hidden units in the alignment model'''
+                units: integer, number of hidden units
+                  in the alignment model'''
         super(SelfAttention, self).__init__()
         # w dense applied to the previous decoder's hidden state
         self.W = tf.keras.layers.Dense(units=units)
