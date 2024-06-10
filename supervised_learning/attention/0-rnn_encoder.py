@@ -5,6 +5,7 @@
 import tensorflow as tf
 
 class RNNEncoder(tf.keras.layers.Layer):
+    '''class that defines the encoder part of a seq2seq model'''
     def __init__(self, vocab, embedding, units, batch):
         '''initializer of class RNNEncoder'''
         super(RNNEncoder, self).__init__()
@@ -23,6 +24,8 @@ class RNNEncoder(tf.keras.layers.Layer):
                 outputs: tensor containing outputs from the encoder
                 hidden: tensor containing the last hidden state of the hidden layer'''
         x = self.embedding(x)
+        if initial is None:
+            initial = self.initialize_hidden_state()
         outputs, hidden = self.gru(x, initial_state = initial)
         return outputs, hidden
 
