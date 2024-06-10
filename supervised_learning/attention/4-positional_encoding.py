@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+'''calculates the positional encodings for each word in a sequence'''
+
 import numpy as np
 
 
