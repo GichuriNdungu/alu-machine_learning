@@ -4,18 +4,21 @@
 
 import tensorflow as tf
 
+
 class SelfAttention(tf.keras.layers.Layer):
     '''class that implements self attention for the model'''
+
     def __init__(self, units):
         '''params:
                 units: integer, number of hidden units in the alignment model'''
         super(SelfAttention, self).__init__()
-        #w dense applied to the previous decoder's hidden state
+        # w dense applied to the previous decoder's hidden state
         self.W = tf.keras.layers.Dense(units=units)
         # u dense applied to encoder's hidden state
         self.U = tf.keras.layers.Dense(units=units)
-        #v dense applied to the tanh of the sum of w and u
+        # v dense applied to the tanh of the sum of w and u
         self.V = tf.keras.layers.Dense(units=1)
+
     def call(self, s_prev, hidden_states):
         '''params:
             s_prev: hidden state of the previous decoder
