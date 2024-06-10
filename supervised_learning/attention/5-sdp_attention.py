@@ -11,7 +11,7 @@ def sdp_attention(Q, K, V, mask=None):
         Q: tensor containing the query matrix
         V:tensor containing the Value matrix
         K:tensor containing the Key matrix
-        mask: optional mask 
+        mask: optional mask
     returns:
         output with the scaled dot product attention
         weights: attention weights tensor
