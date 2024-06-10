@@ -23,7 +23,9 @@ class SelfAttention(tf.keras.layers.Layer):
         return:
             context: context vector for the decoder
             weights:tensor with the attention weights'''
-        attention_score = tf.matmul(s_prev, hidden_states, transpose_b=True)
-        attention_weights = tf.nn.softmax(attention_score)
-        context = tf.matmul(attention_weights, hidden_states)
-        return context, attention_weights
+        W = self.W(tf.expand_dims(s_prev, 1))
+        U = self.U(hidden_states)
+        V = self.V(tf.nn.tanh(W+U))
+        weights = tf.nn.softmax(V, axis=1)
+        context = tf.reduce_sum(weights * hidden_states, axis=1)
+        return context, weights
