@@ -23,6 +23,6 @@ class RNNEncoder(tf.keras.layers.Layer):
                 outputs: tensor containing outputs from the encoder
                 hidden: tensor containing the last hidden state of the hidden layer'''
         x = self.embedding(x)
-        outputs, hidden = self.gru(x)
+        outputs, hidden = self.gru(x, initial_state = initial)
         return outputs, hidden
 
