@@ -21,7 +21,7 @@ class MultiHeadAttention(tf.keras.layers.Layer):
         self.h = h
         self.dm = dm
         # setting the depth of each attention head ???
-        self.depth = (self.dm // self.h)
+        self.depth = dm // h
         # query matrix
         self.Wq = tf.keras.layers.Dense(units=self.dm)
         # key matrix
@@ -34,10 +34,10 @@ class MultiHeadAttention(tf.keras.layers.Layer):
     def split_heads(self, x, batch_size):
         '''split the last dimension of x to facilitate parallel computation'''
         x = tf.reshape(x, (batch_size, -1, self.h, self.depth))
-        return tf.transpose(x, perm=[0, 1, 2, 3])
+        return tf.transpose(x, perm=[0, 2, 1, 3])
 
     def call(self, Q, K, V, mask):
-        '''    
+        '''
         params:
             Q: tensor containing the query matrix
             V:tensor containing the Value matrix
