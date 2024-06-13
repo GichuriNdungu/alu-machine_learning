@@ -11,7 +11,7 @@ class EncoderBlock(tf.keras.layers.Layer):
 
     def __init__(self, dm, h, hidden, drop_rate=0.1):
         '''class constructor
-        params: 
+        params:
             dm: dimensionality of the model
             h: number of heads
             hidden: number of hidden units in fully connected layer
@@ -31,9 +31,9 @@ class EncoderBlock(tf.keras.layers.Layer):
 
     def positional_encoding(input_tensor, max_len=512):
         '''performs positonal encoding for the encoding block
-        params: 
-            input_tensor: input tensor with shape(batch_size, input_seq_len, dm)
-            max_len: maximum sequence length for positional encoding, default=512
+        params:
+            input_tensor: input tensor
+            max_len: maximum sequence length
         return:
             Tensor: input tensor with positiona encoding added'''
         bath_size, input_seq_len, dm = tf.shape(input_tensor)
@@ -46,7 +46,8 @@ class EncoderBlock(tf.keras.layers.Layer):
         positions = tf.range(max_len, dtype=tf.float32)[:, tf.newaxis]
         div_terms = tf.pow(10000.0, tf.range(0, dm, 2, dtype=tf.float32) // dm)
         pos_encoding = tf.concat(
-            [tf.sin(positions / div_terms), tf.cos(positions/div_terms)], axis=-1)
+            [tf.sin(positions / div_terms),
+             tf.cos(positions/div_terms)], axis=-1)
         # ensure pos_encoding has the correct shape(max_len, dm)
         pos_encoding = pos_encoding[:max_len, :]
         pos_encoding = pos_encoding[tf.newaxis, :input_seq_len, :]
@@ -57,7 +58,7 @@ class EncoderBlock(tf.keras.layers.Layer):
     def call(self, x, training, mask=None):
         '''call method for the encoder block'''
         # perform positional encoding for the input
-        # input_tensor = self.positional_encoding(x)
+        # x = self.positional_encoding(x)
         # now using the pre-defined multihead layer, implement mha
         mha_outputs, _ = self.mha(x, x, x, mask)
         mha_outputs = self.dropout1(mha_outputs, training=training)
