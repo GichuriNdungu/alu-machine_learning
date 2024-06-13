@@ -69,13 +69,3 @@ input_tensor = tf.random.normal((32, 100, 256))  # Example input tensor
 output_tensor = positional_encoding(input_tensor, max_len=128)  # Add positional encoding
  
 
-         attention_output, _ = self.mha(x, x, x, mask)
-        attention_output = self.dropout1(attention_output, training=training)
-        output1 = self.layernorm1(x + attention_output)
-
-        dense_output = self.dense_hidden(output1)
-        ffn_output = self.dense_output(dense_output)
-        ffn_output = self.dropout2(ffn_output, training=training)
-        output2 = self.layernorm2(output1 + ffn_output)
-
-        return output2
