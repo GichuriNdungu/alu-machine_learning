@@ -28,3 +28,54 @@ def positional_encoding(max_seq_len, dm):
             PE[pos, i] = np.sin(get_angle(pos, i, dm))
             PE[pos, i+1] = np.cos(get_angle(pos, i, dm))
     return PE
+import tensorflow as tf
+
+def positional_encoding(input_tensor, max_len=512):
+    """
+    Adds positional encoding to the input tensor.
+
+    Args:
+    input_tensor: Input tensor of shape (batch_size, input_seq_len, dm).
+    max_len: Maximum sequence length for positional encoding (default: 512).
+
+    Returns:
+    Tensor: Input tensor with positional encoding added.
+    """
+
+    batch_size, input_seq_len, dm = input_tensor.shape
+
+    # Initialize positional encoding matrix
+    pos_encoding = tf.zeros((max_len, dm))
+
+    # Calculate positional encodings
+    positions = tf.range(max_len, dtype=tf.float32)[:, tf.newaxis]
+    div_terms = tf.pow(10000.0, tf.range(0, dm, 2, dtype=tf.float32) / dm)
+
+    pos_encoding = tf.concat([tf.sin(positions / div_terms), tf.cos(positions / div_terms)], axis=-1)
+
+    # Ensure pos_encoding has the correct shape (max_len, dm)
+    pos_encoding = pos_encoding[:max_len, :]
+
+    # Add batch dimension and slice to input_seq_len
+    pos_encoding = pos_encoding[tf.newaxis, :input_seq_len, :]
+
+    # Add positional encodings to input embeddings
+    output_tensor = input_tensor + pos_encoding
+
+    return output_tensor
+
+# Example usage:
+input_tensor = tf.random.normal((32, 100, 256))  # Example input tensor
+output_tensor = positional_encoding(input_tensor, max_len=128)  # Add positional encoding
+ 
+
+         attention_output, _ = self.mha(x, x, x, mask)
+        attention_output = self.dropout1(attention_output, training=training)
+        output1 = self.layernorm1(x + attention_output)
+
+        dense_output = self.dense_hidden(output1)
+        ffn_output = self.dense_output(dense_output)
+        ffn_output = self.dropout2(ffn_output, training=training)
+        output2 = self.layernorm2(output1 + ffn_output)
+
+        return output2
