@@ -58,7 +58,7 @@ class MultiHeadAttention(tf.keras.layers.Layer):
         v = self.split_heads(v, batch_size)
         attention, attention_weights = sdp_attention(q, k, v, mask)
 
-        attention = tf.transpose(attention, perm=[0, 1, 2, 3])
+        attention = tf.transpose(attention, perm=[0, 2, 1, 3])
         concat_attention = tf.reshape(attention, (batch_size, -1, self.dm))
         outputs = self.linear(concat_attention)
 
