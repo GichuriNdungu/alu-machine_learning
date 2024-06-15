@@ -42,7 +42,7 @@ class DecoderBlock(tf.keras.layers.Layer):
             rtype:
                 Tensor: block's output'''
         #masked multihead attention
-        att1, att_weights = self.mha1(x, x, x, look_ahead_mask)
+        att1, _ = self.mha1(x, x, x, look_ahead_mask)
         att1_drop = self.dropout1(att1, training=training)
         out_1 = self.layernorm1(x + att1_drop)
 
@@ -56,6 +56,6 @@ class DecoderBlock(tf.keras.layers.Layer):
         dense_output = self.dense_hidden(out_2)
         feed_forward = self.dense_output(dense_output)
         feed_forward_dropout = self.dropout3(feed_forward, training=training)
-        final_output = self.layernorm3(feed_forward_dropout)
+        final_output = self.layernorm3(out_2 + feed_forward_dropout)
 
         return final_output
