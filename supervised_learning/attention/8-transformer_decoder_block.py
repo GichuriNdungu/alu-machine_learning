@@ -31,6 +31,7 @@ class DecoderBlock(tf.keras.layers.Layer):
         self.dropout1 = tf.keras.layers.Dropout(rate=drop_rate)
         self.dropout2 = tf.keras.layers.Dropout(rate=drop_rate)
         self.dropout3 = tf.keras.layers.Dropout(rate=drop_rate)
+
     def call(self, x, encoder_output, training, look_ahead_mask, padding_mask):
         '''call method for the Decoder block class
             params:
@@ -41,17 +42,18 @@ class DecoderBlock(tf.keras.layers.Layer):
                 padding_mask: mask for the second multihead att layer
             rtype:
                 Tensor: block's output'''
-        #masked multihead attention
+        # masked multihead attention
         att1, _ = self.mha1(x, x, x, look_ahead_mask)
         att1_drop = self.dropout1(att1, training=training)
         out_1 = self.layernorm1(x + att1_drop)
 
-        #multihead attention
-        att2, _ = self.mha2(out_1, encoder_output,encoder_output, padding_mask)
+        # multihead attention
+        att2, _ = self.mha2(out_1, encoder_output,
+                            encoder_output, padding_mask)
         att2_drop = self.dropout2(att2, training=training)
         out_2 = self.layernorm2(out_1 + att2_drop)
 
-        #feed forward neural net
+        # feed forward neural net
 
         dense_output = self.dense_hidden(out_2)
         feed_forward = self.dense_output(dense_output)
