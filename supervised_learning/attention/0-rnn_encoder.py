@@ -11,11 +11,12 @@ class RNNEncoder(tf.keras.layers.Layer):
     def __init__(self, vocab, embedding, units, batch):
         '''initializer of class RNNEncoder'''
         super(RNNEncoder, self).__init__()
+        self.units = units
         self.batch = batch
         self.embedding = tf.keras.layers.Embedding(
             input_dim=vocab, output_dim=embedding)
         self.gru = tf.keras.layers.GRU(
-            units=units, recurrent_initializer='glorot_uniform',
+            units=self.units, recurrent_initializer='glorot_uniform',
             return_sequences=True,
             return_state=True)
 
