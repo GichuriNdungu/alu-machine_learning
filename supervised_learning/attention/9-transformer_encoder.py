@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """
 Defines a class that inherits from tensorflow.keras.layers.Layer
