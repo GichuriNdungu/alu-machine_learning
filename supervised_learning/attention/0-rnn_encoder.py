@@ -21,16 +21,17 @@ class RNNEncoder(tf.keras.layers.Layer):
             return_state=True)
 
     def initialize_hidden_state(self):
-        '''initializers the hidden states for the RNN cell to a tensor of zeros'''
+        '''initializers the hidden states for
+          the RNN cell to a tensor of zeros'''
         return tf.zeros(shape=(self.batch, self.units))
 
     def call(self, x, initial):
         '''params:
-                x:tensor containing the input to the encoding layer 
+                x:tensor containing the input to the encoding layer
                 initial: tensor containing the initial hidden states
             return:
                 outputs: tensor containing outputs from the encoder
-                hidden: tensor containing the last hidden state of the hidden layer'''
+                hidden: last hidden state of the hidden layer'''
         x = self.embedding(x)
         outputs, hidden = self.gru(x, initial_state=initial)
         return outputs, hidden
