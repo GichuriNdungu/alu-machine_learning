@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """ 0x01. Clustering """
 import numpy as np
