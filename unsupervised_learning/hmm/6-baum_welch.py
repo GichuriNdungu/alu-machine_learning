@@ -82,7 +82,8 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
     """
     performs the Baum-Welch algorithm for a hidden markov model
     """
-    if not isinstance(Observations, np.ndarray) or len(Observations.shape) != 1:
+    if not isinstance(Observations,
+                      np.ndarray) or len(Observations.shape) != 1:
         return None, None
     if not isinstance(Emission, np.ndarray) or len(Emission.shape) != 2:
         return None, None

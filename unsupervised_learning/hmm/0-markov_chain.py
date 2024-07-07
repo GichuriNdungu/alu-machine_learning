@@ -11,4 +11,3 @@ def markov_chain(P, s, t=1):
     for _ in range(t):
         s = s @ P
     return s
-

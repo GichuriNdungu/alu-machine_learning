@@ -37,4 +37,3 @@ def forward(Observation, Emission, Transition, Initial):
     prob = np.sum(alpha[:, -1])
 
     return prob, alpha
-
