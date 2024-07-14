@@ -9,6 +9,7 @@ class GaussianProcess:
     """
     class that represents a noiseless 1D Gaussian process
     """
+
     def __init__(self, X_init, Y_init, l=1, sigma_f=1):
         """
         init of gp
@@ -39,4 +40,4 @@ class GaussianProcess:
         sigma = K_ss - K_s.T.dot(K_inv).dot(K_s)
 
         return mu_s.flatten(), np.diag(sigma)
-
+    
