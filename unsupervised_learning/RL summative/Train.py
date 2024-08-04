@@ -3,7 +3,7 @@ from functions import *
 import sys
 
 if len(sys.argv) != 4:
-	print "Usage: python train.py [stock] [window] [episodes]"
+	print ("Usage: python train.py [stock] [window] [episodes]")
 	exit()
 
 stock_name, window_size, episode_count = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
@@ -43,8 +43,8 @@ for e in range(episode_count + 1):
 
 		if done:
 			print ("--------------------------------")
-			print "Total Profit: " + formatPrice(total_profit)
-			print "--------------------------------"
+			print ("Total Profit: ") + formatPrice(total_profit)
+			print ("--------------------------------")
 
 		if len(agent.memory) > batch_size:
 			agent.expReplay(batch_size)
