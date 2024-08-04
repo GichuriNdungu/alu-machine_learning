@@ -7,15 +7,13 @@ if len(sys.argv) != 4:
     exit()
 
 stock_name, window_size, episode_count = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
-
-agent = Agent(window_size)
 max_timesteps = 100
+agent = Agent(window_size)
 data = getStockDataVec(stock_name)
 data = data[:max_timesteps]
 l = len(data) - 1
 batch_size = 32
-
-
+step_size = 10
 for e in range(episode_count + 1):
     print("Episode " + str(e) + "/" + str(episode_count))
     state = getState(data, 0, window_size + 1)
@@ -23,12 +21,12 @@ for e in range(episode_count + 1):
     total_profit = 0
     agent.inventory = []
 
-    for t in range(l):
+    for t in range(0, l, step_size):
         print(f"Processing time step {t}/{l}")
         action = agent.act(state)
 
         # sit
-        next_state = getState(data, t + 1, window_size + 1)
+        next_state = getState(data, t + step_size, window_size + 1)
         reward = 0
 
         if action == 1:  # buy
@@ -41,7 +39,7 @@ for e in range(episode_count + 1):
             total_profit += data[t] - bought_price
             print("Sell: " + formatPrice(data[t]) + " | Profit: " + formatPrice(data[t] - bought_price))
 
-        done = True if t == l - 1 else False
+        done = True if t >= l - step_size else False
         agent.memory.append((state, action, reward, next_state, done))
         state = next_state
 
