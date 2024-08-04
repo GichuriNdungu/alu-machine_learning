@@ -1,39 +1,53 @@
-import gym
-import numpy as np
-from keras.models import Sequential
-from keras.layers import Dense, Activation, Flatten
-from keras.optimizers import Adam
-from rl.agents.dqn import DQNAgent
-from rl.memory import SequentialMemory
-from rl.policy import EpsGreedyQPolicy
+from agent.agent import Agent
+from functions import *
+import sys
 
-# Initialize the environment
-env = gym.make('CartPole-v1')
-np.random.seed(123)
-if hasattr(env, 'seed'):
-    env.seed(123)
-nb_actions = env.action_space.n  # Total number of actions for CartPole-v1
+if len(sys.argv) != 4:
+	print "Usage: python train.py [stock] [window] [episodes]"
+	exit()
 
-# Build the model
-model = Sequential()
-model.add(Flatten(input_shape=(1,) + env.observation_space.shape))
-model.add(Dense(24))
-model.add(Activation('relu'))
-model.add(Dense(24))
-model.add(Activation('relu'))
-model.add(Dense(nb_actions))
-model.add(Activation('linear'))
-print(model.summary())
+stock_name, window_size, episode_count = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
 
-# Configure and compile the agent
-memory = SequentialMemory(limit=50000, window_length=1)
-policy = EpsGreedyQPolicy()
-dqn = DQNAgent(model=model, nb_actions=nb_actions, memory=memory, nb_steps_warmup=10,
-               target_model_update=1e-2, policy=policy)
-dqn.compile(Adam(lr=1e-3), metrics=['mae'])
+agent = Agent(window_size)
+data = getStockDataVec(stock_name)
+l = len(data) - 1
+batch_size = 32
 
-# Train the agent
-dqn.fit(env, nb_steps=50000, visualize=True, verbose=2)
+for e in range(episode_count + 1):
+	print ("Episode") + str(e) + "/" + str(episode_count)
+	state = getState(data, 0, window_size + 1)
 
-# Test the agent
-dqn.test(env, nb_episodes=5, visualize=True)
+	total_profit = 0
+	agent.inventory = []
+
+	for t in range(l):
+		action = agent.act(state)
+
+		# sit
+		next_state = getState(data, t + 1, window_size + 1)
+		reward = 0
+
+		if action == 1: # buy
+			agent.inventory.append(data[t])
+			print ("Buy: ") + formatPrice(data[t])
+
+		elif action == 2 and len(agent.inventory) > 0: # sell
+			bought_price = agent.inventory.pop(0)
+			reward = max(data[t] - bought_price, 0)
+			total_profit += data[t] - bought_price
+			print ("Sell: ") + formatPrice(data[t]) + (" | Profit: ") + formatPrice(data[t] - bought_price)
+
+		done = True if t == l - 1 else False
+		agent.memory.append((state, action, reward, next_state, done))
+		state = next_state
+
+		if done:
+			print ("--------------------------------")
+			print "Total Profit: " + formatPrice(total_profit)
+			print "--------------------------------"
+
+		if len(agent.memory) > batch_size:
+			agent.expReplay(batch_size)
+
+	if e % 10 == 0:
+		agent.model.save("models/model_ep" + str(e))
