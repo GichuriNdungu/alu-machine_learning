@@ -11,8 +11,8 @@ This project implements a stock trading algorithm using a neural network model a
 - [Model Training](#model-training)
 - [Evaluation](#evaluation)
 - [Visualization](#visualization)
+- [Project live demonstration](#project-live-demonstration)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Installation
 
