@@ -19,8 +19,8 @@ This project implements a stock trading algorithm using a neural network model a
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/RL summative.git
-    cd your-repo-name
+    git clone https://github.com/gichuri/RL_summative.git
+    cd Rl_summative
     ```
 
 2. Install the required dependencies:
