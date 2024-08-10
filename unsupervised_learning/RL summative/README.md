@@ -1,104 +1,121 @@
-# Stock Trading Algorithm
+# Shower Environment Reinforcement Learning
 
-This project implements a stock trading algorithm using a neural network model and reinforcement learning. The algorithm is designed to make buy and sell decisions based on historical stock data.
+This project implements a Deep Q-Network (DQN) agent to interact with a simulated shower environment. The goal is to maintain the shower temperature within a comfortable range using reinforcement learning.
 
-## Table of Contents
+## Project Structure
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Reinforcement Learning](#reinforcement-learning)
-- [Model Training](#model-training)
-- [Evaluation](#evaluation)
-- [Visualization](#visualization)
-- [Project live demonstration](#project-live-demonstration)
-- [Contributing](#contributing)
-- [Authors](#authors)
+- [`model.py`](command:_github.copilot.openSymbolFromReferences?%5B%22model.py%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22c%3A%5C%5CUsers%5C%5Cuser%5C%5CDesktop%5C%5Ccodes%5C%5Calu-machine_learning%5C%5Cunsupervised_learning%5C%5CRL%20summative%5C%5Ctrial%5C%5Ctest.py%22%2C%22_sep%22%3A1%2C%22external%22%3A%22file%3A%2F%2F%2Fc%253A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%2520summative%2Ftrial%2Ftest.py%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%20summative%2Ftrial%2Ftest.py%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A4%2C%22character%22%3A5%7D%7D%5D%5D "Go to definition"): Contains the neural network model definition.
+- [`env.py`](command:_github.copilot.openSymbolFromReferences?%5B%22env.py%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22c%3A%5C%5CUsers%5C%5Cuser%5C%5CDesktop%5C%5Ccodes%5C%5Calu-machine_learning%5C%5Cunsupervised_learning%5C%5CRL%20summative%5C%5Ctrial%5C%5Ctest.py%22%2C%22_sep%22%3A1%2C%22external%22%3A%22file%3A%2F%2F%2Fc%253A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%2520summative%2Ftrial%2Ftest.py%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%20summative%2Ftrial%2Ftest.py%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A5%2C%22character%22%3A5%7D%7D%5D%5D "Go to definition"): Defines the [`ShowerEnv`](command:_github.copilot.openSymbolFromReferences?%5B%22ShowerEnv%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22c%3A%5C%5CUsers%5C%5Cuser%5C%5CDesktop%5C%5Ccodes%5C%5Calu-machine_learning%5C%5Cunsupervised_learning%5C%5CRL%20summative%5C%5Ctrial%5C%5Ctest.py%22%2C%22_sep%22%3A1%2C%22external%22%3A%22file%3A%2F%2F%2Fc%253A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%2520summative%2Ftrial%2Ftest.py%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%20summative%2Ftrial%2Ftest.py%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A5%2C%22character%22%3A16%7D%7D%5D%5D "Go to definition") environment.
+- [`agent.py`](command:_github.copilot.openSymbolFromReferences?%5B%22agent.py%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22c%3A%5C%5CUsers%5C%5Cuser%5C%5CDesktop%5C%5Ccodes%5C%5Calu-machine_learning%5C%5Cunsupervised_learning%5C%5CRL%20summative%5C%5Ctrial%5C%5Ctest.py%22%2C%22_sep%22%3A1%2C%22external%22%3A%22file%3A%2F%2F%2Fc%253A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%2520summative%2Ftrial%2Ftest.py%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%20summative%2Ftrial%2Ftest.py%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A15%2C%22character%22%3A16%7D%7D%5D%5D "Go to definition"): Builds and trains the DQN agent.
+- [`test.py`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%20summative%2Ftrial%2Ftest.py%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%5D "c:\Users\user\Desktop\codes\alu-machine_learning\unsupervised_learning\RL summative\trial\test.py"): Tests the trained DQN agent and visualizes the results.
+- [`saved_weights/`](command:_github.copilot.openSymbolFromReferences?%5B%22saved_weights%2F%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22c%3A%5C%5CUsers%5C%5Cuser%5C%5CDesktop%5C%5Ccodes%5C%5Calu-machine_learning%5C%5Cunsupervised_learning%5C%5CRL%20summative%5C%5Ctrial%5C%5Ctest.py%22%2C%22_sep%22%3A1%2C%22external%22%3A%22file%3A%2F%2F%2Fc%253A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%2520summative%2Ftrial%2Ftest.py%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%20summative%2Ftrial%2Ftest.py%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A29%2C%22character%22%3A18%7D%7D%5D%5D "Go to definition"): Directory to store the trained model weights.
 
 ## Installation
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/gichuri/RL_summative.git
-    cd Rl_summative
+    git clone https://github.com/yourusername/shower-rl.git
+    cd shower-rl
     ```
 
-2. Install the required dependencies:
+2. Create a virtual environment and activate it:
+    ```sh
+    python -m venv venv
+    .\venv\Scripts\activate  # On Windows
+    # source venv/bin/activate  # On macOS/Linux
+    ```
+
+3. Install the required packages:
     ```sh
     pip install -r requirements.txt
     ```
 
 ## Usage
 
-### Model Training
+### Training the Agent
 
-To train the model, run:
+To train the DQN agent, run the [`agent.py`](command:_github.copilot.openSymbolFromReferences?%5B%22agent.py%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22c%3A%5C%5CUsers%5C%5Cuser%5C%5CDesktop%5C%5Ccodes%5C%5Calu-machine_learning%5C%5Cunsupervised_learning%5C%5CRL%20summative%5C%5Ctrial%5C%5Ctest.py%22%2C%22_sep%22%3A1%2C%22external%22%3A%22file%3A%2F%2F%2Fc%253A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%2520summative%2Ftrial%2Ftest.py%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%20summative%2Ftrial%2Ftest.py%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A15%2C%22character%22%3A16%7D%7D%5D%5D "Go to definition") script:
 ```sh
-python train.py [stock] [window_size] [episodes]
+python agent.py
 ```
-- `stock`: The stock symbol to train on (e.g., `AAPL`).
-- `window_size`: The size of the window for the state representation.
-- `episodes`: The number of training episodes.
+This will train the agent and save the weights in the [`saved_weights/`](command:_github.copilot.openSymbolFromReferences?%5B%22saved_weights%2F%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22c%3A%5C%5CUsers%5C%5Cuser%5C%5CDesktop%5C%5Ccodes%5C%5Calu-machine_learning%5C%5Cunsupervised_learning%5C%5CRL%20summative%5C%5Ctrial%5C%5Ctest.py%22%2C%22_sep%22%3A1%2C%22external%22%3A%22file%3A%2F%2F%2Fc%253A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%2520summative%2Ftrial%2Ftest.py%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%20summative%2Ftrial%2Ftest.py%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A29%2C%22character%22%3A18%7D%7D%5D%5D "Go to definition") directory.
 
-### Evaluation
+### Testing the Agent
 
-To evaluate the model, run:
+To test the trained agent and visualize the results, run the [`test.py`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%20summative%2Ftrial%2Ftest.py%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%5D "c:\Users\user\Desktop\codes\alu-machine_learning\unsupervised_learning\RL summative\trial\test.py") script:
 ```sh
-python evaluate.py [stock] [model]
+python test.py
 ```
-- `stock`: The stock symbol to evaluate on (e.g., `AAPL`).
-- `model`: The name of the trained model file (e.g., `model_ep200`).
+This will load the saved weights, run the agent for a specified number of episodes, and plot the total rewards per episode.
 
-### Visualization
+## Code Overview
 
-The evaluation script will generate a plot showing the stock prices along with buy and sell signals.
+### [`test.py`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%20summative%2Ftrial%2Ftest.py%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%5D "c:\Users\user\Desktop\codes\alu-machine_learning\unsupervised_learning\RL summative\trial\test.py")
 
-## Project Structure
+```python
+from rl.agents.dqn import DQNAgent
+from rl.policy import BoltzmannQPolicy
+from rl.memory import SequentialMemory
+from tensorflow.keras.optimizers import Adam
+from model import build_model
+from env import ShowerEnv
 
-- `agent/`: Contains the agent implementation.
-- `models/`: Directory where trained models are saved.
-- `data/`: Directory for storing stock data.
-- `train.py`: Script for training the model.
-- `evaluate.py`: Script for evaluating the model.
-- `functions.py`: Utility functions for data processing and state representation.
+# Instantiate the environment
+env = ShowerEnv()
 
-## Reinforcement Learning
+# Define the model
+states = env.observation_space.shape
+actions = env.action_space.n
+model = build_model(states, actions)
 
-This project uses reinforcement learning to train the trading algorithm. Specifically, it employs a Deep Q-Learning (DQN) approach. Here’s a brief overview of the process:
+# Build the DQN agent
+def build_agent(model, actions):
+    policy = BoltzmannQPolicy()
+    memory = SequentialMemory(limit=50000, window_length=1)
+    dqn = DQNAgent(model=model, memory=memory, policy=policy,
+                   nb_actions=actions, nb_steps_warmup=10,
+                   target_model_update=1e-2)
+    dqn.compile(Adam(learning_rate=1e-3), metrics=['mae'])
+    return dqn
 
-1. **Agent**: The agent interacts with the environment (stock market) and makes decisions (buy, sell, hold).
-2. **State**: The state is represented by a window of historical stock prices.
-3. **Action**: The possible actions are buy, sell, or hold.
-4. **Reward**: The reward is the profit or loss resulting from the action taken.
-5. **Q-Learning**: The agent uses Q-learning to update its knowledge based on the rewards received, aiming to maximize cumulative profit.
+dqn = build_agent(model, actions)
+dqn.compile(Adam(lr=1e-3), metrics=['mae'])
 
-## Model Training
+# Load the saved weights
+dqn.load_weights('saved_weights/dqn_weights.h5f')
 
-The model is trained using a deep Q-learning algorithm. The agent learns to make buy, sell, or hold decisions based on the state representation of the stock prices.
+# Test the agent
+episodes = 5
+for episode in range(episodes):
+    state = env.reset()
+    done = False
+    while not done:
+        action = dqn.forward(state)  # Get action from the trained agent
+        state, reward, done, info = env.step(action)  # Take the action
+        env.render()
+```
 
-## Evaluation
+## Requirements
 
-The evaluation script tests the trained model on historical stock data and visualizes the trading decisions.
+- Python 3.6+
+- TensorFlow
+- Keras-RL
+- Matplotlib
 
-## Visualization
+Install the dependencies using:
+```sh
+pip install -r requirements.txt
+```
 
-The visualization includes:
-- Stock prices over time.
-- Buy signals (green triangles).
-- Sell signals (red inverted triangles).
-- Cumulative profit over time.
+## License
 
-## Project live demonstration
+This project is licensed under the MIT License. See the LICENSE file for details.
 
-Please find a live tutorial of this project [here]
-## Contributing
+## Acknowledgments
 
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
-possible areas of improvement include:
-- increasing the training epochs for a more accurate model. The current model is trained on 200 epochs, tuning this to 1000 would greatly improve the quality of the model.
-- Tracking profits based on the decisions made by the model.
-- This model is limited to short-term stock trading decisions and hence its not very good for at long-term stock trading. Possible contributions could help advance this model to suit long-term stock trading.
+- [Keras-RL](https://github.com/keras-rl/keras-rl) for the reinforcement learning library.
+- [TensorFlow](https://www.tensorflow.org/) for the deep learning framework.
 
-## Authors
+---
 
-- Martin Ndungu [m.ndungu@alustudent.com]
+Feel free to customize this README to better fit your project's specifics and add any additional sections as needed.
