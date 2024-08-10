@@ -109,10 +109,6 @@ Install the dependencies using:
 pip install -r requirements.txt
 ```
 
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
-
 ## Acknowledgments
 
 - [Keras-RL](https://github.com/keras-rl/keras-rl) for the reinforcement learning library.
