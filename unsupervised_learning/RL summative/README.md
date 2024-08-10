@@ -9,12 +9,14 @@ This project implements a Deep Q-Network (DQN) agent to interact with a simulate
 - [`agent.py`](command:_github.copilot.openSymbolFromReferences?%5B%22agent.py%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22c%3A%5C%5CUsers%5C%5Cuser%5C%5CDesktop%5C%5Ccodes%5C%5Calu-machine_learning%5C%5Cunsupervised_learning%5C%5CRL%20summative%5C%5Ctrial%5C%5Ctest.py%22%2C%22_sep%22%3A1%2C%22external%22%3A%22file%3A%2F%2F%2Fc%253A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%2520summative%2Ftrial%2Ftest.py%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%20summative%2Ftrial%2Ftest.py%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A15%2C%22character%22%3A16%7D%7D%5D%5D "Go to definition"): Builds and trains the DQN agent.
 - [`test.py`](command:_github.copilot.openRelativePath?%5B%7B%22scheme%22%3A%22file%22%2C%22authority%22%3A%22%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%20summative%2Ftrial%2Ftest.py%22%2C%22query%22%3A%22%22%2C%22fragment%22%3A%22%22%7D%5D "c:\Users\user\Desktop\codes\alu-machine_learning\unsupervised_learning\RL summative\trial\test.py"): Tests the trained DQN agent and visualizes the results.
 - [`saved_weights/`](command:_github.copilot.openSymbolFromReferences?%5B%22saved_weights%2F%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22c%3A%5C%5CUsers%5C%5Cuser%5C%5CDesktop%5C%5Ccodes%5C%5Calu-machine_learning%5C%5Cunsupervised_learning%5C%5CRL%20summative%5C%5Ctrial%5C%5Ctest.py%22%2C%22_sep%22%3A1%2C%22external%22%3A%22file%3A%2F%2F%2Fc%253A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%2520summative%2Ftrial%2Ftest.py%22%2C%22path%22%3A%22%2Fc%3A%2FUsers%2Fuser%2FDesktop%2Fcodes%2Falu-machine_learning%2Funsupervised_learning%2FRL%20summative%2Ftrial%2Ftest.py%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A29%2C%22character%22%3A18%7D%7D%5D%5D "Go to definition"): Directory to store the trained model weights.
+## video demonstration of project
 
+please find a guided tutorial on the project [here](https://drive.google.com/file/d/15sCwpRqxqAwaknDjm3_vbootHVZoc7iL/view?usp=sharing)
 ## Installation
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/shower-rl.git
+    git clone https://github.com/GichuriNdungu/alu-machine_learning/tree/main/unsupervised_learning/RL%20summative
     cd shower-rl
     ```
 
